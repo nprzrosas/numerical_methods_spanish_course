@@ -1,0 +1,382 @@
+---
+title: "Día 34 - Series de Taylor - Raíces de ecuaciones"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+# Series de Taylor (continuación)
+
+Para $n=3$ se evalúa la tercera derivada en $x=0$:
+
+$f^{(3)}(x)=-2.4x-0.9$
+
+$f^{(0.0)}(x)=-2.4(0.0)-0.9=-0.9$
+
+
+```{r}
+x_i <- 0 
+f_3ra_d <- -2.4*x_i-0.9
+f_3ra_d
+```
+Al incluir la tercera derivada tenemos:
+
+$f(x_{i+1})= f(x_{i})+f'(x_{i})h+\frac{f''(x_{i})}{2!}h^2+\frac{f^{(3)}(x_{i})}{3!}h^3$
+
+
+$f(x_{i+1})= 1.2-0.25-0.5h^2-0.15h^3$ --- (I)
+
+Evaluando en la ecuación (I) en  $x_{i+1}=1$ y recordando que $h=1$, tenemos
+
+$f(1) = 1.2-0.25-0.5(1)^2-0.15(1)^3=0.3$ 
+
+```{r}
+1.2-0.25-0.5*1^2-0.9/factorial(3)*1^3
+```
+Al incluirse la tercera derivada se añade una curvatura descendente que proporciona una mejor estimación. 
+
+
+```{r}
+curve(-0.1*x^4-0.15*x^3-0.5*x^2-0.25*x+1.2, from = 0, to = 1, col = "violet", lwd = 2)
+abline(h=1.2, col="blue")
+curve(1.2-0.25*x, from = 0, to = 1, col = "green", add = TRUE, lwd = 2)
+curve(1.2-0.25*x-0.5*x^2, from = 0, to = 1, col = "yellow", add = TRUE, lwd = 2)
+curve(1.2-0.25*x-0.5*x^2-0.15*x^3, from = 0, to = 1, col = "red", add = TRUE, lwd = 2)
+legend("bottomleft",
+legend=c("original","orden cero","1er. orden", "2do. orden", "3er. orden"),
+col=c("violet","blue","green", "yellow","red"),
+lty=1,lwd=2)
+abline(h=0, v=0, col="gray")
+```
+
+Usando esta aproximación y recordando la expresión para calcular el error de truncamiento en $x=1$, tenemos.
+
+$\epsilon_t$ =valor_verdadero - valor_aproximado
+
+$\epsilon_t=0.2-0.3=-0.25$
+
+
+Para $n=4$ se evalúa la tercera derivada en $x=0$:
+
+$f^{(4)}(x)=-2.4$
+
+$f^{(0.0)}(x)=-2.4=-2.4$
+
+
+```{r}
+x_i <- 0 
+f_4ta_d <- -2.4
+f_4ta_d
+```
+Al incluir la cuarta derivada tenemos:
+
+$f(x_{i+1})= f(x_{i})+f'(x_{i})h+\frac{f''(x_{i})}{2!}h^2+\frac{f^{(3)}(x_{i})}{3!}h^3+\frac{f^{(4)}(x_{i})}{4!}h^4$
+
+
+$f(x_{i+1})= 1.2-0.25-0.5h^2-0.9h^3-0.1h^4$ --- (I)
+
+Evaluando en la ecuación (I) en  $x_{i+1}=1$ y recordando que $h=1$, tenemos
+
+$f(1) = 1.2-0.25-0.5(1)^2-0.15(1)^3-0.1h^4=0.2$ 
+
+```{r}
+1.2-0.25-0.5*1^2-0.9/factorial(3)*1^3-2.4/factorial(4)*1^4
+```
+Al incluirse la cuarta derivada se añade una curvatura descendente que proporciona una mejor estimación. 
+
+
+```{r}
+curve(-0.1*x^4-0.15*x^3-0.5*x^2-0.25*x+1.2, from = 0, to = 1, col = "violet", lwd = 2)
+abline(h=1.2, col="blue")
+curve(1.2-0.25*x, from = 0, to = 1, col = "green", add = TRUE, lwd = 2)
+curve(1.2-0.25*x-0.5*x^2, from = 0, to = 1, col = "yellow", add = TRUE, lwd = 2)
+curve(1.2-0.25*x-0.5*x^2-0.15*x^3, from = 0, to = 1, col = "red", add = TRUE, lwd = 2)
+curve(1.2-0.25*x-0.5*x^2-0.15*x^3-0.1*x^4, from = 0, to = 1, col = "black", add = TRUE, lwd = 1, lty = 4)
+legend("bottomleft",
+legend=c("original","orden cero","1er. orden", "2do. orden", "3er. orden", "4to. orden"),
+col=c("violet","blue","green", "yellow", "red", "black"),
+lty=1,lwd=2)
+abline(h=0, v=0, col="gray")
+```
+
+Usando esta aproximación y recordando la expresión para calcular el error de truncamiento en $x=1$, tenemos.
+
+$\epsilon_t$ =valor_verdadero - valor_aproximado
+
+$\epsilon_t=0.2-0.2=0.0$
+
+Los términos adicionales mejoran aún más la aproximación. En efecto, la inclusión de la tercera y de  la cuarta derivadas da como resultado exactamente la misma ecuación del principio:
+
+$f(x_{i+1})= 1.2-0.25-0.5h^2-0.15h^3-0.1h^4$ 
+
+donde el término residual es 
+
+
+$R_4=\frac{f^{(5)}(\xi)}{(5)!}h^{5}=0$
+
+
+ya que la quinta derivada de un polinomio de cuarto orden es cero. Por consiguiente, la expansión de la serie Taylor hasta la cuarta derivada da una estimación exacta para $x_{i+1}=1$:
+
+$f(1)= 1.2-0.25(1)-0.5(1)^2-0.15(1)^3-0.1(1)^4=0.2$
+
+
+En general, la expansión de la Taylor de $n-$ésimo orden será exacta para un polinomio de $n$-ésimo orden. Para otras funciones continuas y diferenciables, como las exponenciales y las senoidales, no se obtiene una estimación exacta con un número finito de términos. Cada uno de los términos adicionales contribuye, aunque sea con poco, al mejoramiento de la aproximación. Esto se muestra, donde se obtendría un resultado exacto únicamente si se le agrega un número infinito de términos. 
+
+
+Aunque lo anterior es cierto, el valor práctico de las expansiones de la serie de Taylor estriba, en la mayoría de los casos, en que el uso de pocos términos que dará una aproximación lo suficientemente cercana a la solución verdaderamente 
+
+# Unidad II - Raíces de ecuaciones
+
+# Resolviendo sistemas de ecuaciones algebraicas
+
+La solución de ecuaciones es central en el análisis numérico, y R tiene numerosas herramientas para realizarlo. 
+
+# Encuentre los ceros de un polinomio
+
+Desde hace mucho tiempo usted aprendió a usar la fórmula cuadrática: 
+
+
+
+$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
+
+para resolver 
+
+$f(x)=ax^2+b+c$ ---- (J)
+
+A los valores calculados con la ecuación se les llama "raíces" de la ecuación que representan los valores de $x$ que hacer a la ecuación (J) cero. Por lo tanto, se define la raíz de una ecuación como el valor de $x$ que hace $f(x)=0$. Debido a esto, algunas veces a la raíces se les conoce como **ceros** de la ecuación. 
+
+$x^2+2x-12=0$
+
+$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
+
+$x=\frac{-(2)\pm\sqrt{(2)^2-4(1)(-12)}}{2(1)}$
+
+$x=\frac{-(2)\pm\sqrt{4+48}}{2}$
+
+$x=\frac{-(2)\pm\sqrt{52}}{2}$
+
+$x=\frac{-(2)\pm\sqrt{2*2*13}}{2}$
+
+$x=\frac{-2\pm 2 \sqrt{13}}{2}$
+
+$x=-1\pm\sqrt{13}$
+
+$x_1= -1 + \sqrt{13}$
+
+```{r}
+x_1 <- -1 + sqrt(13)
+x_1
+```
+
+$x_2= -1 - \sqrt{13}$
+
+```{r}
+x_2 <- -1 - sqrt(13)
+x_2
+```
+
+$(x+1-\sqrt{13})(x+1+\sqrt{13})$
+
+```{r}
+polyroot(c(-12,2,1))
+```
+
+
+```{r}
+curve(x^2+2*x-12, from = -10, to = 10, col = "red")
+abline(h=0, v= 0, lty=3)
+```
+
+
+$3x^5-x^4+x-1=0$
+
+```{r}
+polyroot(c(-1,1,0,0,-1,3))
+```
+
+# Método gráfico
+
+Un método simple para obtener una aproximación a la raíz de la ecuación $f(x)=0$ consiste en graficar la función y observar dónde cruza el eje $x$. Ese punto, que representa el valor de $x$ para el cual $f(x)=0$, ofrece una aproximación inicial de la raíz. 
+
+
+```{r}
+ecuacion <- function(x){sin(x)+cos(x)}
+curve(ecuacion, from=0, to=2*pi, n=200, xlab="x", ylab="f(x)", col="blue",lwd=2, main="f(x)= sin(x)+cos(x) ")
+abline(h=0, v=0, col="gray")
+```
+
+La técnicas gráficas tiene un valor práctico limitado, ya que no son precisas. Sin embargo, los métodos gráficos se utilizan para obtener aproximaciones de la raíz. Dichas aproximaciones se pueden usar como valores iniciales en los métodos numéricos analizados en este tema.
+
+# Encontrar los ceros de una función 
+
+Una tarea común en análisis numérico es determinar las raíces de una función, los lugares donde su valor es igual a cero. La instalación básica de R tiene la función `uniroot` para hacer esto, pero iniciaremos con dos métodos simples que con frecuencia son utilizados. 
+
+# Método de la bisección 
+
+El método de la bisección selecciona un intervalo en cuál la raíz de la función $f(x)$ debe de estar, y repetidamente bisecta el intervalo hasta que la raíz es encontrada dentro de la precisión deseada. La estimación inicial para los límites inferiores y superiores **xmin** y **xmax**, del intervalor debe dar valores de la función de signos opuestos, desde que un cruce por cero se garantiza que caiga dentro de este intervalo. En el siguiente código, el valor por default de la precisión deseada se fija a una toleancia de $tol = 1e-5$, este valor se puede cambiar a otra tolerancia deseada. 
+
+**Ejemplo. **
+
+Emplee el método de la bisección para encontrar las raíces de la siguiente función, cuya gráfica se genera con el siguiente código. 
+
+$f(x)=\frac{668.06}{x}(1-exp^{-0.146843*x})-40$
+
+```{r}
+ecuacion = function(x){
+  (668.06/x)*(1-exp(-0.146843*x))-40
+  }
+curve(ecuacion, from=4, to=20, n=200, xlab="x", ylab="f(x)", col="blue",lwd=2, main="f(x)")
+abline(h=0, v=0, col="gray")
+```
+
+**Solución.** Este método se implementa con el siguiente código. 
+
+```{r}
+metodo_biseccion <- function(f, xmin, xmax, tol=1e-5){
+  a <- xmin
+  b <- xmax
+  if (a >= b){
+    cat("error: xmin > xmax", "\n")
+    # return regresa un objeto
+    return(NULL) # NULL significa valor indefinido
+  }
+  if (f(a) == 0){
+    return(a)
+  } else if (f(b) == 0) {
+    return(b) 
+  } else if (f(a)*f(b) > 0){
+    cat("error: f(xmin) y f(xmax) son del mismo signo", "\n")
+    return(NULL)
+  }
+  # Si las entradas son correctas
+  # converger hasta encontrar la raiz 
+  iteracion <- 0
+  while ((b-a) > tol){
+    c <- (a+b)/2
+    if (f(c) == 0){
+      return(c)
+    } else if (f(a)*f(c) < 0){
+      b <- c
+    } else {
+      a <- c
+    }
+    iteracion <- iteracion + 1
+  }
+  # va a regresar la raiz, numero de iteraciones y la precision
+  return(c((a+b)/2, iteracion, (b-a)))
+}
+
+
+f <- function(x){
+  (668.06/x)*(1-exp(-0.146843*x))-40
+} 
+metodo_biseccion(f, 12,16)
+
+```
+
+**Ejemplo.**
+Use el método de la bisección para encontrar la raíz de la función $f(x)=x^3-\sin(x)^2$. En la siguiente figura se traza la gráfica de $f(x)$. 
+
+```{r}
+ecuacion <- function(x){
+  x^3-sin(x)^2
+}
+
+curve(ecuacion, from=0.5, to=1, n=200, xlab="x", ylab="f(x)", col="red",lwd=2, main="f(x)")
+abline(h=0, v=0, col="gray")
+```
+
+Y con el siguiente código se obtiene la raíz usando el método de la bisección. 
+
+
+```{r}
+metodo_biseccion <- function(f, xmin, xmax, tol=1e-5){
+  a <- xmin
+  b <- xmax
+  if (a >= b){
+    cat("error: xmin > xmax", "\n")
+    # return regresa un objeto
+    return(NULL) # NULL significa valor indefinido
+  }
+  if (f(a) == 0){
+    return(a)
+  } else if (f(b) == 0) {
+    return(b) 
+  } else if (f(a)*f(b) > 0){
+    cat("error: f(xmin) y f(xmax) son del mismo signo", "\n")
+    return(NULL)
+  }
+  # Si las entradas son correctas
+  # converger hasta encontrar la raiz 
+  iteracion <- 0
+  while ((b-a) > tol){
+    c <- (a+b)/2
+    if (f(c) == 0){
+      return(c)
+    } else if (f(a)*f(c) < 0){
+      b <- c
+    } else {
+      a <- c
+    }
+    iteracion <- iteracion + 1
+  }
+  # va a regresar la raiz, numero de iteraciones y la precision
+  return(c((a+b)/2, iteracion, (b-a)))
+}
+
+
+f <- function(x){
+  x^3 - sin(x)^2
+} 
+metodo_biseccion(f, 0.5,1)
+
+```
+# Asistencia
+
+From Leon Gonzalez to Everyone:  08:33 PM
+
+presente
+
+From Andrea Carmin to Everyone:  08:33 PM
+
+Presente
+
+From Angel Pimentel to Everyone:  08:33 PM
+
+presente
+
+From Alhelí García to Everyone:  08:33 PM
+
+Presente
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  08:33 PM
+
+Gutiérrez Bernal Edgar Isaac
+
+From Daniela Roman Padilla to Everyone:  08:34 PM
+
+presente
+
+From Andrew Betanzos to Everyone:  08:36 PM
+
+buenas noches doctora
+
+presente
+
+From Ximena to Everyone:  08:40 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  08:41 PM
+
+presente
+
+From Anna Viquez to Everyone:  10:03 PM
+
+Presente 
+

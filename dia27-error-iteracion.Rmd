@@ -1,0 +1,145 @@
+---
+title: "Día 26 - Errores (Continuación)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+# Algoritmo computacional para cálculos iterativos (continuación)
+
+La clase pasada vimos este código que calculaba una aproximación para $exp(x)$.
+
+```{r}
+macLaurin <- function(x,n){
+  suma <- 0
+  for (i in 1:n-1){
+    termino <- x^i/factorial(i)
+    suma <- suma + termino
+  }
+  cat("La aproximación de la exp(x) en series de MacLaurin es:", suma )
+}
+
+macLaurin(0.5,6)
+```
+
+Un código un poco más detallado se muestra a continuación. 
+
+
+```{r}
+macLaurin <- function(x,n){
+  suma <- 0
+  for (i in 1:n-1){
+    cat("i=", i,"\n" )
+    termino <- x^i/factorial(i)
+    cat("Cálculo 1.", "El valor del termino es:", termino, "El valor de la suma es", suma, "El valor de i es", i,"\n" )
+    suma <- suma + termino
+    cat("Cálculo 2.", "El valor del termino es:", termino, "El valor de la suma es", suma, "El valor de i es", i, "\n" )
+  }
+  cat("Para exp(x) evaluada en x=", x, ".El valor de la suma es:", suma, ".Con n=", n, "terminos", "\n" )
+}
+
+macLaurin(0.5,6)
+```
+
+# Ciclo while 
+
+Alternativamente se puede usar un ciclo while.
+
+![Diagrama de flujo que muestra el ciclo while.](while_loop.png)
+
+Sintaxis del ciclo while en R. 
+
+![Sintaxis para el ciclo while en R.](while_sintaxis.png)
+
+Los pasos para obtener la suma utilizando un ciclo while se muestran en el siguiente diagrama de flujo. 
+
+![Diagrama de flujo que muestra el procedimiento para obtener la suma expandida en series de MacLaurin utilizando un ciclo while.](maclaurin_v02.png)
+
+La función en R que responde el diagrama de flujo anterior es la siguiente. 
+
+
+```{r}
+maclaurin_2 <- function(x,n){
+  i <- 0
+  suma <- 0 
+  while (i<n){
+    cat("i=", i,"\n" )
+   # cat("Cálculo 1.", "El valor del termino es:", termino, "El valor de la suma es", suma, "El valor de i es", i,"\n" )
+    termino <- x^i/factorial(i)
+    suma <- suma + termino 
+ #   cat("Cálculo 1.", "El valor del termino es:", termino, "El valor de la suma es", suma, "El valor de i es", i,"\n" )
+    i = i + 1
+    cat("Cálculo 2.", "El valor del termino es:", termino, "El valor de la suma es", suma, "El valor de i es", i,"\n" )
+  }
+cat("Para exp(x) evaluada en x=", x, ".El valor de la suma es:", suma, ".Con n=", n, "terminos", "\n" )  
+}
+
+maclaurin_2(0.5,6)
+```
+
+
+
+# Asistencia
+
+From Míriam Sosa to Everyone:  02:29 PM
+
+presente
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  02:32 PM
+
+presente
+
+From Angel Pimentel to Everyone:  02:32 PM
+
+presente
+
+From Andrea Carmin to Everyone:  02:32 PM
+
+Presente
+
+From Anna Viquez to Everyone:  02:33 PM
+
+Presente
+
+From Alhelí García to Everyone:  02:33 PM
+
+Presente
+
+From Leon Gonzalez to Everyone:  03:13 PM
+
+presente
+
+From Ximena Martínez to Everyone:  03:13 PM
+
+Presente
+
+From Daniela Roman to Everyone:  03:13 PM
+
+presente
+
+From Lorena Silva to Everyone:  03:13 PM
+
+presente
+
+From Max to Everyone:  03:14 PM
+
+presente
+
+From Ian Tsla to Everyone:  03:15 PM
+
+presente
+
+From Luis Cabrera to Everyone:  03:15 PM
+
+present
+
+From Valeria Olvera Aguilar to Everyone:  03:53 PM
+
+Presente
+

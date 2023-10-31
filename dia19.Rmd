@@ -1,0 +1,320 @@
+---
+title: "Día 20- Algoritmos/Ciclos for"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+# El sistema de lucha, huída o congelamiento 
+
+Vea la figura 1. 
+
+![El sistema de lucha, huída o congelamiento](FFF.png)
+
+
+
+# "All life is problem solving", Karl Popper. 
+
+As Karl Popper, one of the most influential 20th century philosophers of science, once eloquently stated, “All life is problem solving.” I’ve often contended that the best leaders are the best problem solvers. They have the patience to step back and see the problem at-hand through broadened observation; circular vision. They see around, beneath and beyond the problem itself. They see well-beyond the obvious. The most effective leaders approach problems through a lens of opportunity. 
+
+
+
+# Debugging Rules - Reglas de depuración
+
+A continuación se expresan las reglás que puede usar para depurar un trabajo. 
+
+1. Entender el sistema
+2. Hazlo fallar
+3. Deje de pensar y mire
+4. Divide y conquistarás
+5. Cambiar una cosa a la vez
+6. Mantenga un registro de auditoría
+7. Compruebe el enchufe
+8. Obtenga una vista nueva
+9. Si no lo arregló, no está arreglado
+
+
+# Ciclos for (continuación)
+
+**Ejercicio 1. ** Construya un diagrama de flujo, un algoritmo y una función en R para resolver el siguiente ejercicio.
+
+Un contrastista le paga a los trabajadores al final de cada semana de acuerdo a las siguientes reglas.
+
+Para las primeras 35 horas de trabajo, el pago es de \$15 por hora, para las siguientes 25 horas, la tasa de pago es de \$18 por hora, para el resto, la tasa de pago es de $26 por hora. No se permite que los trabajores trabajen más de 80 horas en una semana. Desarrolle un diagrama de flujo, un algoritmo y una función en R que muestre, ¿cómo se debe calcular el salario de los trabajadores basado en las entradas válidas?
+
+**Solución.** La entrada requerida es el número total de horas trabajadas. Las tasas de pago dependen de las horas trabajadas. El total de horas trabajadas puede considerarse válida si el número cae en el rango de 0 a 80 horas trabajadas, identifique la categoría a la cuál las hora trabajadas pertenecen, y aplique las diferentes tasas para conocer el salario. El procedimiento es mostrado dentro de un ciclo for, y es terminado cuando se proporciona cero o un valor negativo como entrada en las horas trabajadas. 
+
+![Diagrama de flujo para calcular el salario de los trabajadores de acuerdo a las horas trabajadas](contratista.png)
+
+# Solución por partes...
+
+1. Siempre recurra a su conocimiento previo y haga códigos simples que entienda. Primero se va a construir una función a la cual se le ingresaran diferentes número de horas trabajadas y se verá la respuesta. De acuerdo con el diagrama de flujo si se ingresan los siguientes valores de horas trabajadas, se esperan las siguientes respuestas:
+
+* ht <- -1, desplegará el mensaje "horas negativas o cero"
+* ht <- 0, desplegará el mensaje "horas negativas o cero"
+* ht <- 88, desplegará el mensaje "horas inválidas"
+* ht <- 20, Como 20 es menor a 35, el salario se calculará con la siguiente expresión:  salario <- $20*15=300$
+* ht <- 55, Como 55 es menor a 60,  el salario se calculará con la siguiente expresión:  salario <- $35*15+(55-35)*18=885$
+* ht <- 70, Como 70 es menor a 80,  el salario se calculará con la siguiente expresión:  salario <- $35*15+ 25*18+(70-60)*25=1225$
+
+
+```{r}
+calculo_salario <- function(ht){
+  if (ht<=0){
+    print('horas negativas o cero')
+  } else {
+    if (ht>80){
+      print('horas invalidas')
+    } else {
+      if (ht<=35){
+        salario <- ht * 15
+         print(salario)
+      } else {
+        if (ht<=60){
+          salario <- 35 * 15 + (ht-35)*18
+           print(salario)
+        } else {
+          salario <- 35 * 15 + 25 * 18 + (ht - 60) * 25
+           print(salario)
+        }
+      }
+    }
+  }
+}
+
+calculo_salario(70)
+```
+
+
+Al probar el código anterior nos damos cuenta que funciona para todos los casos. Para continuar con la depuración del programa, usaremos la función `cat`, la cual convierte sus argumentos en una cadena de caracteres, es decir los concatena y luego los imprime. 
+
+
+
+```{r}
+calculo_salario <- function(ht){
+  if (ht<=0){
+   # print('horas negativas o cero')
+    cat("Atención: se han ingresado horas negativas o cero (caso 1)", " horas trabajadas: ", ht, "\n")
+  } else {
+    if (ht>80){
+      #print('horas invalidas')
+      cat("Atención: horas inválidas (caso 2),", " horas trabajadas: ", ht, "\n")
+    } else {
+      if (ht<=35){
+        salario <- ht * 15
+         #print(salario)
+         cat("El salario del trabajador es (caso3):", salario, " horas trabajadas: ", ht, "\n")
+      } else {
+        if (ht<=60){
+          salario <- 35 * 15 + (ht-35)*18
+          cat("El salario del trabajador es (caso 4):", salario, " horas trabajadas: ", ht, "\n")
+       #    print(salario)
+        } else {
+          salario <- 35 * 15 + 25 * 18 + (ht - 60) * 25
+           cat("El salario del trabajador es (caso 5):", salario, " horas trabajadas: ", ht, "\n")
+        #   print(salario)
+        }
+      }
+    }
+  }
+}
+
+calculo_salario(88)
+```
+El código anterior, nos permite obtener con detalle la respuesta de cada expresión `if` y funciona correctamente. 
+
+El siguiente paso va concatenar todas las horas trabajadas en una variable e ingresar el código que está dentro de la función en un ciclo `for`. 
+
+```{r}
+horas_trabajadas <- c(-1, 0, 88, 20, 55, 70)
+for (ht in horas_trabajadas){
+  if (ht<=0){
+    cat("Atención: se han ingresado horas negativas o cero (caso 1)", " horas trabajadas: ", ht, "\n")
+  } else {
+    if (ht>80){
+      cat("Atención: horas inválidas (caso 2),", " horas trabajadas: ", ht, "\n")
+    } else {
+      if (ht<=35){
+        salario <- ht * 15
+         cat("El salario del trabajador es (caso3):", salario, " horas trabajadas: ", ht, "\n")
+      } else {
+        if (ht<=60){
+          salario <- 35 * 15 + (ht-35)*18
+          cat("El salario del trabajador es (caso 4):", salario, " horas trabajadas: ", ht, "\n")
+        } else {
+          salario <- 35 * 15 + 25 * 18 + (ht - 60) * 25
+           cat("El salario del trabajador es (caso 5):", salario, " horas trabajadas: ", ht, "\n")
+        }
+      }
+    }
+  }
+}
+```
+
+El código anterior casi corresponde a la solución del diagrama de flujo, con un solo detalle, el programa no se detiene para el caso donde las horas trabajadas son negativas o cero. Para resolver ese punto, recurriremos a alguna función en R que permita detener la ejecución del programa. Lo anterior se logra con la función `break`.
+
+
+En la programación de R, una secuencia de ciclo normal se puede alterar usando break.
+
+## La declaración de ruptura o interrupción -break- 
+
+Se usa una declaración de interrupción dentro de un ciclo `for` para detener las iteraciones y hacer fluir el control fuera del ciclo. En una situación de ciclo `for` anidado, donde hay un ciclo dentro de otro, la declaración de break sale del ciclo más interno que se está evaluando. 
+
+La sintaxis de una declaración `break` es la siguiente. 
+
+![Sintaxis de la declaración de interrupción 'break'](break.png)
+
+Nota: la sentencia `break` también se puede utilizar dentro de la rama `else` de la sentencia `if ... else`.
+
+
+El diagrama de flujo de la declaración break se muestra a continuación. 
+
+![Diagrama de flujo de la declaración 'break'](break2.png)
+
+```{r}
+x <- 1:5
+for (val in x){
+  if (val>=4){
+    break
+  }
+  print(val)
+}
+```
+```{r}
+horas_trabajadas <- c(1, 30, 88, 20, -1, 70)
+for (ht in horas_trabajadas){
+  if (ht<=0){
+    #cat("Atención: se han ingresado horas negativas o cero (caso 1)", " horas trabajadas: ", ht, "\n")
+    break
+  } else {
+    if (ht>80){
+      cat("Atención: horas inválidas (caso 2),", " horas trabajadas: ", ht, "\n")
+    } else {
+      if (ht<=35){
+        salario <- ht * 15
+         cat("El salario del trabajador es (caso3):", salario, " horas trabajadas: ", ht, "\n")
+      } else {
+        if (ht<=60){
+          salario <- 35 * 15 + (ht-35)*18
+          cat("El salario del trabajador es (caso 4):", salario, " horas trabajadas: ", ht, "\n")
+        } else {
+          salario <- 35 * 15 + 25 * 18 + (ht - 60) * 25
+           cat("El salario del trabajador es (caso 5):", salario, " horas trabajadas: ", ht, "\n")
+        }
+      }
+    }
+  }
+}
+```
+
+
+# Examen 1er parcial
+
+El examen para evaluar el primer parcial se realiazará el lunes 3 de Mayo de 2021 de 8:30 a 10 pm. El examen es teórico y abarcará la teoría vista desde el día uno hasta el día 20. Habilite su cámara para que durante toda la prueba sea visible que usted y solo usted se encuentra respondiendo el examen. Prepare hojas blancas y su bolígrafo. Al terminar tomará fotos de su examen, generará un sólo PDF y lo enviará a ncperez@cinvestav.mx. 
+
+# Examen 2do. parcial
+
+El examen del segundo parcial será práctico. Usted recibirá el archivo con los problemas para resolver el examen práctico el día lunes 3 de Mayo después de que entregue su examen teórico. Para este examen tendrá algunos días para responderlo. 
+
+
+
+# Tarea 11 
+
+En Nueva Delhi, la factura telefónica es calculada de acuerdo a las siguientes reglas, para las primeras 300 llamadas, el monto de la factura es fijo y es igual a \$500.00, para las siguientes 65 llamadas, el precio por llamada es de \$0.95, para las siguientes 90 llamadas, la tasa por llamada es de $1.50, para llamadas más allá de ese número el precio por llamada es \$2.25 por llamada.  Desarrolle un diagrama de flujo, un algoritmo y un código en R para calcular el monto de la factura. 
+
+**Solución.** La entrada que se requiere es el número de llamadas y la salida es el monto total de la factura para el número de llamadas. Note que las tasas varían solo con el exceso de llamadas en una categoría en particular. 
+
+
+Envíe su archivo a ncperez@cinvestav.mx máximo el viernes 7 de mayo del 2021 a las 18 horas, nombre su archivo como tarea11_apellidonombre_fecha.PDF
+
+Al inicio de su archivo coloque lo siguiente: 
+
+#2NV1 
+
+
+#Tarea Número x
+
+
+#Nombre completo 
+
+
+#Número de Boleta 
+
+
+#Direccion de correo electronico institucional
+
+
+#"Yo trabajé esta tarea sola/solo usando sólo los materiales visto en clase"
+
+
+#"Yo trabajé esta tarea con Nombre completo de la persona con la que trabajó"
+
+#Reporte los sitios de dónde obtuvo los datos 
+
+
+
+# Bibliografía 
+
+Debuggin, The 9 indispensable Rules for Finding Even the Most Elusive Software and Hardware Problems by David J Agans. AMACOM, 2002
+
+
+# Asistencia
+
+From Míriam Sosa to Everyone:  04:01 PM
+
+Presente
+
+From Andrew Betanzos to Everyone:  04:01 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  04:02 PM
+
+presente
+
+From Edgar isaac Gutiérrez to Everyone:  04:11 PM
+
+presente
+
+From Ximena to Everyone:  04:11 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  04:11 PM
+
+presnte
+
+From Angel Pimentel to Everyone:  04:14 PM
+
+presente
+
+From Emmanuel González to Everyone:  04:14 PM
+
+presente
+From Daniela Roman to Everyone:  04:14 PM
+
+presente
+
+From Valeria Olvera Aguilar to Everyone:  05:15 PM
+
+Presente
+
+From Lorena Silva to Everyone:  05:25 PM
+
+presente
+
+From Alhelí García to Everyone:  05:26 PM
+
+Presente
+
+From Ian Tsla to Everyone:  05:31 PM
+
+presente
+
+

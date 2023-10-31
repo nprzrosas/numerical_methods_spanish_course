@@ -1,0 +1,379 @@
+---
+title: "Día 37 - Resolviendo sistemas de ecuaciones lineales"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+# Dos ecuaciones lineales con dos incógnitas 
+
+Considere el siguiente sistema de dos ecuaciones lineales con dos incógnitas $x$
+
+\begin{alignat*}{5}
+   a_{1,1}x_1 & {}+{} &  a_{1,2}x_2   & {}={} & b_1 \label{eq:eq1}\tag{1} \\
+   a_{2,1}x_1 & {}+{} &  a_{2,2}x_2   & {}={} & b_2 
+\end{alignat*}
+
+donde $a_{1,1},a_{1,2},a_{2,1},a_{2,2},$ $b_1$ y $b_2$ son números dados. Cada una de estas ecuaciones corresponde a una línea recta. Una solución al sistema (1) es un par de números, denotados por $(x,y)$, que satisface (1). ¿Cuántos pares ordenados pueden ser solución del sistema (1)? La pregunta se responde usando dos hechos importantes del álgebra elemental. 
+
+**Hecho A.** Si $a=b$ y $c=d$, entonces $a+c=b+d$
+
+**Hecho B.** Si $a=b$ y $c$ es cualquier número real, entonces $ca=cb$.
+
+El hecho A establece que si se suman dos ecuaciones se obtiene una tercera ecuación correcta. El hecho B establece que si se multiplican ambos lados de una ecuación por una constante se obtiene una segunda ecuación válida. Se debe suponer que $c \neq0$ ya que aunque la ecuación $0 = 0$ es correcta, no es útil. 
+
+La clase anterior vimos tres diferentes sistemas lineales, los cuales tenían una única solución, no tenían solución o tenían un número infinito de soluciones. Ahora, usando los hechos A y B vamos a tratar de resolver dichos sistemas. 
+
+# Sistema con una solución única
+
+Considere el sistema 
+
+\begin{alignat*}{5}
+   x_1 & {}-{} &  2x_2  &  {}={} & -1 \label{eq:eq2}\tag{2}\\
+   -x_1 & {}+ {} & 3x_2 &  {}={} & 3\\
+\end{alignat*}
+
+Si se suman las dos ecuaciones se tiene, por le hecho A, la siguiente ecuación: $x_2=2$ . Entonces si se despeja de la primera ecuación $x_1=-1+2x_2=-1+2(2)=3$. Así, el par (3,2) satisface el sistema (2) y la forma en que se encontró la solución muestra que es el único par de números que lo hace. Es decir, el sistema (2) tiene una **solución única.**
+
+# Sistema sin solución
+
+Considere el sistema 
+
+\begin{alignat*}{5}
+   x_1 & {}-{} &  2x_2  &  {}={} & -1 \label{eq:eq3}\tag{3}\\
+   -x_1 & {}+ {} & 2x_2 &  {}={} & 3\\
+\end{alignat*}
+
+Si se multiplica por $-1$ la primera ecuación (que está permitido por el hecho B) se obtiene $-x_1+2x_2=1$ esto contradice la segunda ecuación. Por lo tanto, el sistema (3) **no tiene solución**. Como se expresó un sistema que no tiene solución es **incosistente.**
+
+# Sistema con un número infinito de soluciones
+
+Considere el sistema 
+
+\begin{alignat*}{5}
+   x_1 & {}-{} &  2x_2  &  {}={} & -1 \label{eq:eq4}\tag{4}\\
+   -x_1 & {}+ {} & 2x_2 &  {}={} & 1\\
+\end{alignat*}
+
+Estas dos ecuaciones son equivalentes porque cualesquiera dos números, $x$ y $y$, que satisfacen la primera ecuación también satisfacen la segunda, y viceversa. Para comprobar esto se multiplica la primera ecuación por $-1$. Esto está permitido por el hecho B. Entonces, $x_2=\frac{1}{2}(1+x_1)$. Así, el par $(x_1,\frac{1}{2}(1+x_1))$ es una solución del sistema (4) para cualquier número real $x$. Es decir, el sistema (4) tiene un **número infinito de soluciones**. Para este ejemplo, los siguientes pares son soluciones: $(0,\frac{1}{2})$, $(1,1)$, $(-5,-2)$ 
+
+
+```{r}
+curve((1/2)*(x+1), from = -6, to = 5, col = "blue", lwd = 3, ylab = "x2")
+curve((1/2)*(x+1), col = "pink", add = TRUE, lwd = 1, lty = 4)
+legend("topleft",
+legend=c("x2=(1/2)*(x1+1)","x2=(1/2)*(x1+1)"),
+col=c("blue","pink"),
+lty=1,lwd=2)
+points(0,0.5)
+points(1,1)
+points(-5,-2)
+abline(h=0, v=0, col="gray")
+```
+
+
+Lo anterior se resumen en el siguiente teorema: el sistema 
+
+\begin{alignat*}{5}
+   a_{1,1}x_1 & {}+{} &  a_{1,2}x_2   & {}={} & b_1  \\
+   a_{2,1}x_1 & {}+{} &  a_{2,2}x_2   & {}={} & b_2 
+\end{alignat*}
+
+de dos ecuaciones con dos incógnitas $x_1$ y $x_2$ no tiene solución, tiene una solución única o tiene un número infinito de soluciones. Esto es:
+
+i) Tiene una solución única si y sóli si $a_{1,1}a_{2,2}-a_{1,2}a_{2,1}\neq0$.
+
+ii) No tiene solución o tiene un 
+número infinito de soluciones, si y sólo si 
+$a_{1,1}a_{2,2}-a_{1,2}a_{2,1}=0$.
+
+# m ecuaciones con n incógnitas: eleminación de Gauss-Jordan y Gaussina
+
+En esta parte se describe un método para encontrar todas las soluciones (si es que existe) de un sistema de $m$ ecuaciones lineales con $n$ incógnitas. Al hacerlo, se verá que tales sitemas o bien no tienen solución, tienen una solución o tienen un número infinito de soluciones. Antes de llegar al método general se verán algunos ejemplos sencillos. 
+
+## Solución de un sistema de tres ecuaciones con tres incógnitas: solución única
+
+**Ejemplo.** Resuelva el sistema 
+
+\begin{alignat*}{5}
+   2x_1 & {}+{} &  4x_2  &  {}+{} &  6x_3  & {}={} & 18  \label{eq:eq5}\tag{5} \\
+   4x_1 & {}+{} &  5x_2  &  {}+{} &  6x_3  & {}={} & 24 \\
+   3x_1 & {}+{} &  x_2  &  {}-{} &  2x_3  & {}={} & 4 \\
+\end{alignat*}
+
+
+**Solución**
+
+En este caso se buscan tres números $x_1, x_2, x_3,$ tales que las tres ecuaciones del sistema (5) se satisfaga. El método de solución que se estudiará será el de simplificar las ecuaciones como se hizo anteriormente, de manera que las soluciones puedan identificarse de inmediato. Se comienza por dividir la primera ecuación entre 2 .
+
+$\frac{1}{2}(2x_1+4x_2+6x_3=18)$
+
+$x_1+2x_2+3x_3=9)$
+
+Esta ecuación se sustituye por la primera ecuación del sistema (A). Esto da: 
+
+\begin{alignat*}{5}
+   x_1 & {}+{} &  2x_2  &  {}+{} &  3x_3  & {}={} & 9  \label{eq:eqb}\tag{B} \\
+   4x_1 & {}+{} &  5x_2  &  {}+{} &  6x_3  & {}={} & 24 \\
+   3x_1 & {}+{} &  x_2  &  {}-{} &  2x_3  & {}={} & 4 \\
+\end{alignat*}
+
+
+Luego multiplicamos por $-4$ la primera ecuación del sistema (B) 
+
+$-4(x_1+2x_2+3x_3=9)$
+
+$-4x_1-8x_2-12x_3=-36$
+
+Y sumamos esta nueva ecuación a la segunda ecuación del sistema (B).
+
+\begin{alignat*}{5}
+   -4x_1 & {}-{} &  8x_2  &  {}-{} &  12x_3  & {}={} & -36 \\
+   4x_1 & {}+{} &  5x_2  &  {}+{} &  6x_3  & {}={} & 24 \\
+\end{alignat*}
+
+y obtenemos $-3x_2-6x_3=-12$, esta ecuación es la nueva ecuación dos del sistema de ecuaciones (B). Este nuevo sistema se llama (C)
+
+
+\begin{alignat*}{5}
+   x_1 & {}+{} &  2x_2  &  {}+{} &  3x_3  & {}={} & 9  \label{eq:eqc}\tag{C} \\
+    & {}-{} &  3x_2  &  {}-{} &  6x_3  & {}={} & -12 \\
+   3x_1 & {}+{} &  x_2  &  {}-{} &  2x_3  & {}={} & 4 \\
+\end{alignat*}
+
+
+Luego multiplicamos por $-3$ la primera ecuación y el resultado se suma con la tercera ecuación del sistema (C)
+
+$-3(x_1+2x_2+3x_3=9)$
+
+$-3x_1-6x_2-9x_3=-27$
+
+\begin{alignat*}{5}
+   -3x_1 & {}-{} &  6x_2  &  {}-{} &  9x_3  & {}={} & -27 \\
+   3x_1 & {}+{} &  x_2  &  {}-{} &  2x_3  & {}={} & 4 \\
+\end{alignat*}
+
+y el resultado es $-5x_2-11x_3=-23$. Esta ecuación es la nueva ecuación del sistema (C). Este nuevo sistema se llama (D). 
+
+
+\begin{alignat*}{5}
+   x_1 & {}+{} &  2x_2  &  {}+{} &  3x_3  & {}={} & 9  \label{eq:eqd}\tag{D} \\
+    & {}-{} &  3x_2  &  {}-{} &  6x_3  & {}={} & -12 \\
+    & {}-{} &  5x_2  &  {}-{} &  11x_3  & {}={} & -23 \\
+\end{alignat*}
+
+Observe que en el sistema (D) se ha eliminado $x_1$ de la 2da y 3ra ecuación. 
+
+Después dividimos la segunda ecuación del sistema (D) por $-3$. 
+
+$-\frac{1}{3}(-3x_2-6x_3=-12)$
+
+$x_2+2x_3=4$
+
+Esta última ecuación es la nueva ecución dos del sistema lineal (D). Al sustituirla nos genera un nuevo sistema de ecuaciones lineales al que llamamos (E). 
+
+\begin{alignat*}{5}
+   x_1 & {}+{} &  2x_2  &  {}+{} &  3x_3  & {}={} & 9  \label{eq:eqe}\tag{E} \\
+    & {}{} &  x_2  &  {}+{} &  2x_3  & {}={} & 4 \\
+    & {}-{} &  5x_2  &  {}-{} &  11x_3  & {}={} & -23 \\
+\end{alignat*}
+
+Si multiplica la segunda ecuación del sistema (E) por $-2$ 
+
+
+$-2(x_2+2x_3=4)$
+
+$-2x_2-4x_3=-8$
+
+Si esta última ecuación se suma a la ecuación (1) del sistema (E), tenemos
+
+\begin{alignat*}{5}
+   x_1 & {}+{} &  2x_2  &  {}+{} &  3x_3  & {}={} & 9 \\
+       & {}-{} &  2x_2  &  {}-{} &  4x_3  & {}={} & -8 \\
+\end{alignat*}
+
+lo que da como resultado $x_1-x_3=1$. Si ecuación la sustituimos por la primera del sistema de ecuaciones lineales (E), obtenemos un nuevo sistema lineal al llamamos (F)
+
+
+\begin{alignat*}{5}
+   x_1 & {} {} &   &  {}-{} &  x_3  & {}={} & 1  \label{eq:eqf}\tag{F} \\
+    & {}{} &  x_2  &  {}+{} &  2x_3  & {}={} & 4 \\
+    & {}-{} &  5x_2  &  {}-{} &  11x_3  & {}={} & -23 \\
+\end{alignat*}
+
+
+Después multiplicamos por $5$ la ecuación dos del sistema F 
+
+$5(x_2+2x_3=4)$
+
+$5x_2+10x_3=20)$
+
+y lo sumanos a la tercera ecuación del sistema F. 
+
+\begin{alignat*}{5}
+    & {}{} &  5x_2  &  {}+{} &  10x_3  & {}={} & 20 \\
+       & {}-{} &  5x_2  &  {}-{} &  11x_3  & {}={} & -23 \\
+\end{alignat*}
+
+que da como resultado $-x_3=-3$. Este resultado lo sustituimos por la ecuación tres del sistema F. Esta sustitución produce un nuevo sistema al que llamamos G. 
+
+
+\begin{alignat*}{5}
+   x_1 & {} {} &   &  {}-{} &  x_3  & {}={} & 1  \label{eq:eqG}\tag{G} \\
+    & {}{} &  x_2  &  {}+{} &  2x_3  & {}={} & 4 \\
+    & {}{} &    &  {}-{} &  x_3  & {}={} & -3 \\
+\end{alignat*}
+
+
+Ahora multiplicamos por $-1$ la tercera ecuación del sistema G. 
+
+$-1(-x_3=-3)$
+
+$x_3=3$
+
+Y esta última expresión la sustituimos por la ecuación tercera del sistema G. Obteniendo un nuevo sistema equivalente H. 
+
+\begin{alignat*}{5}
+   x_1 & {} {} &   &  {}-{} &  x_3  & {}={} & 1  \label{eq:eqh}\tag{H} \\
+    & {}{} &  x_2  &  {}+{} &  2x_3  & {}={} & 4 \\
+    & {}{} &    &  {}{} &  x_3  & {}={} & 3 \\
+\end{alignat*}
+
+
+Sumamos la tercera ecuación a la primera 
+
+\begin{alignat*}{5}
+   x_1 & {} {} &   &  {}-{} &  x_3  & {}={} & 1  \\
+    & {}{} &    &  {}{} &  x_3  & {}={} & 3 \\
+\end{alignat*}
+
+y obtenemos $x_1=4$. Esta expresión la sustituimos en el sistema H generando un nuevo sistema de ecuaciones lineales I . 
+
+\begin{alignat*}{5}
+   x_1 & {} {} &   &  {}{} &   & {}={} & 4  \label{eq:eqi}\tag{I} \\
+    & {}{} &  x_2  &  {}+{} &  2x_3  & {}={} & 4 \\
+    & {}{} &    &  {}{} &  x_3  & {}={} & 3 \\
+\end{alignat*}
+
+Se multiplica la tercera ecuación del sistema I por $-2$,
+
+$-2(x_3=3)$
+
+$-2x_3=-6$
+
+\begin{alignat*}{5}
+    & {}{} &  x_2  &  {}+{} &  2x_3  & {}={} & 4 \\
+    & {}{} &    &  {}-{} &  2x_3  & {}={} & -6 \\
+\end{alignat*}
+
+Y esto nos da como resultado $x_2=-2$. Al sustituir esta expresión por la ecuación dos del sistema I, tenemos 
+
+\begin{alignat*}{5}
+   x_1 & {} {} &   &  {}{} &   & {}={} & 4  \label{eq:eqj}\tag{J} \\
+    & {}{} &  x_2  &  {}{} &   & {}={} & -2 \\
+    & {}{} &    &  {}{} &  x_3  & {}={} & 3 \\
+\end{alignat*}
+
+Ésta es la solución única para el sistema. Se escribe en la forma $(4,-2,3)$. El método que se usó para resolver el sistema se conoce como **eliminación de Gauss-Jordán.**
+
+Lo que se hizo en este ejercicio fue:
+
+i) Se dividió la primera ecuación, entre una constante, para hacer el coeficiente de $x_1$ igual a $1$.
+
+ii) Se "eliminaron" los términos en $x_1$ de la segunda y terceras ecuaciones. Esto es, los coeficientes de estos términos se hicieron cero al multiplicar la primera ecuación por las constantes adecuadas y sumándola a la segunda y tercera ecuaciones, respectivamente, de manera que al sumar las ecuaciones una de las incógnitas se eliminaba. 
+
+iii) Se dividió la segunda ecuación entre una constante, para hacer el coeficiente de $x_2$ igual a $1$ y después se usó la segunda ecuación para "eliminar" los términos en $x_2$ de la primera y tercera ecuaciones, de manera parecida a como se hizo en el paso anterior. 
+
+iv) Se dividió la tercera ecuación entre una constante, para hacer el coeficiente de $x_3$ igual a $1$ y después se usó la tercera ecuación para "eliminar" los términos de $x_3$ de la primera y segunda ecuaciones.
+
+Cabe resaltar el hecho de que, en cada paso, se obtuvieron sistemas equivalentes. Es decir, cada sistema tenía el mismo conjunto de soluciones que el precedente. Esto es una consecuencia de los hechos A y B. 
+
+# Tarea 15
+
+Calcule las soluciones generales del siguiente sistema de ecuaciones lineales. Entregar máximo el lunes 7 de junio del 2021 a las 8 am a ncperez@cinvestav.mx 
+
+
+\begin{alignat*}{5}
+        & {}+{} &  y  &  {}+{} &  2z  & {}={} & 6  \\
+   3x & {}+{} &  -3y  &  {}-{} &  3z  & {}={} & -15 \\
+   x & {}+{} &  3y  &  {}+{} &  3z & {}={} & 11 \\
+\end{alignat*}
+
+
+# Acuerdo 
+
+Tercer examen parcial se realizará el día martes 8 de junio de 2021 de 14:30 a 16:00. El examen será a cámara abierta, así que asigne un lugar para que todo el tiempo de la prueba sea visible su actividad. Prepare también hojas para resolver su examen. Al termminar tomará fotografías a sus respuestas, formará un sólo archivo en PDF y lo enviará a ncperez@cinvestav.mx. El nombre de su archivo será examen_tres_apellidonombre_210608.pdf. 
+
+
+
+
+# Asistencia 
+
+
+From Andrew Betanzos to Everyone:  04:01 PM
+
+buenas tardes doctora
+
+From Angel Pimentel to Everyone:  04:04 PM
+
+presente
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  04:04 PM
+
+Presente
+
+From Max to Everyone:  04:04 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  04:04 PM
+
+presente
+
+From Anna Viquez to Everyone:  04:04 PM
+
+Presente
+
+From Angel Pimentel to Everyone:  04:12 PM
+
+León tiene problemas con su internet profesora
+
+From Leon Gonzalez to Everyone:  04:18 PM
+
+presente
+
+From Ian Tsla to Everyone:  04:19 PM
+
+presente.
+
+From Andrea Carmin to Everyone:  04:20 PM
+
+Presente 
+
+From Valeria Olvera Aguilar to Everyone:  05:26 PM
+
+Presente
+
+From Míriam Sosa to Everyone:  05:26 PM
+
+PRESENTE
+
+From Daniela Roman to Everyone:  05:26 PM
+
+Presente
+
+From Andrew Betanzos to Everyone:  05:26 PM
+
+presente
+
+From Ian Tsla to Everyone:  05:27 PM
+
+aquí ando
+
+

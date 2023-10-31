@@ -1,0 +1,299 @@
+---
+title: "Día 38 - Método de Gauss-Jordan/Eliminación gaussiana"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+
+# Operaciones elementales con renglones 
+
+Del ejercicio anterior se ha visto que multiplicar (o dividir) los dos lados de una ecuación por un número diferente de cero da por resultado una nueva ecuación equivalente. Más aún, si se suma un múltiplo de una ecuación a otra del sistema se obtiene una ecuación equivalente. Por último, si se intercambian dos ecuaciones en un sistema de ecuaciones se obtiene un sistema equivalente. Estas tres operaciones, cuando se aplican a los renglones de la matriz aumentada que representa un sistema de ecuaciones se denominan **operaciones elementales con renglones**.
+
+i) Multiplicar (o dividir) un renglón por un número diferente de cero. 
+
+ii) Sumar un múltiplo de un renglón a otro renglón.  
+
+iii) Intercambiar dos renglones. 
+
+El proceso de aplicar las operaciones elementales con renglones para simplicar una matriz aumentada se llama **reducción por renglones**.
+
+
+# Notación 
+
+1. $R_i \rightarrow cR_i$ que quiere decir "reemplaza el $i-$ésimo renglón por ese mismo renglón por $c$". [Para multiplicar el $i-$ésimo renglón por $c$ se multiplica cada número en el $i-$ésimo renglón por $c$.]
+
+2. $R_j \rightarrow R_j+ cR_i$ significa sustitutye el $j-$ésimo renglón por la suma del renglón $j$ más el renglón $i$ multiplicado por $c$.
+
+3. $R_i \rightleftarrows R_j$ que quiere decir "intercambiar los renglones $i$ y $j$".
+
+4. $A \rightarrow B$ indica que las matrices aumentadas $A$ y $B$ son equivalentes; es decir, los sistemas que representan tienen la misma solución. 
+
+En el ejemplo, se vio que al usar operaciones elementales con renglones i) y ii) varias veces, se puede obtener un sistema cuyas soluciones estén dadas en forma explícita. Ahora se repiten los pasos del ejemplo 1 usando la notación que se acaba de introducir:
+
+
+![Reducción Gauss - Jordan.](gauss_solucion.png)
+
+De nuevo se puede "ver" de inmediato que la solución es $x_1=4$, $x_2=-2$, $x_3=3$.
+
+**Ejemplo.** Solución de un sistema de tres ecuaciones con tres incógnitas: número infinito de soluciones
+
+
+
+\begin{alignat*}{5}
+   2x_1 & {}+{} &  4x_2  &  {}+{} &  6x_3  & {}={} & 18  \label{eq:eq1}\tag{1} \\
+   4x_1 & {}+{} &  5x_2  &  {}+{} &  6x_3  & {}={} & 24 \\
+   2x_1 & {}+{} &  7x_2  &  {}-{} &  12x_3  & {}={} & 30 \\
+\end{alignat*}
+
+**Solución.**
+
+Para resolver el sistema se procede como en el ejemplo anterior, primero se escribe el sistema como una matriz aumentada:
+
+\begin{equation*}
+\begin{pmatrix}
+2 & 4 & 6 & | & 18    \\
+4 & 5 & 6 & | & 24    \\
+2 & 7 & 12 & | & 30 
+\end{pmatrix}
+\end{equation*}
+
+
+![Reducción Gauss - Jordan.](gauss_infinito.png)
+
+Esto es equivalente al sistema de ecuaciones
+
+
+
+\begin{alignat*}{5}
+   x_1 & {}{} &   &  {}+{} &  x_3  & {}={} & 1  \label{eq:eq2}\tag{2} \\
+    & {}{} &  x_2  &  {}+{} &  2x_3  & {}={} & 4 \\
+\end{alignat*}
+
+Hasta aquí se puede llegar. Se tienen sólo dos ecuaciones para las tres incógnitas $x_1$, $x_2$, $x_3$ y existe un número infinito de soluciones. Para ver esto se elige un valor de $x_3$. Entonces $x_2=4-2x_3$ y $x_1=1+x_3$. Ésta será una solución para cualquier número $x_3$. Seescribe esta solución  en la forma $(1+x_3,4-2x_3,x_3)$. Por ejemplo, si $x_3=0$, se obtiene la solución $(1,4,0)$. Para $x_3=10$ se obtiene la solución $(11,-16,10)$.
+
+**Ejemplo.** Un sistema inconsistente. Resuelva el sistema 
+
+\begin{alignat*}{5}
+    & {}+{} & 2x_2  &  {}+{} &  3x_3  & {}={} & 4  \label{eq:eq3}\tag{3} \\
+ 2x_1   & {}-{} & 6x_2  &  {}+{} &  7x_3  & {}={} & 15  \\     x_1   & {}-{} &  2x_2  &  {}+{} &  5x_3  & {}={} & 10 \\
+\end{alignat*}
+
+
+**Solución.** La matriz aumentada para este sistema es
+
+\begin{equation*}
+\begin{pmatrix}
+0 & 2 & 3 & | & 4    \\
+2 & -6 & 7 & | & 15    \\
+1 & -2 & 5 & | & 10 
+\end{pmatrix}
+\end{equation*}
+
+El elemnto $1,1$ de la matriz no se puede hacer $1$ como antes porque al multiplicar $0$ por cualquier número real se obtiene $0$. En su lugar, se puede usar la operación elemental con renglones $(iii)$ para obtener un número diferente de cero en la posición $1,1$. Se puede intercambiar el renglón $1$ con cualquiera de los otros dos; sin embargo, al intercambiar los renglones $1$ y $3$ queda un $1$ en esa posición. Al hacerlo se obtiene lo siguiente:
+
+
+
+![Reducción Gauss - Jordan.](gauss_inconsistente.png)
+
+Debe hacerse una pausa aquí; las últimas dos ecuaciones son 
+
+
+\begin{alignat*}{5}
+    & {}-{} & 2x_2  &  {}-{} &  3x_3  & {}={} & -5   \\
+    & {}{} & 2x_2  &  {}+{} &  3x_3  & {}={} & 4   \\
+\end{alignat*}
+
+lo que es imposible (si $-2x-3x_3=-5$, entonces $2x_2+3x_3=5,$ no 4). Así no hay una solución. Se puede proceder como en los últimos dos ejemplos para obtener una forma más estándar:
+
+
+![Reducción Gauss - Jordan.](gauss_incosistente2.png)
+
+
+Ahora la última ecuación es $0x_1+0x_2+0x_3=-1$, lo que es imposible ya que $0\neq-1$. Así el sistema no tiene solución. En este caso se dice que el sistema es $incosistente$.
+
+
+![Forma escalonada.](escalonadas.png)
+
+**Forma escalonada reducida por renglones y pivote.** Una matriz se encuentra en la **forma escalonada reducida por renglones** si se cumplen las siguientes condiciones:
+
+i. Todos los renglones (si los hay) cuyos elementos son todos cero aparecen en la parte inferior de la matriz. 
+
+ii. El primer número diferente de cero (comenzado por la izquierda) en cualquier renglón cuyos elementos no todos son cero es $1$.
+
+iii. Si dos renglones sucesivos tienen elementos distintos de cero, entonces el primer $1$ en el renglón de abajo está más hacia la derecha que el primer $1$ en el renglón de arriba. 
+
+
+iv. Cualquier columna que contiene el primer $1$ en un renglón tiene ceros en el resto de sus elementos. El primer número diferente de cero en un renglón (si lo hay) se llama **pivote** de ese renglón. 
+
+
+![Matrices en la forma escalonada reducida por renglones. Observe el número de pivotes en cada caso.](pivotes.png)
+
+
+## Solución de un sistema mediante eliminación gaussiana. 
+
+**Ejemplo:** Resuelva el sistema del ejemplo 1 reduciendo la matriz de coeficientes a la forma escalonada reducida por renglones. 
+
+
+**Solución.** Se comienza como antes:
+
+![Eliminación gaussiana.](gaussiana.png)
+
+
+Hasta aquí, este proceso es idéntico al anterior, pero ahora sólo se hace cero el número $(-5)$ que está abajo del primer $1$ en el segundo renglón:
+
+
+![Eliminación gaussiana.](gaussiana_uno.png)
+
+
+La matriz  aumentada del sistema (y los coeficientes de la matriz) se encuentran ahora en la forma escalonada de renglones y se puede ver de inmediato que $x_3=3$. Después se usa la **sustitución hacia atrás** para despejar primero $x_2$ y después $x_1$. La segunda ecuación queda $x_2+2x_3=4$. Entonces, $x_2+2(3)=4$ y $x_2=-2$. De iugal manera, de la primera ecuación se obtiene $x_1+2(-2)+3(3)=9$ o $x_1=4$. Así, de nuevo se obtiene la solución $(4,-2,3)$. El método de solución que se acaba de emplear se llama **eliminación gaussiana.**
+
+Se cuenta con dos métodos para resolver los ejemplos de sistemas de ecuaciones:
+
+i. **Eliminación de Gauss-Jordan.** Se reduce por renglón la matriz de coeficientes a la forma escalonada reducida por renglones. 
+
+ii. **Eliminación gaussiana.** Se reduce por renglón la matriz de coeficientes a la forma escalonada por renglones, se despeja el valor de la última incógnita y después se usa sustitución hacia atrás para las demás incógnitas. 
+
+
+# Función solve de R 
+
+**Ejemplo.** Resuelva el sistema 
+
+\begin{alignat*}{5}
+   2x_1 & {}+{} &  4x_2  &  {}+{} &  6x_3  & {}={} & 18  \label{eq:eq5}\tag{5} \\
+   4x_1 & {}+{} &  5x_2  &  {}+{} &  6x_3  & {}={} & 24 \\
+   3x_1 & {}+{} &  x_2  &  {}-{} &  2x_3  & {}={} & 4 \\
+\end{alignat*}
+
+
+Para resolver un sistema de ecuaciones lineales en R, primero ingrese la matriz de coeficientes
+
+```{r}
+m <- rbind(c(2,4,6),c(4,5,6),c(3,1,-2))
+m
+```
+Luego ingrese el vector que contiene los resultados de cada ecuación de sistema lineal.
+
+```{r}
+b <- c(18,24,4)
+b
+```
+Utilice la función **solve** para resolver el sistema 
+
+
+```{r}
+solve(m,b)
+```
+
+La solución es la misma que habíamos visto el día 37. 
+
+**Ejemplo 2.** Uso de la función solver para un sistema con un número infinito de soluciones. Solución de un sistema de tres ecuaciones con tres incógnitas: número infinito de soluciones
+
+
+
+\begin{alignat*}{5}
+   2x_1 & {}+{} &  4x_2  &  {}+{} &  6x_3  & {}={} & 18  \\
+   4x_1 & {}+{} &  5x_2  &  {}+{} &  6x_3  & {}={} & 24 \\
+   2x_1 & {}+{} &  7x_2  &  {}-{} &  12x_3  & {}={} & 30 \\
+\end{alignat*}
+
+
+![Error obtenido al tratar de resolver un sistema  con un número infinito de soluciones.](error1_matriz.png)
+
+```{r}
+#m1 <- rbind(c(2,4,6),c(4,5,6),c(2,7,12))
+#b1 <- c(18,24,30)
+#solve(m1,b1)
+```
+
+La razón de esto es que hemos intentado resolver un sistema de ecuaciones que consta exactamente de los mismos valores. Esto no es posible y por eso el lenguaje de programación R devuelve el mensaje de error.
+
+Tenga en cuenta que este error también puede ocurrir cuando tiene diferentes valores en su matriz. Sin embargo, el mensaje de error normalmente indica que algo anda mal con la matriz de entrada.
+
+
+**Ejemplo 3.** Uso de la función solver para un sistema inconsistente.  Resuelva el sistema 
+
+\begin{alignat*}{5}
+    & {}+{} & 2x_2  &  {}+{} &  3x_3  & {}={} & 4  \\
+ 2x_1   & {}-{} & 6x_2  &  {}+{} &  7x_3  & {}={} & 15  \\     x_1   & {}-{} &  2x_2  &  {}+{} &  5x_3  & {}={} & 10 \\
+\end{alignat*}
+
+
+
+![Error obtenido al tratar de resolver un sistema inconsistente.](error2_matriz.png)
+
+```{r}
+#m2 <- rbind(c(0,2,3),c(2,-6,7),c(1,-2,5))
+#b2 <- c(4,15,10)
+#solve(m2,b2)
+```
+
+
+# Asistencia
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  09:59 PM
+
+presente
+
+From Anna Viquez to Everyone:  09:59 PM
+
+Presente 
+
+From Andrew Betanzos to Everyone:  09:59 PM
+
+presente
+
+From Alhelí García to Everyone:  09:59 PM
+
+Presente
+
+From Valeria Olvera Aguilar to Everyone:  09:59 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  09:59 PM
+
+presente
+
+From Angel Pimentel to Everyone:  09:59 PM
+
+presente
+
+From Lorena Silva to Everyone:  09:59 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  09:59 PM
+
+presente
+
+From Ximena to Everyone:  09:59 PM
+
+Presente
+
+From Daniela Roman to Everyone:  09:59 PM
+
+presente
+
+From Max to Everyone:  09:59 PM
+
+Presente
+
+From Ian Tsla to Everyone:  09:59 PM
+
+presente.
+
+From Andrea Carmin to Everyone:  09:59 PM
+
+Presente
+
+From Míriam Sosa to Everyone:  10:01 PM
+
+presente
+
+

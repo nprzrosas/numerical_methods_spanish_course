@@ -1,0 +1,253 @@
+---
+title: "Día 18- Algoritmos/Diagramas de flujo (parte 10)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+El ciclo for puede recorrer una lista de dos en dos. La respuesta es sí. Recuerde de su clase del día 7, la función `seq(from, to, by)`.
+
+Si se desea un incremento diferente a `1`, use `seq(from, to, by)`. Si los parámetros se dan ese orden, los nombres pueden ser omitidos, pero si se una diferente orden, se requiere de los nombres (esto es válido para todas las funciones de R).
+
+```{r}
+seq(3, 8, 0.5) # secuencia creciente de 3 a 8 con incrementos de 0.5 
+ 
+```
+
+Nosotros podemos hacer unos de `seq(from, to, by)` para crear la lista de números que vayan de dos en dos. 
+
+```{r}
+for (i in seq(0,10,2)){
+  print('hola')
+}
+```
+
+
+
+Recuerde su función que idenfitica la figura geometrica...
+
+```{r}
+cuadrilatero <- function(AB, BC, CD, DA, ang){
+  if(AB==BC){
+    if(BC==CD){
+      if(CD==DA){
+        if(ang==90){
+          print("Es un cuadrado")        
+        }else{
+          print("Es un rombo")
+        }
+      }else{
+        print("Es un cuadrilatero irregular")
+      }
+    }else{
+      print("Es un cuadrilatero irregular")
+    }
+  }else{
+    if(AB==CD){
+      if(BC==DA){
+        if(ang==90){
+          print("Es un rectangulo")
+        }else{
+          print("Es un paralelogramo")
+        }
+      }else{
+        print("Es un cuadrilatero irregular")
+      }
+    }else{
+      print("Es un cuadrilatero irregular")
+    }
+  }
+}
+
+cuadrilatero(1,2,3,5,88)
+```
+
+
+Podemos interaccionar con el usuario, realizando los siguientes cambios:
+
+```{r}
+cuadrilatero <- function(){
+  AB <- readline("ingrese AB:")
+  BC <- readline("ingrese BC:")
+  CD <- readline("ingrese CD:")
+  DA <- readline("ingrese DA:")
+  ang <- readline("ingrese el angulo:")
+  if(AB==BC){
+    if(BC==CD){
+      if(CD==DA){
+        if(ang==90){
+          print("Es un cuadrado")        
+        }else{
+          print("Es un rombo")
+        }
+      }else{
+        print("Es un cuadrilatero irregular")
+      }
+    }else{
+      print("Es un cuadrilatero irregular")
+    }
+  }else{
+    if(AB==CD){
+      if(BC==DA){
+        if(ang==90){
+          print("Es un rectangulo")
+        }else{
+          print("Es un paralelogramo")
+        }
+      }else{
+        print("Es un cuadrilatero irregular")
+      }
+    }else{
+      print("Es un cuadrilatero irregular")
+    }
+  }
+}
+
+cuadrilatero()
+```
+
+
+La interacción con el usuario la vamos a repertir tres veces. 
+
+```{r}
+for (i in 1:3){
+  cuadrilatero <- function(){
+  AB <- readline("ingrese AB:")
+  BC <- readline("ingrese BC:")
+  CD <- readline("ingrese CD:")
+  DA <- readline("ingrese DA:")
+  ang <- readline("ingrese el angulo:")
+  if(AB==BC){
+    if(BC==CD){
+      if(CD==DA){
+        if(ang==90){
+          print("Es un cuadrado")        
+        }else{
+          print("Es un rombo")
+        }
+      }else{
+        print("Es un cuadrilatero irregular")
+      }
+    }else{
+      print("Es un cuadrilatero irregular")
+    }
+  }else{
+    if(AB==CD){
+      if(BC==DA){
+        if(ang==90){
+          print("Es un rectangulo")
+        }else{
+          print("Es un paralelogramo")
+        }
+      }else{
+        print("Es un cuadrilatero irregular")
+      }
+    }else{
+      print("Es un cuadrilatero irregular")
+    }
+  }
+}
+
+cuadrilatero()
+}
+```
+
+
+Ejemplo 2. En el departamento de ventas de una compñía se les dan las siguientes comisiones de acuerdo a las ventas alcanzadas de acuerdo a las siguientes reglas:
+
+
+![Tasa de comisión](tabla_ventas.png)
+
+Diseñe un procedimiento para calcular la comisión del departamento de ventas. 
+
+Solución: La salida requerida es la comisión ganada por el personal del departamento de ventas. La única entrada que se requiere es la cantidad vendida. Diversos pasos de toma de decisión se requieren, y el proceso es muy probable que se repita un número de veces. Asuma que el proceso es terminado cuando la cantidad de venta es cero o negativo. El procedimiento se ilustra en el siguiente diagrama de flujo. 
+
+
+
+![Diagrama de flujo para mostras la tasa de comisión](comision_ventas.png){width=50%}
+El código en R que responde al diagrama de flujo anterior es la siguiente. 
+
+```{r}
+ventas <- c(1, 10, 20,30, 100, 500, 20000)
+  for (v in ventas){
+    if (v<=0){
+      # verificar como puedo detener un codigo de programa en R ***
+      break
+    } else {
+      if (v<=5000){
+        com <- v * 0.07
+      } else {
+        if (v<=10000){
+          com <- v * 0.09 + 500
+        } else {
+          if (v<=20000){
+            com <- v * 0.11 + 1000
+          } else {
+            if (v<=25000){
+              com <- v * 0.13 + 2000 
+            } else{
+              com <- v*0.15 + 4000
+            }
+          }
+        }
+      }
+    }
+    print(paste0("La comisión del empleado es: ", com)) 
+  }
+```
+
+
+
+# Asistencia
+
+
+From Míriam Sosa to Everyone:  02:33 PM
+
+presente
+
+From Max to Everyone:  02:33 PM
+
+presente
+
+From Angel Pimentel to Everyone:  02:33 PM
+
+presente
+
+From Andrew Betanzos to Everyone:  02:37 PM
+
+presente
+
+From Luis Cabrera to Everyone:  02:37 PM
+
+presente
+
+From Anna Viquez to Everyone:  02:41 PM
+
+Presente
+
+From Ian Tsla to Everyone:  02:42 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  02:46 PM
+
+presente
+
+From Daniela Roman to Everyone:  02:46 PM
+
+presente
+
+From Lorena Silva to Everyone:  02:46 PM
+
+presente
+
+From Alhelí García to Everyone:  02:46 PM
+
+Presente
+

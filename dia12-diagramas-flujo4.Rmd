@@ -1,0 +1,269 @@
+---
+title: "Día 12 - Algoritmos/Diagramas de flujo (parte 4)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+
+# Expresión condicional if-else en R
+
+## ¿Cómo usar la expresión if-else en R?
+
+La expresión `if` permite evaluar si la expresión es verdadera, entonces el bloque de código se ejecuta. 
+
+![Diagrama de flujo para representar la secuencia del programa cuando la expresión if es verdadera.](if_true.png)
+
+```{r}
+a <- 12
+if(a==12){
+  print("a es doce")
+}
+```
+
+Si la expresión `if` no es verdadera, al momento de ejecutar el código no pasa nada. 
+
+```{r}
+a <- 12
+if(a==7){
+  print("a es doce")
+}
+```
+
+
+La condición puede ser un valor lógico o un vector. Sí es un vector solo considera el primer término. En el caso de un vector numérico, el cero es tomado como falso.
+
+La expresión condicional `if` puede ir seguida de la expresión opcional `else` que se ejecuta cuando la expresión condicional `if` es falsa. 
+
+![Diagrama de flujo para representar la secuencia del programa cuando la expresión if es falsa.](else.png)
+
+```{r}
+a <- 12
+if(a==6){
+  print("a es seis")
+} else {
+  print("a no es seis")
+}
+```
+## La escalera if, else-if en R
+
+La escalera `if, else-if` es muy popular porque escoge un grupo de instrucciones desde un conjunto de grupos de instrucciones. Las expresiones son evaluadas de arriba hacia abajo. Tan pronto como una expresión condicional es verdadera, el grupo de instrucciones asociado con este `if` será ejecutado. La instrucción final `else` a menudo actúa por defecto; esto es, si todas las pruebas de las condiciones fallan, entonces el último grupo asociado al `else` se ejecutará. Si no hay un `else` final y todas las condiciones son falsas, entonces no se ejecuta ninguna instrucción de la escalera. 
+
+![Diagrama de flujo para representar la escalera if, else-if en R.](escalera.png)
+
+Cuando use las expresiones `if`,`else-if`, `else` en R, hay algunos puntos que debe mantener en la mente:
+
+* La expresión `if` puede tener ningún `else`. Sí la expresión `if` tiene un `else`, este debe venir después de un `if`.
+
+* La expresión `if` puede tener ningún o muchos `if` y deben venir antes que el `else`.
+
+* Sí una expresión `if-else` tiene éxito no se evaluará ninguna de los expresiones restantes `if`, `if-else` o `else`.
+
+Las expresiones `if`,`else-if`, `else` permiten que se ejecute un código entre dos o más alternativas.
+
+```{r}
+a <- 12
+if (a==9){
+  print("a es nueve")
+} else if (a==10){
+  print("a es diez")
+} else if (a==11){
+  print("a es once")
+} else{
+  print("a es doce")
+}
+```
+
+
+# Códigos desarollados en clase 
+
+Cuando la expresión `if` es `cierta` se ejecuta el bloque del código. 
+
+```{r}
+a <- 12
+if (a==12){
+  print("a es 12")
+  print("estoy haciendo ejercicios")
+  print("estoy practicando")
+}
+```
+Cuando la expresión `if` es `falsa` NO se ejecuta el bloque del código. 
+
+```{r}
+a <- 12
+if (a==11){
+  print("a es once")
+  print("estoy haciendo ejercicio")
+  print("estoy practicando")
+}
+```
+
+Si la expresión `if` es `falsa` se ejecuta el bloque de código dentro del `else`. 
+
+```{r}
+a <-12
+if (a==4){
+  print("a es cuatro")
+  print("estoy mis primeros ejercicios")
+} else {
+  print("a no es cuatro")
+  print("quiero aprender R")
+}
+```
+
+¿Cuál es el error en este código?
+
+![Error en un código de R.](incorrecto_if.png)
+
+El problema esta en que no se está usando un operador relacional en la expresión `if`. Recuerde que los operadores relacionales son aquellos que descubren la relación entre dos operandos que se les proporcionan. En la tabla se muestran las seis operaciones relacionales que admite el lenguaje de programación R. La salida es booleana (VERDADERO o FALSO) para todos los operadores relacionales en el lenguaje de programación R.
+
+![Operadores relacionales.](operadores_tabla.png)
+
+
+## Ejemplo de operadores relacionales en números en R 
+
+```{r}
+a <- 7.5
+b <- 2
+ 
+print ( a>b )    # mayor que
+print ( a<b )    # menor que
+print ( a==b )  # igual a
+print ( a<=b )   # menor que o igual 
+print ( a>=b )   # mayor que o igual
+print ( a!=b )  # diferente
+```
+
+Recuerde que si no hay un `else` final y todas las condiciones son falsas, entonces no se ejecuta ninguna instrucción de la escalera. 
+
+```{r}
+a <- 16
+if(a==15){
+  print("a es quince")
+} else if (a==14){
+  print("a es catorce")
+} else if (a==13){
+  print("a es trece")
+} 
+
+```
+
+Cuando un código se que quiere reutilizar es conveniente colocarlo dentro de una función. En la siguiente función se pide al usuario que ingrese el valor de b. Como el valor de a se pide al usario entonces el argumento de la función queda vacío. 
+
+```{r}
+pedir_b <- function(){
+  b = readline(prompt = "ingrese b: ")
+  if (b=='12'){
+    print("b es doce")
+  } else {
+    print("b no es doce")
+  }
+}
+
+pedir_b()
+
+```
+
+# Tarea 6 
+
+Escriba un diagrama de flujo, un algoritmo y una función que tiene como entradas los cuatro lados de un cuadrilatero y su ángulo y que imprima los cuatro lados y el ángulo.  Tenga listo su código para la clase del día lunes 19 de abril del 2020. 
+
+Al inicio de su archivo coloque lo siguiente: 
+
+#2NV1 
+
+
+#Tarea Número x
+
+
+#Nombre completo 
+
+
+#Número de Boleta 
+
+
+#Direccion de correo electronico institucional
+
+
+#"Yo trabajé esta tarea sola/solo usando sólo los materiales visto en clase"
+
+
+#"Yo trabajé esta tarea con Nombre completo de la persona con la que trabajó"
+
+#Reporte los sitios de dónde obtuvo los datos 
+
+
+# Tarea 7 
+
+Vea la plática ["El valor del fracaso en STEM (Science, Technology, Engineering and Mathematics)"](https://www.youtube.com/watch?app=desktop&feature=youtu.be&v=8qE_mffmuEA)  del Dr. Augustin Luna científico de la Universidad de Harvard y desarrollador de paquetería de R.
+
+
+
+
+# Bibliografía 
+
+Flowchart and algorithm basics. The art of programming. A. B. Chaudhuri. Mercury Learning and Information. 2020.
+
+
+
+#  Asistencia
+
+
+From Míriam Sosa to Everyone:  04:04 PM
+
+Presente
+
+From Andrew Betanzos to Everyone:  04:04 PM
+
+presente
+
+From Edgar isaac Gutiérrez to Everyone:  04:04 PM
+
+presente
+
+From Alhelí García to Everyone:  04:04 PM
+
+Presente
+
+From Leon Gonzalez to Everyone:  04:04 PM
+
+presente
+
+From Andrea Carmin to Everyone:  04:04 PM
+
+Presente. 
+
+From Max to Everyone:  04:04 PM
+
+Presente
+
+From Lorena Silva to Everyone:  04:04 PM
+
+presente
+
+From Daniela Roman to Everyone:  04:04 PM
+
+Presente
+
+From Ximena Martínez to Everyone:  04:32 PM
+
+Presente
+
+From Valeria Olvera Aguilar to Everyone:  04:33 PM
+
+presente
+
+From Angel Pimentel to Everyone:  04:37 PM
+
+Presente
+
+From Anna Viquez to Everyone:  04:46 PM
+
+Presente
+

@@ -1,0 +1,221 @@
+---
+title: "Día 24 - Errores"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+# Aproximaciones y errores de redondeo 
+
+**Error**
+
+**Error de redondeo:** se deben a que la computadora tan sólo representa cantidades con un número finito de dígitos. 
+
+**Error de truncamiento:** es la discrepancia que se introduce por el hecho de que los métodos numéricos pueden emplear aproximaciones para representar operaciones y cantidades matemáticas exactas. 
+
+**Error que no están relacionados directamente con el método numérico:** estos son equivocaciones, errores de formulación del modelo, y la incertidumbre en la obtención de los datos. 
+
+
+# Cifras significativas
+
+Las **cifras significatias** de un número son aquellas que pueden utilizarse en forma confiable. Se trata del número de dígitos que se ofrecen con certeza, más uno estimado. 
+
+![Velocímetro y odómetro.](velocimetro.png)
+
+**Ejemplo.** Estos números contienen las mismas cifras significativas 
+
+![Ejemplo de cifras significativas.](significativas.png)
+
+Cuando se incluye ceros en número muy grandes no queda claro ¿cuántos números son significativos?
+
+![Ejemplo de cifras significativas.](significativas2.png)
+La incertidumbre se puede eliminar utilizando notación científica.
+
+![Ejemplo de cifras significativas con notación científica.](significativas4.png)
+
+El concepto de cifras significativas es importante en los métodos numéricos. Debido a que los métodos numéricos dan resultados aproximados, se deben desarrollar criterios para especificar qué tan confiables son dichos resultados. Esto se puede lograr en términos de cifras significativas. Por ejemplo, se puede decir que una aproximación es aceptable siempre y cuando sea correcta con cuatro cifras significativas.
+
+Aunque ciertos números como $\pi$, $e$, $\sqrt{7}$ representan cantidades específicas, no se pueden expresar exactamente con un número finito de dígitos. Por ejemplo, 
+
+$\pi=3.141592653589793238462643...$ 
+
+hasta el infinito. Como las computadoras retienen solo un número de cifras significativas, tales números jamás se prodrán representar con exactitud. A la omisión del resto de cifras significativas se le conoce como **error de redondeo**. 
+
+
+# Visualización numérica, error de redondeo y redondeo en R 
+
+Por default R muestra 7 dígitos en los cálculos. Vea el siguiente ejemplo. 
+
+```{r}
+pi
+```
+
+Esto se puede cambiar con la función options(digits = d), donde d es el número deseado de dígitos. La opción es efectiva hasta que se cambie o hasta que se reinicie R. Ejemplo:
+
+```{r}
+options(digits = 7)
+pi
+```
+La función round(number, digits) redondea el número de interés al número especificado de decimales. Por default digits = 0. Esto funciona tanto para números positivos o números negativos de dígitos. Ejemplo: 
+
+```{r}
+options(digits = 7)
+round(1234.567)
+```
+```{r}
+options(digits = 7)
+round(1234.567, -2)
+```
+
+
+```{r}
+options(digits = 7)
+round(1234.567, 2)
+```
+
+La función signif(number, digits) redondea el número a un número espeficado de dígitos significativos (default = 6).
+
+
+```{r}
+signif(1234.567) # Configuración por Default = 6
+
+```
+
+
+```{r}
+signif(1234.567, 2) # Configuración por Default = 6
+
+```
+
+# Exactitud y precisión 
+
+Los errores asociados con cálculos y medidas pueden caracterizarse con respecto a su exactitutd y su presición. La **exactitud** se refiere a qué tan cercano está el valor calculado o medido del valor verdadero. La **precisión** se refiere a qué tan cercanos se encuentran, unos de otros, diversos valores calculados o medidos. La **inexactitud** también conocida como sesgo, se define como una desviación sistemática del valor verdadero. En el panel c de la siguiente figura los disparos están más juntos que en el panel a, los dos casos son igual de inexactos, ya que ambos se centran en la esquina superior izquiera del blanco. La **impresición** (también llamada incertidumbre), se refiere a la magnitud en la dispersión de los disparos. Por consiguiente, aunque en los paneles b y d los disparos son igualmente exactos (esto es, igualmente centradas con respecto al blanco), la última es más precisa, pues los disparos están agrupados en forma más compacta. 
+
+Los métodos numéricos deben ser lo suficientemente exactos o sin sesgo para satisfacer los requisitos de un problema particular de ingeniería. También deben ser lo suficientemente precisos para se adecuados en el diseño de la ingeniería. En este curso se usa el término **error** para representar tanto la inexactitud como la imprecisión en las predicciones. 
+
+
+![Conceptos de exactitud y precisión](disparos.png)
+
+# ¿Qué factores contribuyen al error en los Métodos Numéricos?
+
+
+Los errores numéricos surgen del uso de aproximaciones para representar operaciones y cantidades matemáticas exactas. Estas incluyen los **errores de truncamiento** que resultan del empleo de aproximaciones como un procedimiento matemático exacto, y los **errores de redondeo** que se producen cuando se usan números que tienen un límite de cifras significativas para representar números exactos. Para ambos tipos de errores, la relación entre el resultado exacto, o verdadero, y el aproximado está dado por 
+
+$Valor$ $verdadero=$ $valor$ $aproximado$ + $error$
+
+![Representación del error](error_aprox.png)
+
+Reordenando la expresión anterior se encuentra que el error numérico es igual a la diferencia entre el valor verdadero y el valor aproximado, es decir, 
+
+$E_t=$ $valor$ $verdadero$ - $valor$ $aproximado$ 
+
+Dónde $E_t$ representa el valor exacto del error. El subíndice $t$ indica que se trata del error "verdadero" (true). 
+
+
+
+
+
+Considerando el orden de la magnitud del valor que se estima se puede normalizar el error respecto al valor verdadero, es decir
+
+\
+
+$Error \, relativo \,  fraccional \, verdadero =\frac{error\, verdadero}{valor \, verdadero}$
+
+El error relativo se puede multiplicar por 100$%$ para expresarlo como 
+
+
+$\epsilon_t =\frac{error\, verdadero}{valor \, verdadero}100\%$
+
+donde $\epsilon_t$ denota el error relativo porcentual verdadero. 
+
+**Ejemplo.** Suponga que tiene se tiene que medir la longitud de un puente y de la de un remache, y se obtiene $9999$ y $9$ cm, respectivamente. Si los valores verdaderos son $100000$ y $10$ cm, calcule en cada caso:
+
+a) El error verdadero 
+
+b) El error relativo porcentual 
+
+**Solución.**
+
+a) El error en la medición del puente es
+
+$E_t=10000-9999=1\,cm$
+
+y en del remache es de 
+
+$E_t=10-9=1\,cm$
+
+b) El error relativo porcentual para el puente es
+
+$\epsilon_t=\frac{1}{10000}100\%=0.01\%$
+
+y para el remache es de 
+
+$\epsilon_t=\frac{1}{10}100\%=10\%$
+
+
+Por lo tanto, aunque ambas medidas tienen un error de $1$ cm, el error relativo porcentual del remache es mucho mayor. Se concluye entonces que se ha hecho un buen trabajo en la medición del puente; mientras que la estimación para el remache no es tan buena. 
+
+# Asistencia
+
+From Andrea Carmin to Everyone:  04:10 PM
+
+Presente
+
+From Max to Everyone:  04:10 PM
+
+Presente
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  04:10 PM
+
+presente
+
+From Ian Tsla to Everyone:  04:10 PM
+
+presente.
+
+From Angel Pimentel to Everyone:  04:10 PM
+
+presente
+
+From Lorena Silva to Everyone:  04:10 PM
+
+presente
+
+From ANNA VIQUEZ to Everyone:  04:10 PM
+
+Presente
+
+From Alhelí García to Everyone:  04:10 PM
+
+Presente
+
+From Emmanuel González to Everyone:  04:11 PM
+
+presente
+
+From Ximena Martínez to Everyone:  04:15 PM
+
+Presente
+
+From Míriam Sosa to Everyone:  04:15 PM
+
+Presente
+
+From Andrew Betanzos to Everyone:  04:22 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  05:18 PM
+
+presente
+
+From Valeria Olvera Aguilar to Everyone:  05:25 PM
+
+Presente
+

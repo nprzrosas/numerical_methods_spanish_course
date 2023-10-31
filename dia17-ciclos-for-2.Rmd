@@ -1,0 +1,202 @@
+---
+title: "Día 17- Algoritmos/Diagramas de flujo (parte 9)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+# Revisión de la Tarea 10 
+
+Construya un diagrama de flujo, un algoritmo y una función en R para encontrar el mayor de tres números ingresados.
+
+![Estructura del diagrama de flujo de un ciclo for de iteración posterior a la prueba](num_mayor.png)
+
+Del diagrama de flujo anterior la función en R queda de la siguiente forma. 
+
+```{r}
+
+numero_mayor <- function(A, B, C){
+  if (A>B){
+    if(A>C){
+      num_mayor <- A
+    } else{
+      num_mayor <- C
+    }
+  } else {
+    if (B>C){
+      num_mayor <- B
+    } else{
+      num_mayor <- C
+    }
+  }
+  print(num_mayor)
+}
+
+numero_mayor(5,2,3)
+
+```
+
+
+# Problemas involucrando ciclos for 
+
+En los diagramas de flujo de la clase anterior, vimos algoritmos de secuencia y selección. Ahora veremos estructuras lógicas de iteración. 
+
+El término **iteración** significa **repetición**. Algunas veces un procedimiento debe ser ejecutado muchas veces. Todos los procedimientos deben ser escritos de forma tal que pueden repetirse tantas veces como sea necesario. Nosotros no debemos desarrollar procedimientos que se ejecuten una vez. Si fuera así, entonces las calculadoras serían suficientes para obtener los resultados.  Una estructura lógica iterativa es conocida como **ciclo** (loop en inglés). Realizar un bucle (looping) significa repetir un conjunto de operaciones para obtener un resultado repetidamente. 
+
+Una iteración puede ser implementada en dos formas: una iteración previa a la prueba (pre-test iteration) y una iteración posterior a la prueba (post-test iteration) . En el caso de una iteración previa a la prueba, una afirmación es probada para decidir si un conjunto de operaciones se desarrollará o no. Si la condición implica que la afirmación es verdadera , entonces las operaciones deseadas son desarrolladas. Si es falsa, entonces la iteración se termina. Esto se muestra en el siguiente diagrama. 
+
+
+![Estructura del diagrama de flujo de un ciclo for de iteración previa a la prueba](for_pre_test.png){width=50%}
+
+
+Para una iteración posterior a la prueba, la afirmación es probada después de realizar un conjunto de operaciones se decide si repetir el conjunto de operaciones o terminar la repetición. Si la condición es cierta, entonces el conjunto de operaciones se repite, en caso contrario, no se repite. La estructura del diagrama de esta lógica se muestra a continuación. 
+
+
+![Estructura del diagrama de flujo de un ciclo for de iteración posterior a la prueba](for_post_iteration.png){width=40%}
+
+Note que las operaciones en el ciclo deben ser realizadas al menos una vez en el caso de la iteración posterior a la prueba. 
+
+La sintaxis de un ciclo for 
+
+
+`for (variación en forma de secuencia) {`
+    `código`
+`}`
+
+![Sintaxis ciclo for](forfor.png)
+
+![Lógica detrás del ciclo for](forc.png)
+
+El diagrama anterior corresponde a la declaración de un ciclo `for` para el leguaje de programación C. Dada su similitud en el razonamiento de un ciclo `for` para R, por eso lo he colacado. En el ciclo `for` en C, expresión 1 es usada para inicializar el ciclo. Expresión 2 es usada para expresar la continuidad del ciclo. Expresión 3 es usada para actualizar el loop. Código es el cuerpo del ciclo.
+
+Para ejecutar un ciclo `for`, se ejecuta la expresión 1. Cabe mencionar que expresión 1 se ejecuta una y sólo una vez al inicio del ciclo. Después se determina sí la expresión es verdadera  o falsa. Si la expresión 2 es falsa, entonces terminará el ciclo y se ejecutará la siguiente acción del programa. Si la expresión 3 es verdadera, continuamos hasta que la expresión dos sea falsa, en cuyo caso la ejecución del programa salta hasta la siguiente línea fuera del `for`. 
+
+Ejemplo en C:
+
+sum = 0;
+
+for (i = 1, i<=4; i += 1)
+
+     sum += i;
+     
+prinf("sum = %d", sum);
+
+
+
+El concepto del ciclo `for`en R se muestra a continuación.
+
+```{r}
+for (indice in 0:5) {
+  print(indice)
+}
+```
+
+
+```{r}
+for (indice in 0:5) {
+  print(indice + 1)
+}
+```
+
+
+```{r}
+for (indice in 0:5) {
+  print(indice + 100)
+}
+```
+
+```{r}
+for (indice in 0:5) {
+  print(indice * 100)
+}
+```
+
+```{r}
+colores <- c("amarillo", "azul", "verde", "anaranjado", "rojo")
+for (color in colores){
+   print(paste0("Color: ", color)) 
+}
+```
+
+La función `paste0` concatena la palabra **Color** con la palabra almacenada en **colores**.
+
+# Respuesta a la pregunta de Miriam 
+
+El ciclo for puede recorrer una lista de dos en dos. La respuesta es sí. Recuerde de su clase del día 7, la función `seq(from, to, by)`.
+
+Si se desea un incremento diferente a `1`, use `seq(from, to, by)`. Si los parámetros se dan ese orden, los nombres pueden ser omitidos, pero si se una diferente orden, se requiere de los nombres (esto es válido para todas las funciones de R).
+
+```{r}
+seq(3, 8, 0.5) # secuencia creciente de 3 a 8 con incrementos de 0.5 
+ 
+```
+
+Nosotros podemos hacer unos de `seq(from, to, by)` para crear la lista de números que vayan de dos en dos. 
+
+```{r}
+for (i in seq(0,10,2)){
+  print('hola')
+}
+```
+
+# Asistencia
+
+From Angel Pimentel to Everyone:  08:35 PM
+
+presente
+
+From Edgar isaac Gutiérrez to Everyone:  08:35 PM
+
+presente
+
+From Ximena Martínez to Everyone:  08:35 PM
+
+Presente
+
+From Daniela Roman to Everyone:  08:35 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  08:35 PM
+
+presente
+
+From Alhelí García to Everyone:  08:35 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  08:35 PM
+
+presente
+
+From Max to Everyone:  08:41 PM
+
+presente
+
+From Anna Viquez to Everyone:  08:41 PM
+
+Presente
+
+From Andrea Carmin to Everyone:  08:41 PM
+
+Presente 
+
+From Valeria Olvera Aguilar to Everyone:  09:44 PM
+
+Presente
+
+From Ian Tsla to Everyone:  09:44 PM
+
+prsente
+
+From Andrew Betanzos to Everyone:  10:00 PM
+
+presente
+
+

@@ -1,0 +1,233 @@
+---
+title: "Día 13 - Algoritmos/Diagramas de flujo (parte 5)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+# Conferencia "El valor del fracaso en STEM: utilización y análisis"
+
+Ingrese a la conferencia [El valor del fracaso en STEM: utilización y análisis](https://www.youtube.com/watch?app=desktop&feature=youtu.be&v=8qE_mffmuEA) impartida por el Dr. Augustin Luna desarrollador de paquetes de R desde la Universidad de Harvard.
+
+# Ayuda en R 
+
+
+```{r}
+?print
+```
+
+# Stackoverflow
+
+
+Ingrese a [stackoverflow](https://stackoverflow.com/) e investigue para qué es el sitio.
+
+
+# Expresión condicional if-else en R - Operadores relacionales
+
+Los operadores relacionales son aquellos que descubren la relación entre dos operandos que se les proporcionan. En la tabla se muestran las seis operaciones relacionales que admite el lenguaje de programación R. La salida es booleana (VERDADERO o FALSO) para todos los operadores relacionales en el lenguaje de programación R.
+
+![Operadores relacionales.](operadores_tabla.png)
+
+
+## Ejemplos de programas usando operadores relacionales en números en R 
+
+```{r}
+a <- 7.5
+b <- 2
+# Recuerde que la función print puede imprimir cualquier objeto. En este caso imprime el resultado lógico (TRUE or FALSE) al evaluar los operadores relacionales. 
+
+print ( a>b )    # mayor que
+print ( a<b )    # menor que
+print ( a==b )  # igual a
+print ( a<=b )   # menor que o igual 
+print ( a>=b )   # mayor que o igual
+print ( a!=b )  # diferente
+```
+
+```{r}
+a <- 3
+b <- 2
+
+if (a==b){
+  print("a es igual a b")
+} else if (a!=b){
+  print("a es diferente a b")
+} else if (a<b){
+  print("a es menor que b")
+} else if (a>b){
+  print("a es mayor que b")
+} else if (a<=b){
+  print("a es menor que o igual a b ")
+} else if (a>=b){
+  print("a es mayor que o igual a b")
+} 
+
+```
+
+Una función en R puede carecer completamente de argumentos ya sea porque todos estan definidos por defecto (y sus valores modificados con opciones), o porque la función realmente no tiene argumentos. Cuando el argumento no está definico dentro la función, R buscará el argumento dentro del ámbito circundante, sí no lo encuentra, generará un mensaje de error y la ejecución se cancela. 
+
+```{r}
+sin_argumento_f <- function(){
+  a = readline(prompt = "ingrese a: ")
+  b = readline(prompt = "ingrese b: ")
+  if (a!=b){
+    print("a es diferente de b")
+  }else{
+    print("a es igual a b")
+  }
+} 
+
+sin_argumento_f()
+```
+
+![Código con error. El argumento b no se ingresa en los argumentos de la función, ni se localiza dentro de la función.](no_argumeto.png)
+
+
+# Expresión condicional if-else en R - Ejercicios
+
+
+## Revisión de la tarea anterior, diagrama de flujo para mostrar los lados de un cuadrado 
+
+
+**Ejercicio 1:** Escriba un programa que categorice la forma de un cuadrilátero como cuadrado, rombo, paralelogramo o cuadrilátero irregular teniendo como entradas las longitudes de los cuatro lados y un ángulo interno. 
+
+**Solución:** Para hacer una decisión acerca de la forma de un cuadrilátero, necesitamos conocer la definición de cuadrilátero. 
+
+* Un cuadrilátero es llamado cuadrado si todos los lados tienen la misma longitud y cada uno de los ángulos internos es de 90 grados.
+
+
+* Un cuadrilátero es llamado rombo sí las longitudes de los cuatro lados son iguales y ninguno de los ángulos internos es de 90 grados. En el caso de que sólo se proporcione uno de los ángulos internos y este no es 90 grados y la longitud  los lados es igual, entonces estamos hablando de un rombo. Si el ángulo interno es de 90 grados y los lados son de la misma longitud entonces estamos hablando de un cuadrado.
+
+* Si los lados opuestos son de la misma longitud y el ángulo interno es de 90 grados, entonces deber se un rectángulo. 
+
+* Si los lados opuestos son de la misma longitud y el ángulo interno no es de 90 grados, entonces debe ser un paralelogramo. 
+
+* Si ninguna de las condiciones se satisface entonces debe ser un cuadrilatero irregular. 
+
+
+![Cuadriláteros.](geometricas.png)
+
+
+# El ejercicio 1 lo vamos a resolver por partes...
+
+
+Desarrolle el diagrama de flujo, algoritmo y una función en R para encontrar si los lados ingresados corresponden a un cuadrado. Al terminar comparta su pantalla y explique sus resultados. 
+
+Nota: ingrese a [Google colab](https://colab.research.google.com/#create=true&language=r) y escriba su función en R.
+
+
+![Diagrama de flujo para encontrar sí los lados y el ángulo ingresado corresponde a un cuadrado.](flow_cuadrado2.png)
+
+
+**Solución del Algoritmo.**
+
+El algoritmo correspondiente al ejercicio 1 se muestra a continuación: 
+
+**Paso 1.** Ingresar AB, BC, CD, DA y el ángulo.
+
+**Paso 2.**
+             
+             Si (If) AB = BC
+              Si (If) AB = CD
+                Si (If) BC = DA
+                  Si (If) ang = 90
+                    Entonces imprima es un cuadrado
+                  End If
+                End If
+              End If
+            End If 
+    
+**Paso 3.** Fin 
+
+La función en R del ejercicio anterior se muestra a continuación. 
+
+```{r}
+intento_cuadrado <- function(AB, BC, CD, DA, ang){
+  if(AB==BC){
+    if(AB==CD){
+      if(BC==DA){
+        if(ang==90){
+          print("Es un cuadrado")
+        }
+      }
+    }
+  }
+}
+
+intento_cuadrado(2, 2, 2, 2, 90)
+```
+# Tarea 8 del día lunes 19 de Abril del 2021.
+
+Desarrolle el diagrama de flujo, algoritmo y una función en R para encontrar si los lados ingresados corresponden a un cuadrado o a un rombo. En la siguiente clase compartirá su pantalla y explique sus resultados. 
+
+Nota: ingrese a [Google colab](https://colab.research.google.com/#create=true&language=r) y escriba su función en R.
+
+
+# Asistencia 
+
+From Angel Pimentel to Everyone:  08:33 PM
+
+presente
+
+From Max to Everyone:  08:33 PM
+
+Presente
+
+From Leon Gonzalez to Everyone:  08:33 PM
+
+presente
+
+From Andrew Betanzos to Everyone:  08:33 PM
+
+presente
+
+From Anna Viquez to Everyone:  08:33 PM
+
+presente
+
+From Daniela Roman to Everyone:  08:33 PM
+
+Presente
+
+From Ximena Martínez to Everyone:  08:34 PM
+
+Presente
+
+From Alhelí García to Everyone:  08:34 PM
+
+Presente
+
+From Andrea Carmin to Everyone:  08:36 PM
+
+Presente 
+
+From Míriam Sosa to Everyone:  08:36 PM
+
+Presente
+
+From Emmanuel González to Everyone:  09:58 PM
+
+presente
+
+From Valeria Olvera Aguilar to Everyone:  09:58 PM
+
+Presente
+
+From Míriam Sosa to Everyone:  09:58 PM
+
+presente
+
+From Luis Cabrera to Everyone:  09:58 PM
+
+presente
+
+From Lorena Silva to Everyone:  09:59 PM
+
+presente
+

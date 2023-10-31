@@ -1,0 +1,322 @@
+---
+title: "Día 26 - Errores (Continuación)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+Como $\epsilon_a$ no es menor que el valor requerido $\epsilon_s$, se deben continuar los cálculos agregados con otro término, $\frac{x^3}{3!}$, repitiendo el cálculo del error. 
+
+
+
+$e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}$
+
+y para $x=0.5$
+
+$e^{0.5}=1+0.5+\frac{0.5^2}{2!}+\frac{0.5^3}{3!}=1.645833$
+```{r}
+valor_aproximado <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)
+valor_aproximado
+```
+
+Después se calcula el error relativo porcentual verdadero 
+
+$\epsilon_t=\left|\frac{valor\,verdadero-valor\,aproximado}{valor\,verdadero}\right|\times100\%$
+
+$\epsilon_t=\left|\frac{1.648721-1.64583}{1.648721}\right|\times100\%=0.1751623\%$
+
+```{r}
+valor_verdadero <- exp(0.5)
+valor_aproximado <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)
+epsilon_t <- abs((valor_verdadero-valor_aproximado)/valor_verdadero)*100
+epsilon_t
+```
+
+Después se determina una estimación aproximada del error, dada por 
+
+$\epsilon_a=\left|\frac{aproximación\,actual-aproximación\,anterior}{aproximación\,actual}\right|\times100\%$
+
+$\epsilon_a=\left|\frac{1.64583-1.625}{1.64583}\right|\times100\%=1.265823\%$
+
+```{r}
+aprox_actual<- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)
+aprox_anterior <- 1+0.5+0.5^2/(2*1)
+epsilon_a <- abs((aprox_actual-aprox_anterior)/aprox_actual)*100
+epsilon_a
+```
+
+Ahora trataremos de averiguar sí el $|\epsilon_a|<\epsilon_s$.
+
+```{r}
+aprox_actual<- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)
+aprox_anterior <- 1+0.5+0.5^2/(2*1)
+epsilon_a <- abs((aprox_actual-aprox_anterior)/aprox_actual)*100
+cat("El valor de epsilon_a es:", epsilon_a, "\n" )
+epsilon_s <- 0.5*10^(2-3)
+cat("El valor de epsilon_s es:", epsilon_s, "\n" )
+cat("El valor abosulto de epsilon_a es menor que epsilon_s?", abs(epsilon_a)<epsilon_s, "\n")
+```
+
+******
+
+
+Como $\epsilon_a$ no es menor que el valor requerido $\epsilon_s$, se deben continuar los cálculos agregados con otro término, $\frac{x^4}{4!}$, repitiendo el cálculo del error. 
+
+
+
+$e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\frac{x^4}{4!}$
+
+y para $x=0.5$
+
+$e^{0.5}=1+0.5+\frac{0.5^2}{2!}+\frac{0.5^3}{3!}+\frac{0.5^4}{4!}=1.648438$
+
+```{r}
+valor_aproximado <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)
+valor_aproximado
+```
+
+Después se calcula el error relativo porcentual verdadero 
+
+$\epsilon_t=\left|\frac{valor\,verdadero-valor\,aproximado}{valor\,verdadero}\right|\times100\%$
+
+$\epsilon_t=\left|\frac{1.648721-1.6484375}{1.648721}\right|\times100\%=0.01721156\%$
+
+```{r}
+valor_verdadero <- exp(0.5)
+valor_aproximado <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)
+epsilon_t <- abs((valor_verdadero-valor_aproximado)/valor_verdadero)*100
+epsilon_t
+```
+
+Después se determina una estimación aproximada del error, dada por 
+
+$\epsilon_a=\left|\frac{aproximación\,actual-aproximación\,anterior}{aproximación\,actual}\right|\times100\%$
+
+$\epsilon_a=\left|\frac{1.6484-1.6458}{1.6484}\right|\times100\%=0.1579779\%$
+
+```{r}
+aprox_actual<- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)
+aprox_anterior <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)
+epsilon_a <- abs((aprox_actual-aprox_anterior)/aprox_actual)*100
+epsilon_a
+```
+
+Ahora trataremos de averiguar sí el $|\epsilon_a|<\epsilon_s$.
+
+```{r}
+aprox_actual<- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)
+aprox_anterior <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)
+epsilon_a <- abs((aprox_actual-aprox_anterior)/aprox_actual)*100
+cat("El valor de epsilon_a es:", epsilon_a, "\n" )
+epsilon_s <- 0.5*10^(2-3)
+cat("El valor de epsilon_s es:", epsilon_s, "\n" )
+cat("El valor abosulto de epsilon_a es menor que epsilon_s?", abs(epsilon_a)<epsilon_s, "\n")
+```
+
+******
+
+
+
+Como $\epsilon_a$ no es menor que el valor requerido $\epsilon_s$, se deben continuar los cálculos agregados con otro término, $\frac{x^5}{5!}$, repitiendo el cálculo del error. 
+
+
+
+$e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\frac{x^4}{4!}+\frac{x^5}{5!}$
+
+y para $x=0.5$
+
+$e^{0.5}=1+0.5+\frac{0.5^2}{2!}+\frac{0.5^3}{3!}+\frac{0.5^4}{4!}+\frac{0.5^5}{5!}=1.648698$
+
+```{r}
+valor_aproximado <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)+0.5^5/(5*4*3*2*1)
+valor_aproximado
+```
+
+Después se calcula el error relativo porcentual verdadero 
+
+$\epsilon_t=\left|\frac{valor\,verdadero-valor\,aproximado}{valor\,verdadero}\right|\times100\%$
+
+$\epsilon_t=\left|\frac{1.648721-1.6486}{1.648721}\right|\times100\%=0.001416494\%$
+
+```{r}
+valor_verdadero <- exp(0.5)
+valor_aproximado <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)+0.5^5/(5*4*3*2*1)
+epsilon_t <- abs((valor_verdadero-valor_aproximado)/valor_verdadero)*100
+epsilon_t
+```
+
+Después se determina una estimación aproximada del error, dada por 
+
+$\epsilon_a=\left|\frac{aproximación\,actual-aproximación\,anterior}{aproximación\,actual}\right|\times100\%$
+
+$\epsilon_a=\left|\frac{1.6486-1.6484}{1.6486}\right|\times100\%=0.01579529\%$
+
+```{r}
+aprox_actual<- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)+0.5^5/(5*4*3*2*1)
+aprox_anterior <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)
+epsilon_a <- abs((aprox_actual-aprox_anterior)/aprox_actual)*100
+epsilon_a
+
+```
+
+
+Ahora trataremos de averiguar sí el $|\epsilon_a|<\epsilon_s$.
+
+```{r}
+aprox_actual<- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)+0.5^5/(5*4*3*2*1)
+aprox_anterior <- 1+0.5+0.5^2/(2*1)+0.5^3/(3*2*1)+0.5^4/(4*3*2*1)
+epsilon_a <- abs((aprox_actual-aprox_anterior)/aprox_actual)*100
+cat("El valor de epsilon_a es:", epsilon_a, "\n" )
+epsilon_s <- 0.5*10^(2-3)
+cat("El valor de epsilon_s es:", epsilon_s, "\n" )
+cat("El valor abosulto de epsilon_a es menor que epsilon_s?", abs(epsilon_a)<epsilon_s, "\n")
+
+```
+
+
+Como $\epsilon_a<\epsilon_s$. Entonces, resumimos todos los cálculos se resumen en la siguiente tabla. 
+
+
+
+![Tabla](tabla_error.png)
+
+Así, después de usar seis términos, el error aproximado es menor que $\epsilon=0.05%$, y el cálculo se termina. Sin embargo, observe que, el resultado es exacto con seis cifras significativas, en vez de tres cifras significativas. Esto se debe a que en este caso, las ecuaciones son conservadores. Es decir, que aseguran que el resultado es, por lo menos, tan bueno como lo especifican. 
+
+
+
+
+# Algoritmo computacional para cálculos iterativos
+
+La ecuación expandida en series de MacLaurin
+
+$e^x=1+x+\frac{x^2}{2!}+...+\frac{x^n}{n!}$
+
+se puede reescribir sí se consideran las siguientes expresiones $x^0=1$, $0!=1$, $x^1=x$ y $1!=1$. Por lo tanto, 
+
+$e^x=\frac{x^0}{0!}+\frac{x^1}{1!}+\frac{x^2}{2!}+...+\frac{x^n}{n!}$
+
+Note que en cada término el valor de la potencia y el cociente contienen el mismo valor. Por lo tanto, la expresión anterior puede ser reescrita como 
+
+$e^x=\frac{x^i}{i!}+\frac{x^i}{i!}+\frac{x^i}{i!}+...+\frac{x^i}{i!}$ donde $i=0,1,2,3,...,n$
+
+O lo que es lo mismo
+
+$e^x\approx\sum_{i=0}^{n}\frac{x^i}{i!}$
+
+
+**Ejercicio. ** Escriba un diagrama de flujo, un algoritmo y una función en R que muestre cómo evaluar la expansión en series de MacLaurin.
+
+$e^x=\frac{x^i}{i!}+\frac{x^i}{i!}+\frac{x^i}{i!}+...+\frac{x^i}{i!}$ donde $i=0,1,2,3,...,n$
+
+**Solución.** Para evaluar las series, necesitamos dos entradas: los valores de $x$ y $n$. A partir de esto, las diferentes expresiones de $x$ pueden ser generadas. La expresión $x^i$ va a producir diferentes expresiones de $x$ para $i=0$ hasta $n$. La generación de los coeficientes se logra con el factorial de $i$. Para encontrar la relación entre el número de términos a evaluar y el valor de $i$, observe la siguiente Tabla. En ella puede notar que el valor de $i$ puede calcularse como $i=n-1$
+
+
+![Tabla que resalta los valores que adopta i en cada término](tabla_i.png)
+
+Recuerde cómo se genera un vector y el tema de vectorización dónde a un vector se le puede aplicar una operación aritmética puede efectuarse a todo el vector. 
+
+```{r}
+1:10 # Generación de un vector 
+```
+
+```{r}
+1:10-1 #Operación aritmética sobre el vector
+```
+
+
+Los pasos para los cálculos se muestran en el siguiente diagrama de flujo. 
+
+
+![Diagrama de flujo que muestra el procedimiento para obtener la suma expandida en series de MacLaurin ](maclaurin.png)
+
+
+La función en R que responde al diagrama de flujo anterior se presenta a continuación.
+
+
+
+```{r}
+macLaurin <- function(x,n){
+  suma <- 0
+  for (i in 1:n-1){
+    termino <- x^i/factorial(i)
+    suma <- suma + termino
+  }
+  cat("La aproximación de la exp(x) en series de MacLaurin es:", suma )
+}
+
+macLaurin(0.5,6)
+```
+
+Código desarrollado en clase. 
+
+```{r}
+macLaurin_2 <- function(x,n){
+  suma <- 0
+  for (i in 1:n-1){
+    termino <- x^i/factorial(i)
+    suma <- suma + termino
+    cat("El valor de la suma es", suma, "El valor del termino es",  termino, "el valor de i es", i, "\n")
+  }
+  cat("La aproximacion de la funcion exp(x) en series de MacLaurin con", n, "terminos es",  suma )
+}
+
+macLaurin_2(0.5,6)
+```
+
+# Asistencia 
+
+From Angel Pimentel to Everyone:  08:35 PM
+
+presente
+
+From Andrea Carmin to Everyone:  08:35 PM
+
+Presente 
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  08:36 PM
+
+presente
+
+From Max to Everyone:  08:36 PM
+
+presente
+
+From Luis Cabrera to Everyone:  08:36 PM
+
+presente
+
+From Alhelí García to Everyone:  08:36 PM
+
+Presente
+
+From Leon Gonzalez to Everyone:  08:36 PM
+
+presente
+
+From Daniela Roman to Everyone:  08:38 PM
+
+presente
+
+From Lorena Silva to Everyone:  08:38 PM
+
+presente
+
+From Angel Pimentel to Everyone:  09:10 PM
+
+wilem o algo asi ¿no profesora?
+
+From Andrew Betanzos to Everyone:  09:11 PM
+
+presente
+
+From Ian Tsla to Everyone:  09:12 PM
+
+presente.
+
+

@@ -1,0 +1,297 @@
+---
+title: "Día 25 - Errores (Continuación)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  html_document:
+    toc: yes
+    toc_depth: 2
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+
+En Métodos Numéricos en muy pocas ocasiones se va a conocer una solución analitica. En tales casos, una alternativa es normalizar el error 
+
+
+$\epsilon_a=\frac{error\,aproximado}{valor\,aproximado}100\%$
+
+donde el subíndice $a$ signifca que el error está normalizado a un valor aproximado. 
+
+Uno de los retos que enfrentan los métodos numéricos es el de determinar estimaciones del error en ausencia del conocimiento de los valores verdaderos. Por ejemplo, ciertos métodos numéricos usan un método iterativo para calcular los resultado. En tales métodos se hace una aproximación considerando la aproximación anterior.Este proceso se hace de forma iterativa, esperando cada vez mejores resulados. En tales casos, el error se calcula como la diferencia entre la aproximación previa y la actual.  
+
+
+
+$\epsilon_a=\frac{aproximación\,actual-aproximación\,anterior}{aproximación\,actual}100\%$
+
+Los signos de las ecuaciones pueden ser positivos o negativos. Si la aproximacón es mayor que el valor verdadero (o la aproximación previa es mayor que la aproximación actual), el error es negativo; si la aproximación es menor que el valor verdader, el error es positivo.  También el denominador puede ser menor a cero, lo cual también produciría un error negativo. Cuando se realizan cálculos, no importa muhco el signo de error, sino más bien que su valor absoluto porcentual sea menor que una tolerancia porcentual prefijada $\epsilon_s$. Por lo tanto, es útil emplear el valor absoluto de las ecuaciones. En tales casos los cálculo se repiten hasta que 
+
+$|\epsilon_a|<\epsilon_s$
+
+Es conveniente relacionar estos errores con el  número de cifras significativas en la aproximación. Si el siguiente criterio se cumple, se tendrá la seguridad que el resultado es correcto en al menos $n$ cifras significativas.
+
+$\epsilon_s=(0.5\times10^{2-n})\%$
+
+
+# Estimación del error con métodos iterativos
+
+En matemáticas con frecuencia las funciones se representan mediante series infinitas. Por ejemplo, la función exponencial se calcula usando
+
+$e^x=1+x+\frac{x^2}{2!}+...+\frac{x^n}{n!}$
+
+```{r}
+curve(exp(x), from = -5, to = 5, col = "red", lwd = 2)
+
+```
+
+```{r}
+curve(exp(x), from = -5, to = 5, col = "red", lwd = 2)
+curve(1+x, add = TRUE, col = "blue", lwd = 2)
+curve(1+x+x^2/2, add = TRUE, col = "green", lwd = 2)
+curve(1+x+x^2/2+x^3/(3*2*1), add = TRUE, col = "violet", lwd = 2)
+curve(1+x+x^2/2+x^3/(3*2*1)+x^4/(4*3*2*1), add = TRUE, col = "gray", lwd = 2)
+curve(1+x+x^2/2+x^3/(3*2*1)+x^4/(4*3*2*1)+x^5/(5*4*3*2*1), add = TRUE, col = "pink", lwd = 2)
+curve(1+x+x^2/2+x^3/(3*2*1)+x^4/(4*3*2*1)+x^5/(5*4*3*2*1)++x^6/(6*5*4*3*2*1), add = TRUE, col = "yellow", lwd = 2)
+```
+
+
+Así cuanto más términos se le agregan a la serie, la aproximación será cada vez más una mejor estimación del valor verdadero de $e^x$. La ecuación anterior se conoce como **expansión en series de Maclaurin**.
+
+**Ejercicio.** Empezando con el primer término $e^x=1$ y agregando término por término, estime el valor de $e^{0.5}$. Después de agregar cada término, calcule el error relativo porcentual verdadero y aproximado usando las ecuaciones correspondientes. Observe que el valor verdadero de 
+
+
+```{r}
+exp(0.5)
+
+```
+
+Agregue términos hasta que el valor absoluto del error aproximado $\epsilon_a$ sea menor que un criterio de error preestablecido $\epsilon_s$ con tres cifras significativas. 
+
+**Solución**
+
+La ecuación 
+
+$\epsilon=(0.5\times10^{2-n})\%$ 
+
+se emplea para determinar el criterio de error que asegura que un resultado sea correcto en al menos tres cifras significativas:
+
+$\epsilon_s=(0.5\times10^{2-3})\%=0.05\%$ 
+
+
+```{r}
+epsilon_s <- 0.5*10^(2-3)
+epsilon_s
+
+```
+
+
+Por lo tanto se agregarán términos a la expansión en series de MacLaurin hasta que $\epsilon_a$ sea menor que $\epsilon_s=0.05\%$ . 
+
+De la ecuación expandida en series de MacLaurin
+
+$e^x=1+x+\frac{x^2}{2!}+...+\frac{x^n}{n!}$
+
+
+Realizaremos el primer cálculo
+
+$e^x=1$
+
+Entonces, la primera estimación es igual a 1.
+
+$\epsilon_t=\left|\frac{valor\,verdadero-valoror\,aproximado}{valor\,verdadero}\right|\times100\%$
+
+$\epsilon_t=\left|\frac{1.648721-1}{1.648721}\right|\times100\%$
+
+```{r}
+valor_verdadero <- exp(0.5)
+valor_aproximado <- 1
+epsilon_t <- abs((valor_verdadero-valor_aproximado)/valor_verdadero)*100
+epsilon_t
+```
+
+
+La segunda estimación se obtiene agregando el segundo término, así:
+
+
+$e^x=1+x$
+
+y para $x=0.5$
+
+$e^{0.5}=1+0.5=1.5$
+
+Después se calcula el error relativo porcentual verdadero 
+
+$\epsilon_t=\left|\frac{valor\,verdadero-valor\,aproximado}{valor\,verdadero}\right|\times100\%$
+
+$\epsilon_t=\left|\frac{1.648721-1.5}{1.648721}\right|\times100\%=9.02\%$
+
+```{r}
+valor_verdadero <- exp(0.5)
+valor_aproximado <- 1+0.5
+epsilon_t <- abs((valor_verdadero-valor_aproximado)/valor_verdadero)*100
+epsilon_t
+```
+
+Después se determina una estimación aproximada del error, dada por 
+
+$\epsilon_a=\left|\frac{aproximación\,actual-aproximación\,anterior}{aproximación\,actual}\right|\times100\%$
+
+$\epsilon_a=\left|\frac{1.5-1}{1.5}\right|\times100\%=33.3\%$
+
+```{r}
+aprox_actual<- 1+0.5
+aprox_anterior <- 1
+epsilon_a <- abs((aprox_actual-aprox_anterior)/aprox_actual)*100
+epsilon_a
+```
+
+
+Como $\epsilon_a$ no es menor que el valor requerido $\epsilon_s$, se deben continuar los cálculos agregados con otro término, $\frac{x^2}{2!}$, repitiendo el cálculo del error. 
+
+
+
+$e^x=1+x+\frac{x^2}{2!}$
+
+y para $x=0.5$
+
+$e^{0.5}=1+0.5+\frac{0.5^2}{2!}=1.625$
+
+```{r}
+valor_aproximado <- 1+0.5+0.5^2/(2*1)
+valor_aproximado
+```
+
+Después se calcula el error relativo porcentual verdadero 
+
+$\epsilon_t=\left|\frac{valor\,verdadero-valor\,aproximado}{valor\,verdadero}\right|\times100\%$
+
+$\epsilon_t=\left|\frac{1.648721-1.625}{1.648721}\right|\times100\%=1.43\%$
+
+```{r}
+valor_verdadero <- exp(0.5)
+valor_aproximado <- 1+0.5+0.5^2/(2*1)
+epsilon_t <- abs((valor_verdadero-valor_aproximado)/valor_verdadero)*100
+epsilon_t
+```
+
+Después se determina una estimación aproximada del error, dada por 
+
+$\epsilon_a=\left|\frac{aproximación\,actual-aproximación\,anterior}{aproximación\,actual}\right|\times100\%$
+
+$\epsilon_a=\left|\frac{1.5-1}{1.5}\right|\times100\%=7.69\%$
+
+```{r}
+aprox_actual<- 1+0.5+0.5^2/(2*1)
+aprox_anterior <- 1+0.5
+epsilon_a <- abs((aprox_actual-aprox_anterior)/aprox_actual)*100
+epsilon_a
+```
+
+# Tarea 12
+
+Continuar el proceso hasta que $\epsilon_a<\epsilon_s$. Reporte claramente sus pasos y sus cálculos y resuma todo en un formato como el de la siguiente tabla. 
+
+
+
+![Tabla](tabla_tarea.png)
+
+Envíe su archivo a ncperez@cinvestav.mx máximo el lunes 17 de Mayo del 2021 a las 18 horas, nombre su archivo como tarea12_apellidonombre_fecha.PDF
+
+Al inicio de su archivo coloque lo siguiente: 
+
+#2NV1 
+
+
+#Tarea Número x
+
+
+#Nombre completo 
+
+
+#Número de Boleta 
+
+
+#Direccion de correo electronico institucional
+
+
+#"Yo trabajé esta tarea sola/solo usando sólo los materiales visto en clase"
+
+
+#"Yo trabajé esta tarea con Nombre completo de la persona con la que trabajó"
+
+#Reporte los sitios de dónde obtuvo los datos 
+
+ 
+
+# Bibliografía 
+
+Flowchart and algorithm basics. The art of programming. A. B. Chaudhuri. Mercury Learning and Information. 2020.
+
+Applied Numerical Methods with Matlab For Engineeris and Scientits. Steven C. Chapra. 
+
+
+# Asistencia
+
+
+From Angel Pimentel to Everyone:  04:07 PM
+
+presente
+
+From Andrea Carmin to Everyone:  04:07 PM
+
+Presente 
+
+From ANNA VIQUEZ to Everyone:  04:07 PM
+
+presente
+
+From Ximena Martínez to Everyone:  04:07 PM
+
+Presente
+
+From Max to Everyone:  04:07 PM
+
+presente
+
+From Daniela Roman to Everyone:  04:07 PM
+
+presente
+
+From Lorena Silva to Everyone:  04:09 PM
+
+presente
+
+
+From Angel Pimentel to Everyone:  04:09 PM
+
+mi compañero león tiene problemas con su computadora, se conecta en unos minutos profa
+
+From Andrew Betanzos to Everyone:  04:09 PM
+
+Presente
+
+From Leon Gonzalez to Everyone:  04:13 PM
+
+Presente
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  04:13 PM
+
+presente
+
+From Alhelí García to Everyone:  04:14 PM
+
+Presente
+
+From Valeria Olvera Aguilar to Everyone:  05:29 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  05:29 PM
+
+presente
+
+
+
+
+

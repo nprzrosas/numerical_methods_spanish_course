@@ -1,0 +1,321 @@
+---
+title: "Día 9 - Algoritmos/Diagramas de flujo"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+# Introducción a la programación 
+
+Un **programa de computadora** es un conjunto de instrucciones secuenciales escritos en un lenguaje de programación que es usado para dirigir a la computadora para que realice una tarea específica de computación. 
+
+Observe que la definición demanda que cualquier conjunto de instrucciones debe ser tal que las tareas deben ser desarrolladas secuencialmente a menos que se indique lo contrario. Cada instrucción en el conjunto debe expresar una unidad de trabajo que un lenguaje de computadora pueda soportar. En general, los lenguajes de programación de alto nivel, soportan una actividad humana a la vez. Por ejemplo: si una tarea de computación involucra la determinación del promedio de tres números, entonces se requerirán al menos tres actividades humanas: proporcionar los números, obtener la suma de los tres números y obtener el promedio. Esta tarea puede hacerse en dos pasos también: primero obtener los números y luego desarrollar la suma y el promedio. El objetivo del programa es resolver problemas usando la computadora de forma rápida y precisa.
+
+
+# Programación estructurada
+
+La **programación estructurada** es un conjunto de reglas que preescriben buenos hábios de estilo para el programador. La idea clave detrás de la programación estructurada es que cualquier algoritmo numérico requiere tan sólo de tres estructuras de control fundamentales: secuencia, selección y repetición.
+
+Recuerde que un **algoritmo** es un conjunto de pasos que genera una secuencia finita de operaciones computacionales elementales que guian a una solución. La descripción textual de un algoritmo puedo no entenderse rápida y fácilmente. Por esta razón, se optan por representaciones pictóricas llamadas diagramas de flujo. Formalmente hablando un **diagrama de flujo** es un diagrama que representa los pasos de un algoritmo. En un diagrama de flujo, "cajas" de diferentes formas geométricas son usadas para denotar diversos tipos de operaciones. Estas "cajas" se conectan con flechas denotando el flujo o la dirección en la cual uno debe proceder para conocer el siguiente paso. Estas flechas son conocidas como **líneas del flujo**
+
+Los diagramas de flujo pueden ser clasificados en dos categorías:
+
+* Diagramas de flujo de programas
+
+* Diagramas de flujo sistémicos 
+
+Los **diagramas de flujo de programas** son espejos de los programas de computadoras en el sentido de los símbolos que se usan en el diagrama de flujo. Ellos contienen los pasos para resolver una unidad del problema para un resultado específico. 
+
+Los **diagramas de flujo sistémicos** contienen las soluciones de muchas unidades de problemas que están estrechamente relacionadas unas con otras y que interaccionan unas con otras para alcanzar un objetivo. 
+
+Nosotros nos enfocaremos en los diagramas de flujo de programas. 
+
+Un **diagrama de flujo de programa** es una herramienta extremadamente útil en el desarrollo de un programa. Cualquier error u omisión puede ser detectado fácilmente a partir de un diagrama de flujo que de un programa, porque el diagrama de flujo es una representación pictórica de la lógica detrás de un programa, además de que puede ser seguido fácil y rápidamente. Además, sirve para documentar el programa por sí se requiren modificaciones futuras. 
+
+Las siguientes reglas deben aplicarse cuando se crea un digrama de flujo de un programa. 
+
+1) Se deben usar los símbolos estándar usados en la creación de diagramas de flujos de programas.
+
+2) El programa lógico debe ser escrito de arriba hacia abajo y de izquierda a derecha.
+
+3) Cada símbolo usado en un diagrama de flujo de programa debe contener un solo punto de entrada y un solo punto de salida, con exepción del símbolo de decisión. 
+
+4) Las operaciones mostradas dentro de un símbolo de un diagrama de flujo de programa debe ser expresada independientemente de cualquir lenguaje particular de programación. 
+
+5) Todas las ramas de decisión deben estar perfectamente etiquetadas. 
+
+En la Figura 1 se muestran los símbolos estándar usados en los diagramas de flujo de programas.
+
+![Figura 1. Símbolos usados en los diagramas de flujo para programas.](simbolos3.png)
+
+Los diagramas de flujo pueden ser usados para mostrar la secuencia de pasos para realizar cualquier trabajo. Un conjunto de operaciones involucrando entradas, desarrollo de operaciones aritméticas sobre las entradas y mostrándolas a los usuarios demuestra la estructura secuencial y lógica del programa. El diagrama de flujo de la Figura 2 muestra los pasos para cocina arroz utilizando un cocedor de arroz. 
+
+**Paso 1.** Tome el arroz que se va a cocinar.
+
+**Paso 2.** Consiga una cazuela.
+
+**Paso 3.** Consiga agua.
+
+**Paso 4.** Lave el arroz en el agua. 
+
+**Paso 5.** Coloque el arroz dentro de la cazuela. 
+
+**Paso 6.** Vacíe agua en la cazuela. 
+
+**Paso 7.** Si (If) el nivel del agua está una pulgada arriba del arroz, entonces vaya al paso 8, en caso contrario (else) vaya al paso 6. 
+
+**Paso 8.** Encienda la estufa.
+
+**Paso 9.** Si (If) el arroz ya se coció vaya al paso 12, en caso contrario (else) vaya al paso 10. 
+
+**Paso 10.** Caliente la cazuela. 
+
+**Paso 11.** Vaya al paso 9. 
+
+**Paso 12.** Apague la estufa. 
+
+**Paso 13.** Quite la cazuela de la estufa. 
+
+**Paso 14.** Sirva el arroz.
+
+**Paso 15.** Fin
+
+![Figura 2. Diagramas de flujo para cocer arroz.](arroz3.png)
+
+El propósito principal del diagrama de flujo es descubrir/inventar la secuencia de pasos para mostrar la solución de un problema a través de manipulaciones aritméticas y/o lógicas a través de las cuales podemos dar instrucciones a la computadora. 
+
+Consideremos diferentes problemas, seguidos de su análisis y después un diagrama de flujo deseado. Se denotará la operación de asignación usando el símbolo de flecha. La dirección de la flecha implica el destino de la asignación. Por ejemplo: $A \leftarrow B$ significa que el valor contenido en B es asignado a A. Lo anterior no significa que el valor de B se pierde en A. Más bien implica que el valor contenido en B se copia a A, de forma tal que A y B continienen la misma cosa. Nosotros usamos el símbolo `*` o $\times$ para indicar la operación de multiplicación. 
+
+## Ejemplos de diagramas de flujo con estructura de secuencia lógica. 
+
+Considere ahora construir un diagrama de flujo para mostrar el procedimiento de obtener la suma de 2 números. Esta es una tarea simple. Para resolver el problema, requerimos dos números como entradas. Luego se añaden los dos número para desarrollar la suma. Observe que el usuario puede agregar dos números cualesquiera. Como se desea construir un procedimiento, no se especifican el par de números.  Es más conveniente sí se denota la entrada con valores simbólicos. Símbolos que representen los números. Un símbolo similar puede ser usado para representar la suma.  Otro concepto usado en programación es el de los `contenedores` llamados `variables`. Los símbolos para representar los valores de los datos de entrada o de la salida pueden ser tratados como los contenedores de los `valores de entrada o salida`.  
+
+
+
+**Problema 1:** Dibuje un diagrama de flujo que muestre ¿cómo se puede obtener la suma de dos números?
+
+
+**Solución:** En la Figura 3 se muestra el diagrama de flujo para obtener la suma de dos números. 
+
+![Figura 3. Diagramas de flujo para sumar dos números.](suma4.png)
+
+
+El siguiente algoritmo muestra la suma del procedimiento deseado:
+
+
+**Paso 1.** Ingrese a A y B .
+
+**Paso 2.** S $\leftarrow$  A + B (almacena la suma de los valores en A y B en S).
+
+**Paso 3.** Imprima S (muestre la suma obtenida en el paso 2).
+
+**Paso 4.** Fin. 
+
+Una estructura de secuencia muestra una entrada simple, una salida y operaciones de proceso. 
+
+
+### Implementación del algoritmo en R 
+
+Para implementar el algoritmo usaremos las funciones de R. La definición de una función tiene siempre el siguiente formato. 
+
+`nombre_funcion <- function(arg1, arg2, arg3,...){`
+       
+      escriba su código
+      
+      return(regresa_objeto)
+       
+`}`
+
+
+ 
+Ejemplo: 
+
+```{r}
+suma  <- function(a, b){ # Paso 1: Ingrese los números a y b
+      s <- a + b # Paso 2: Almacena la suma 
+      return(s) # Paso 3: Imprime la suma 
+} # Paso 4: Fin 
+
+suma(2, 2) # Aquí llamamos a la función suma e ingresamos los números a = 2 y b = 2
+```
+
+**Problema 2.** Dibuje un diagrama de flujo que muestre el procedimiento para obtener el promedio de dos números.
+
+
+**Solución:** a partir del concepto de determinar el promedio de dos números dados, nosotros sabemos que hay que obtener la suma primero y después dividirlo entre dos para obtener el promedio.  En la Figura 4 se muestra el diagrama de flujo para obtener el promedio de dos números. 
+
+![Figura 4. Diagramas de flujo para realizar el promedio dos números.](prom5.png)
+
+El algoritmo correspondiente al problema 2 se muestra a continuación:
+
+**Paso 1.** Ingrese a A y B .
+
+**Paso 2.** suma $\leftarrow$  A + B (almacena la suma de los valores en A y B en S).
+
+**Paso 3.** promedio $\leftarrow$ suma/2  (calcula el promedio).
+
+**Paso 4.** Imprime el promedio (devuelve el promedio).
+
+**Paso 5.** Fin. 
+
+El algoritmo implementado en R queda de la siguiente forma: 
+
+```{r}
+promedio  <- function(a , b){ # Paso 1: ingrese los números a y b
+      suma <- a +b # Paso 2: almacena la suma 
+      prom <- suma/2 #Paso 3: realiza el promedio
+      return(prom) # Paso 4: regresa el promedio
+} # Paso 5: Fin 
+
+promedio(2, 3) # Aquí llamamos a la función prom e ingresamos los números a = 2 y b = 2
+```
+**Problema 3.** Dibuje un diagrama de flujo que muestre el procedimiento para obtener el volumen de un cubo rectangular.
+
+
+**Solución:** Nosotros conocemos que la fórmula para determinar el volumen de un cubo rectangular es volumen = largo $\times$ ancho $\times$ alto. Entonces, para determinar el volumen de un cubo rectangular, nosotros necesitamos conocer lo largo, ancho y alto de un cubo. Cuandos se multiplican estos valores, entonces obtenemos el volumen. En la Figura 5 se muestra el diagrama de flujo para calcular el volumen de un cubo rectangular. 
+
+
+![Figura 5. Diagramas de flujo para realizar el promedio dos números.](cubo2.png)
+
+El algoritmo para la solución del problema 3 se muestra a continuación:
+
+**Paso 1.** Ingrese el largo, ancho y alto del cubo rectangular.
+
+**Paso 2.** vol $\leftarrow$ largo $\times$ ancho $\times$ alto (calcula el volumen del cubo rectangular).
+
+**Paso 3.** Imprime el volumen (devuelve el volumen).
+
+**Paso 4.** Fin. 
+
+La implementación del algoritmo en R es la siguiente:
+
+```{r}
+volumen  <- function(alto, ancho, largo){ # Paso 1: Ingrese el alto, ancho y largo 
+      vol_rectangular <- alto*ancho*largo # Paso 2: Almacena en vol_rectangular el volumen del cubo  
+      return(vol_rectangular) # Paso 3: Imprime el volumen del cubo rectangular 
+}
+
+volumen(2, 3, 5) #Aquí se llama a la función y se ingresan los argumentos
+```
+
+
+# Participación del día lunes 12 de Abril del 2021.
+
+Construya el diagrama de flujo, algoritmo y función en R para cálcular el volumen de alguna figura geométrica. Al terminar comparta su pantalla y explique sus resultados. 
+
+Nota: ingrese a [Google colab](https://colab.research.google.com/#create=true&language=r) y escriba su función en R.
+
+
+# Tarea 4
+
+Haga un diagrama de flujo de su algoritmo que trabajó durante las vacaciones. Incluya sentencias if-else. Entregar máximo el martes 13 de Abril del 2021 a la 1 pm, nombre su archivo como tarea4_apellidonombre_fecha.PDF
+
+
+Al inicio de su archivo coloque lo siguiente: 
+
+#2NV1 
+
+
+#Tarea Número x
+
+
+#Nombre completo 
+
+
+#Número de Boleta 
+
+
+#Direccion de correo electronico institucional
+
+
+#"Yo trabajé esta tarea sola/solo usando sólo los materiales visto en clase"
+
+
+#"Yo trabajé esta tarea con Nombre completo de la persona con la que trabajó"
+
+#Reporte los sitios de dónde obtuvo los datos 
+
+ 
+
+# Bibliografía 
+
+Flowchart and algorithm basics. The art of programming. A. B. Chaudhuri. Mercury Learning and Information. 2020.
+
+
+# Asistencia 
+
+From Angel Pimentel to Everyone:  08:40 PM
+
+Pimentel López Francisco Angel
+
+From Leon Gonzalez to Everyone:  08:40 PM
+
+Presente
+
+From Angel Pimentel to Everyone:  08:40 PM
+
+presente, lo siento
+
+From Valeria Olvera Aguilar to Everyone:  08:40 PM
+
+Presente
+
+From Alhelí García to Everyone:  08:40 PM
+
+Presente
+
+From Lorena Silva to Everyone:  08:40 PM
+
+presente
+
+From Max to Everyone:  08:41 PM
+
+Presente
+
+From Andrea Carmin to Everyone:  08:41 PM
+
+Presente 
+
+From Ian Tsla to Everyone:  08:42 PM
+
+PRESENTE
+
+From Emmanuel González to Everyone:  08:42 PM
+
+presente 
+
+From Andrew Betanzos to Everyone:  08:42 PM
+
+presente
+
+From Edgar isaac Gutiérrez to Everyone:  08:42 PM
+
+presente
+
+From Daniela Roman to Everyone:  08:42 PM
+
+presente
+
+From Ximena Martínez to Everyone:  08:43 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  08:50 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  09:13 PM
+
+Draw.io
+
+Ese era
+
+From Me to Everyone:  09:35 PM
+
+https://colab.research.google.com/#create=true&language=r

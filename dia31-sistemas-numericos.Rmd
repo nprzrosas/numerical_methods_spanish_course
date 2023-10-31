@@ -1,0 +1,158 @@
+---
+title: "Día 31 - Sistemas Numéricos"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+
+
+![Diagrama de flujo para calcular la suma aproximada](epsilon_a.png)
+
+
+
+
+```{r}
+metodo_iterativo <- function(x,epsilon_s,max_it){
+  iteracion <- 1
+  solucion <- 1
+  epsilon_a <- 100 
+  repeat{
+    solucion_previa = solucion
+    cat("La solucion_vieja es:", solucion_previa, "iteracion:", iteracion, "\n")
+    solucion = solucion + x^iteracion/factorial(iteracion)
+    iteracion = iteracion + 1 
+    if (solucion!=0){
+      epsilon_a <- abs((solucion-solucion_previa)/solucion)*100
+    }
+    if(epsilon_a<=epsilon_s | iteracion>=max_it){
+      cat("Entro al break", "\n" )
+      break
+    }
+  }
+  cat("La solucion es:", solucion, "iteraciones es", iteracion, "epsilon_a es", epsilon_a, "\n" )
+}
+
+metodo_iterativo(0.5,0.05,100)
+```
+
+
+
+# Errores de redondeo
+
+
+Como se mencionó antes, los errores de redondeo se origina debido a que la computadora emplea un número determinado de cifras significativas durante un cálculo. Los números como $\pi$, $e$ o $\sqrt{7}$ no pueden expresarse con un número fijo de cifras significativas. Por lo tanto no pueden ser representados exactamente por la computadora. Además, debido a que las computadoras usan una representación en base 2, no pueden representar exactamente algunos números en base 10. Esta discrepancia por la omisión de cifras signigicativas se llama **error de redondeo**.
+
+
+## Representación de números en la computadora 
+
+Númericamente los errores de redonde se relacionan de manera directa con la forma en que se guardan los números en la memoria de la computadora. La unidad fundamental mediante la cual se representa la información se llama **término**. Ésta es una entidad que consiste en una cadena de **dígitos binarios o bits (binary digits)**. Por lo común, los números son guardados en una o más términos. Para enteder cómo se realiza esto, se debe primero revisar primero algún material relacionado con los sitemas numéricos. 
+
+**Sistemas numéricos**. Un sistema numérico es simplemente una convención para representar cantidades. 
+
+**Base.** Es el número que se usa como referencia para construir un sistema numérico. 
+
+**Sistema númerico decimal o de base 10**. Para construirse usó como referencia los diez dedos de las manos o de los pies. 
+
+
+![Los diez dedos de las manos y de los pies fueron usados como referencia para construir el sistema numérico decimal o de base 10.](manos_pies.png)
+
+
+El sistema de base $10$ utiliza $10$ dígitos 
+
+$0, 1, 2, 3, 4, 5, 6, 7, 8, 9$
+
+para representar números. Tales dígitos son satisfactorios por sí mismo para contar de $0$ a $9$. 
+
+Para grandes cantidades se usa la combinación de estos dígitos básicos; con el **valor de posición** se especifica su magnitud. El dígito en el extremo derecho de un número entero representa un número del $0$ al $9$. El segundo dígito a partir de la derecha representa un múltiplo de $10$. El tercer dígito a partir de la derecha representa un múltiplo de $100$ y así sucesivamente. Por ejemplo, sí se tiene el número 
+
+
+$86409$ 
+
+se tienen $8$ grupos $10000$, $6$ grupos $1000$, $4$ grupos $100$, $0$ grupos $10$ y nueve unidades, o bien 
+
+$(8 \times 10^4) + (6 \times 10^3) + (4 \times 10^2) + (0 \times 10^1) + (9 \times 10^0) = 86409$ 
+
+
+
+```{r}
+8*10^4+6*10^3+4*10^2+0*10^1+9*10^0
+```
+
+La siguiente figura ofrece una representación de cómo se formula un número en el sistema de base $10$. Este tipo de representación se llama **notación posicional**
+
+![Notación posicional del sistema decimal.](numeros.png)
+
+Existen otros sistemas numéricos como el **sistema octal** o **base 8**. El sistema que hay en una computadora es un sistema binario, limitado a dos estados $0$ o $1$. Esto se relaciona con el hecho de que las unidades lógicas fundamentales de las computadoras seam componentes electrónicos de apagado/encendido. Por lo tanto, los números en la computadora se representan con un sistema **binario** o **base 2**. Del mismo modo que el sistema decimal, las cantidades pueden representarse usando notación posicional. Por ejemplo, el número binario `10101101` es equivalente a 173
+
+
+![Notación posicional del sistema binario.](binario.png)
+
+**Representación entera**. El método más sencillo para representar números enteros en la computadora se denomina **método de magnitud con signo** y emplea el primer bit de un término para indicar el signo: con un $0$ para positivo y un $1$ para negativo. Los bits sobrantes se usan para guardar el número. Por ejemplo, el valor entero $-173$ puede guardarse en la memoria de una computaodra de $16$ bits como se muestra en la figura. 
+
+![Representación de un entero decimal -173 en una computadora de 16 btis usando el método de magnitud con signo.](numero_bits.png)
+
+
+# Asistencia 
+
+From Angel Pimentel to Everyone:  02:32 PM
+
+presente
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  02:33 PM
+
+presente
+
+From Andrea Carmin to Everyone:  02:33 PM
+
+Presente
+
+From Ximena Martínez to Everyone:  02:33 PM
+
+Presente
+
+From Alhelí García to Everyone:  02:34 PM
+
+Presente
+
+From Daniela Roman to Everyone:  02:35 PM
+
+presente
+
+From Míriam Sosa to Everyone:  02:36 PM
+
+presente
+
+From Valeria Olvera Aguilar to Everyone:  03:46 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  03:47 PM
+
+presente
+
+From Lorena Silva to Everyone:  03:47 PM
+
+presente
+
+From Anna Viquez to Everyone:  03:47 PM
+
+presente
+
+From Ian Tsla to Everyone:  03:47 PM
+
+presente.
+
+From Max to Everyone:  03:57 PM
+
+presente
+
+
+
+

@@ -1,0 +1,388 @@
+---
+title: "Día 10 - Algoritmos/Diagramas de flujo (parte 2)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+# Diagramas de flujo de programas (continuación)
+
+* **Algoritmos**: es un conjunto de pasos que genera una secuencia finita de operaciones computacionales elementales que guian a una solución.
+
+* **Diagrama de flujo**: es un diagrama que representa los pasos de un algoritmo.
+
+* **Funciones en R**: Una función es un conjunto de instrucciones que convierten las entradas (inputs) en resultados (outputs) deseados. En la Figura 1 se muestra una ilustración de lo que es una función.
+
+
+![Analogia de una función en R. Imagen obtenida de https://fhernanb.github.io/Manual-de-R/creafun.html](function_machine.png)
+
+Las partes de una función son:
+
+**Entradas o argumentos:** sirven para ingresar información necesaria para realizar el procedimiento de la función. Los argumentos pueden estar vacíos y a la espera de que el usuario ingrese valores, o pueden tener valores por defecto, esto significa que si el usuario no ingresa un valor, la función usará el valor por defecto. Una función puede tener o no argumentos de entrada, en los ejemplos se mostrarán estos casos.
+
+**Cuerpo:** está formado por un conjunto de instrucciones que transforman las entradas en las salidas deseadas. Si el cuerpo de la función está formado por varias instrucciones éstas deben ir entre llaves { }.
+
+
+**Salidas:** son los resultados de la función. Toda función debe tener al menos un resultado. Si una función entrega varios tipos de objetos se acostumbra a organizarlos en una lista que puede manejar los diferentes tipos de objetos.
+
+
+En la Figura 2 se muestra la estructura general de una función en R.
+
+![Estructura general de una función en R](cuerpo.png)
+
+
+**Ejercicio 1.** Dibuje un diagrama de flujo que muestre el procedimiento para obtener el área de un círculo.
+
+
+**Solución:** Nosotros conocemos que la fórmula para determinar el área de un círculo es area = $\pi$ $\times$ r$^2$. Entonces, para determinar el área del círculo necesitamos conocer el radio. Cuando este valor lo elevamos al cuadrado y lo multiplicamos por $\pi$ obtenemos el área. En la Figura 3 se muestra el diagama de flujo para calcular el área del círculo. 
+
+![Diagrama de flujo para calcular el área de un círculo.](area_clase.png)
+
+
+
+El algoritmo correspondiente al ejercicio 1 se muestra a continuación:
+
+**Paso 1.** Ingrese r (radio).
+
+**Paso 2.** area_circulo $\leftarrow$  pi * r $^2$ (area_circulo almacena el área del círculo).
+
+**Paso 3.** imprima el área del círculo.
+
+**Paso 4.** Fin. 
+
+
+
+```{r}
+area <- function(radio){ # Paso 1: Ingrese el radio
+      area_circulo <- pi * radio ^ 2 # Paso 2: calcule el área 
+      return(area_circulo) # Paso 3: Imprime el valor del área del círculo  
+} 
+
+area(2)
+```
+
+
+¿En qué está mal esta función de la Figura 4?
+
+![Función con error.](ejemplo_mal1.png)
+
+
+
+## Problemas que involucran selección 
+
+En esta clase trabajaremos con problemas que involucran decisiones. Este proceso de tomar decisiones es implementado a través de una estructura lógica llamada **selección**. Aquí una **condición** se prueba para ver sí es verdadera o falsa. Si es verdadera, una acción toma lugar. Si es falsa, una acción alternativa se desempeña. Nosotros podemos expresar este proceso usando la notación de diagrama de flujo. Vea la Figura 5. 
+
+
+![Diagramas de flujo para representar un proceso que involucre selección.](decision.png){width=70% }
+
+
+
+Note que realizar cierta acción puede involucrar una o más secuencias de operaciones y debe haber un punto común para satisfacer la regla simple apuntando al conector conteniendo la palabra **Fin**. Un diagrama de flujo puede contener cualquier número de procesos que involucre selección, dependiendo de los requerimentos del proceso y los bloques pueden aparecer en cualquier secuencia dependiendo de la decisión lógica del programa. Por ejemplo, un número de bloques de decisión puede seguir a otro. A continuación se presenta un ejemplo para clarificar este concepto. 
+
+**Problema 1.** Dibuje un diagrama de flujo que muestre la ganancia o pérdidas obtenidas en una venta. 
+
+
+**Solución:** La ganancia o la pérdida de una venta puede ser obtenida si el precio del costo y de la venta se conocen. Sin embargo, hay necesidad de hacer una decisión aquí. Si el precio del costo es mayor al precio de venta, entonces indica una pérdida en el proceso. De lo contrario, puede ser una ganancia cero (no hubo ganancia ni pérdida) o alguna ganancia. La Figura 6 representa el diagrama de flujoj que soluciona el problema. 
+
+![Diagramas de flujo para representar la ganancia o pérdidas obtenidas en una venta.](venta4.png)
+
+
+El algoritmo que corresponde al problema anterior es el siguiente:
+
+**Paso 1.** Ingrese PC (precio de la compra) y PV (precio de venta).
+
+**Paso 2.** 
+                  
+             Si (if) PC < PV
+             
+                  calcule ganancia <- PV - PC
+                             
+                  imprima "La ganancia es"; ganancia
+            
+                caso contrario (if-else)    
+                
+                  Imprima "No hay ganancia ni pérdida"
+                  
+                caso contrario (else)
+                
+                   calcule PER <- PC - PV
+                  
+                  imprima "La pérdida es"; PER
+                  
+             Fin (End-if)
+                
+
+**Paso 3.** Fin. 
+
+
+Implementación del algoritmo en R 
+
+```{r}
+venta <- function(precio_costo, precio_venta) {
+if (precio_costo < precio_venta) {
+  ganancia <- precio_venta - precio_costo
+  print(paste("La ganancia es", ganancia))  
+} else if (precio_costo == precio_venta ) {
+  print(paste("No hay ganancia ni pérdida"))
+} else {
+  perdida <- precio_costo - precio_venta
+  print (paste("La pérdida es", perdida))
+}
+}
+
+venta(10, 5)
+```
+
+**Ejemplo 2** Construya un procedimiento para determinar quién es el número mayor de un par de números. 
+
+
+**Solución:** Nosotros tenemos que determinar cuál de los dos números es mayor. Para ello necesitamos comparar los números y determinar ¿cuál es el mayor?
+
+En la Figura 7, se muestra el diagrama de flujo del programa asumiendo que los dos números son diferentes.
+
+![Diagramas de flujo para representar el proceso de encontrar qué número es mayor.](mayor2.png)
+
+
+
+El algoritmo que corresponde al problema dos es el siguiente:
+
+**Paso 1.** Ingrese A y B.
+
+**Paso 2.** 
+                  
+             Si (if) A > B
+                  
+                  Entonces num_mayor <- A
+            
+             caso contrario (else)    
+             
+                  num_mayor <- B
+                  
+             Fin (end-if)
+                
+
+**Paso 3.** Imprima num_mayor. 
+
+**Paso 4.** Fin. 
+
+La implementación del algoritmo en R se muestra a continuación:
+
+```{r}
+mayor <- function(A, B) {
+if (A > B) {
+  num_mayor <- A
+} else {
+  num_mayor <- B
+} 
+  print(paste("El número mayor es", num_mayor))
+}
+
+mayor(3, 5)
+```
+**Ejemplo 3** Construya un diagrama de flujo para determinar si un número es par o impar. 
+
+**Solución:** Nosotros sabemos que un número es par si es completamente divisible entre 2. Esto significa que si nosotros desarrollamos la division entera de un número determinado, el residuo de la división va a ser cero. Para construir el diagrama de flujo, se acepta el número como entrada, obtenemos el residuo de la división entera al tomar al número de entrada como dividendo y entonces verificar si el residuo es cero. Si es cero, entonces la conclusión será que el número es par, caso contrario el número será impar. 
+
+
+![Diagramas de flujo para representar el proceso de encontrar si un número es par o impar.](par_impar.png)
+
+
+El algoritmo correspondiente al problema 3 se muestra a continuación:
+
+
+**Paso 1.** Ingrese A.
+
+**Paso 2.** Calcule el residuo <- residuo de (A/2).
+
+**Paso 3.** 
+                  
+             Si (if) R = 0
+                  
+                  Entonces imprima es una número par 
+            
+             caso contrario (else)    
+             
+                  Entonces imprima es una número impar
+                  
+             Fin (end-if)
+
+**Paso 4.** Fin. 
+
+La implementación del algoritmo en R se muestra a continuación:
+
+```{r}
+par_impar <- function(A) {
+  residuo <- A %% 2
+if (residuo == 0) {
+  print("El número es par")
+} else {
+  print("El número es impar")
+} 
+}
+
+par_impar(4)
+```
+**Ejemplo 4.** Determine el precio final que se debe pagar en una venta. El precio final consiste en el precio de venta más impuestos. El impuesto que se cobrará esta definido por: 
+
+a) 8% al precio de venta para productos nacionales
+b) 18% al precio de venta para productos extranjeros
+
+Construya un diagrama de flujo de programa que muestre cómo se determina el precio final de venta. 
+
+**Solución: ** Nosotros debemos calcular el impuesto de venta tomando en cuenta uno de los dos tipos de impuestos. Para este propósito, requerimos dos entradas: el precio de venta y el origen del producto. Asuma que nosotros proporcionamos respectivamente "N" o "E" si el producto es nacional o extranjero.
+
+![Diagramas de flujo que muestre cómo se determina el precio final de venta.](impuesto.png)
+
+
+
+El algoritmo correspondiente al ejemplo 4 se muestra a continuación:
+
+
+**Paso 1.** Ingrese precio_venta.
+
+**Paso 2.** Ingrese N o E si el producto es nacional o extranjero.
+
+**Paso 3.** 
+                  
+             Si (if) origen = N
+                  
+                  Entonces calcule impuesto <- precio_venta*0.08
+            
+             caso contrario (else)    
+             
+                  Entonces calcule impuesto <- precio_venta*0.18
+                  
+             Fin (end-if)
+             
+                  
+
+**Paso 4.** Calcule precio_total <- precio_venta + impuesto
+
+**Paso 5.** Imprima precio_total 
+
+**Paso 6.** Fin. 
+
+La implementación del algoritmo en R se muestra a continuación:
+
+
+```{r}
+venta <- function(precio_venta) {
+  origen = readline(prompt = "Precione N para venta nacional o E para venta extranjera: ")
+if (origen == 'N') {
+  impuesto <- precio_venta*0.08 
+} else {
+  impuesto <- precio_venta*0.18 
+} 
+precio_total = precio_venta + impuesto
+print (paste("El precio total es:", precio_total))
+}
+
+venta(10)
+```
+
+
+# Participación del día martes 13 de Abril del 2021.
+
+Construya el diagrama de flujo, algoritmo y función en R para cálcular el producto de dos números. Al terminar comparta su pantalla y explique sus resultados. 
+
+Nota: ingrese a [Google colab](https://colab.research.google.com/#create=true&language=r) y escriba su función en R.
+
+
+# Tarea 5
+
+Haga un diagrama de flujo y el algoritmo que convierta de dólares a pesos mexicanos y de pesos mexicanos a dólares.  Entregar máximo el miércoles 14 de Abril del 2021 a las 15 horas, nombre su archivo como tarea5_apellidonombre_fecha.PDF
+
+
+Al inicio de su archivo coloque lo siguiente: 
+
+#2NV1 
+
+
+#Tarea Número x
+
+
+#Nombre completo 
+
+
+#Número de Boleta 
+
+
+#Direccion de correo electronico institucional
+
+
+#"Yo trabajé esta tarea sola/solo usando sólo los materiales visto en clase"
+
+
+#"Yo trabajé esta tarea con Nombre completo de la persona con la que trabajó"
+
+#Reporte los sitios de dónde obtuvo los datos 
+
+ 
+
+# Bibliografía 
+
+Flowchart and algorithm basics. The art of programming. A. B. Chaudhuri. Mercury Learning and Information. 2020.
+
+# Referencias
+https://fhernanb.github.io/Manual-de-R/creafun.html
+
+#  Asistencia
+
+From Edgar isaac Gutiérrez to Everyone:  02:35 PM
+
+presente
+
+From Anna Viquez to Everyone:  02:35 PM
+
+presente
+
+From Alhelí García to Everyone:  02:35 PM
+
+Presente
+
+From Angel Pimentel to Everyone:  02:35 PM
+
+presente
+
+From Andrew Betanzos to Everyone:  02:35 PM
+
+presente
+
+From Daniela Roman to Everyone:  02:35 PM
+
+Presente
+
+From Max to Everyone:  02:40 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  02:40 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  02:44 PM
+
+presente
+
+From Ximena Martínez to Everyone:  02:51 PM
+
+Presente
+
+From Lorena Silva to Everyone:  03:01 PM
+
+presente
+
+From Valeria Olvera Aguilar to Everyone:  03:01 PM
+
+Presente
+
+
+
+
+

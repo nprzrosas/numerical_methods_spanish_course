@@ -1,0 +1,398 @@
+---
+title: "Día 6 - Herramientas computacionales - UPIEM-IPN"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+Ingrese a [Google colab](https://colab.research.google.com/#create=true&language=r) y practique los ejercicios de su clase.
+
+# Revisión de terminología 
+
+**función:** una pieza de código que toma ciertas entradas y hace algo específico con ellas. Por ejemplo, la función `c()`, que significa *combina* o *concatena*; las entradas dentro del paréntesis se conocen como argumentos.
+
+Nota: la palabra *concatenar* viene del Latin *concatenare*  que significa *unir una cosa con otra*.  
+
+
+**objeto:** piezas de memoria, con valores y un conjunto de operaciones asociadas.
+
+
+**operador:** es un símbolo que se coloca entre dos valores para hacer un cálculo. Los símbolos +, -, * y / son símbolos y tienen el mismo significado que en matemáticas. Entonces, `3 + 1` en R regresa el valor de `3` como se espera. 
+
+**vectorización:** tiene diferentes significados en R, el más común es cuando un operador o función actúa sobre cada elemento del vector sin necesidad de crear un `loop`. El segundo significado es cuando una función toma un vector como entrada y hace un cálculo estadístico.  
+
+# Operadores aritméticos (continuación)
+
+La siguiente tabla muestra algunos de los operadores básicos. Todos estos operadores pueden aplicarse a vectores. 
+
+Operador | Descripción | Ejemplo
+------ | ------|----------
+x + y      | y se suma a x           | 2 + 3 = 5
+x - y      | y se resta a x          | 8 - 2  =  6
+x * y      | x multiplicado por y   | 3 * 2 = 6
+x / y      | x dividido por x      | 10 / 5 = 2
+x ^ y     | x elevado a la potencia de y | 2 ^ 5 = 32
+x %% y | residuo de x dividido por y (x mod y)  | 7 %% 3 = 1 
+x %/% y |  x dividido por y redondeado hacia abajo  | 7 %/% 3 = 2 
+
+
+Nota 1: los cálculos son hechos en el siguiente orden:
+
+- exponente
+
+- multiplicación y división en el orden en que los operadores son presentados
+
+- adición y substracción en el orden en que los operadores son presentados
+
+- el operador `mod`  `(%%)` y el operador división entera `(%/%)` tienen la misma prioridad que el operador de división normal `(/)` en los cálculos. Se puede cambiar el orden las operaciones al usar paréntesis, ejemplo:
+
+```{r}
+4 + 2 * 3
+```
+
+```{r}
+(4 + 2) * 3
+```
+
+Nota 2: Los operadores aritméticos se pueden usar en vectores. 
+
+# Vectores  (continuación)
+
+## Operadores sobre vectores
+
+El operador *secuencia* representado por dos puntos `(:)` permite generar vectores dentro de un rango. Por ejemplo:
+
+
+```{r}
+1:5
+```
+
+
+Con la instrucción anterior se ha generado un vector con valores de `1` a 5` e incrementos de uno en uno. El vector creado se puede asignar a una variable. Por ejemplo:
+
+
+```{r}
+vector <- 1:5
+vector 
+```
+
+Podemos sumar dos secuencias. Por ejemplo:
+
+```{r}
+1:5 + 1:5
+```
+
+Podemos sumar dos vectores. Por ejemplo:
+
+```{r}
+c(1, 3, 5, 7, 9) + c(1, 3, 5, 7, 9)
+```
+
+Todos los operadores en R, no sólo (+) están vectorizados. Los siguientes ejemplos demuestran substracción, multiplicación, elevar a una potencia, los dos tipos de división;así como el residuo después de la división (operación del modulo) aplicados a vectores:
+
+
+```{r}
+c(1, 3, 5, 7, 9) - 2 # Substracción de -2 a los elementos del vector 
+```
+
+```{r}
+c(1, 2, 3, 4, 5) * c(1, 2, 3, 4, 5) # Multiplicación de vectores
+```
+```{r}
+1:5 * 1:5  # Multiplicación de vectores
+```
+
+```{r}
+c(1, 2, 3, 4, 5) ^ 2 # Elevar a una potencia con  ^
+```
+```{r}
+c(1, 2, 3, 4, 5) ** 2 
+# Podemos usar ^ o ** para elevar a una potencia, pero ^ es más común
+```
+
+El operador `/`  realiza la división punto flotante (acepta decimales). 
+
+![Ejemplo de división punto flotante](division2.png)
+
+
+
+
+
+```{r}
+1:10 / 3  # División (punto flotante)
+```
+
+El operador `%/% `  realiza la división entera. 
+
+![Ejemplo de división entera.](division_entera.png)
+
+
+```{r}
+1:10 %/% 3  # División entera 
+```
+
+El operador `%% ` obtiene el residuo después de la división.
+
+![Ejemplo de x modulo de y.](division_modulo.png)
+
+
+```{r}
+1:10 %% 3  # Residuo después de la división
+```
+
+Todas las funciones como las funciones trigonométricas, exponenciales, logarítmicas, operan con vectores. 
+
+
+```{r}
+cos(c(0, pi /4, pi /2, pi)) # pi es una constante dentro de R
+```
+
+Para encontrar sí dos valores enteros son iguales use el operador `== ` 
+
+```{r}
+c(3, 4 - 1, 1 + 1 + 1) == 3
+# compara si los valores del vector son iguales a 3.
+#Si encuentra que el valor del vector es igual a 3, entonces proporciona la palabra TRUE
+```
+
+```{r}
+c(3, 4 - 1, 1 + 1 + 1) == 0 
+# compara si los valores del vector son iguales a 0. 
+#Si encuentra que el valor del vector es igual a 0, entonces proporciona la palabra TRUE, 
+#caso contrario FALSE
+```
+
+
+```{r}
+c(3, 4 - 1, 1 + 1) == 2 
+# compara si los valores del vector son iguales a 2. 
+#Si encuentra que el valor del vector es igual a 2, entonces proporciona la palabra TRUE, 
+#caso contrario FALSE
+```
+
+El operador `!= ` compara sí dos valores son diferentes:  
+
+
+```{r}
+1:3 != 3:1  
+# Si dos elementos son diferentes proporcionará la palabra TRUE, 
+#caso contrario FALSE
+```
+
+El operador `< ` compara sí un valor es menor que otro:  
+
+```{r}
+exp(1:5) < 100  
+# Compara si los elementos son menores a 100 proporcionará la palabra TRUE,
+#caso contrario FALSE
+```
+El operador `>= ` compara sí un valor es mayor o igual que otro:  
+
+```{r}
+(1:5) ^ 2  >= 16 
+# Compara sí los elementos son mayores o iguales a 16.
+#En caso afirmativo proporcionará la palabra TRUE, caso contrario FALSE
+```
+
+También puede usar el operador `== ` para comparar cadenas. En ese caso la comparación es sensible a sí las palabras son mayúsculas y minísculas. De aquí que las cadenas deben coincidir exactamente. 
+
+```{r}
+c("Mamá", "mom", "mommy", "mama", "ama", "Madre", "apa", "ma?") == "Mamá" 
+```
+```{r}
+c("A", "B", "C", "D") < "C" 
+```
+
+```{r}
+c("a", "b", "c", "d") < "C" 
+```
+
+
+# Números especiales 
+
+R soporta cuatro valores numéricos especiales:`Inf`, `-Inf`, `NaN` y `NA`.
+
+Número | Significado 
+------ | ------|
+   `Inf`   | más infinito          
+`-Inf`   | menos infinito         
+`NaN`     | not-a-number / no es un número   
+`NA`     | not available / no está disponible 
+
+
+```{r}
+c(Inf + 1, Inf - 1, Inf - Inf) 
+```
+
+
+```{r}
+c(NA + 1, NA * 5, NA + Inf) 
+```
+
+# Ayuda
+
+Usted puede pedir ayudar en R con el signo de interrogación `?` y la palabra que desee buscar `?mean` 
+
+```{r}
+?mean
+```
+
+
+
+# Lenguajes de programación
+
+Para consultar los lenguajes de programación solicitados este año, vea la siguiente liga de [lenguajes de programación](https://linuxhint.com/10_best_programming_languages_2021/).
+
+
+
+
+# Tarea 2: 
+
+Consteste las siguientes preguntas (fecha máxima de entrega, martes 30 de Marzo a las 13 horas):
+
+1. ¿Qué operador se debe usar para la división de enteros?
+2. ¿Cómo verificaría que la variable x es igual a `pi`?
+3. Describa al menos dos caminos de generar un vector?
+
+
+Al inicio de su archivo coloque lo siguiente: 
+
+#2NV1 
+
+
+#Tarea Número x
+
+
+#Nombre completo 
+
+
+#Número de Boleta 
+
+
+#Direccion de correo electronico institucional
+
+
+#"Yo trabajé esta tarea sola/solo usando sólo los materiales visto en clase"
+
+
+#"Yo trabajé esta tarea con Nombre completo de la persona con la que trabajó"
+
+#Reporte los sitios de dónde obtuvo los datos 
+
+Reporte sus respuestas en un archivo en PDF con el nombre tarea2_apellido_nombre_210330.PDF o  tarea2_apellido_nombre_210330.ipynb y envíe a ncperez@cinvestav.mx.
+
+
+# Bibliografía 
+
+Using R for Numerical Analysis in Science and Engineering. The R series, Victor A. Bloomfield. 
+
+The book of R, Tilman M. Davies, N Sterch Press.
+
+Learning R. A step by step function guide to data analysis, Richard Cotton, o'Reilly 
+
+
+
+# Asistencia
+
+
+From Norma Pérez to Everyone:  08:34 PM
+
+
+https://colab.research.google.com/#create=true&language=r
+
+
+From Ximena Martínez to Everyone:  08:42 PM
+
+
+Presente
+
+
+From Leon Gonzalez to Everyone:  08:42 PM
+
+
+Presente
+
+
+From Andrew Betanzos to Everyone:  08:42 PM
+
+
+presente
+
+
+From Alhelí García to Everyone:  08:42 PM
+
+
+Presente
+
+
+From Valeria Olvera Aguilar to Everyone:  08:42 PM
+
+
+Presente
+
+
+From Daniela Roman to Everyone:  08:42 PM
+
+
+presente
+
+
+From Edgar isaac Gutiérrez to Everyone:  08:42 PM
+
+
+presente
+
+
+From Max to Everyone:  08:42 PM
+
+
+Presente
+
+
+From Andrea Carmin to Everyone:  08:42 PM
+
+
+Presente
+
+
+From Angel Pimentel to Everyone:  08:42 PM
+
+
+presente
+
+
+From Míriam Sosa to Everyone:  08:42 PM
+
+
+presente
+
+
+From Lorena Silva to Everyone:  08:43 PM
+
+
+presente
+
+
+From Anna Viquez to Everyone:  08:43 PM
+
+
+presente
+
+
+From Luis Cabrera to Everyone:  08:43 PM
+
+
+presnte
+
+
+From Emmanuel González to Everyone:  08:43 PM
+
+
+presente
+

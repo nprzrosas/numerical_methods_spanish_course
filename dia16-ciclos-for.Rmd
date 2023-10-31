@@ -1,0 +1,180 @@
+---
+title: "Día 16- Algoritmos/Diagramas de flujo (parte 8)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+
+# Solución de la Tarea 9 - Cálculo del bono de productividad
+
+Haga un diagrama de flujo, algoritmo y función en R del siguiente ejercicio. 
+
+Las siguientes reglas se usan para calcular el bono de productividad de una compañía: 
+
+a) Si el pago es más de $3,000.00, el bono es fijo y es igual a 300. 
+
+b) Si el pago es más de \$1,600.00, pero menor o igual a \$3,000.00, el bono será el 10% del pago sujeto a un máximo de \$240.
+
+c) Si el pago es menos que o igual a \$1,600.00, el bono es 15% del pago, sujeto a un mínimo de \$100.00. 
+
+Construya un diagrama de flujo de programa que muestre cómo se determina el bono de productividad de la compañía. 
+
+
+**Solución: ** La entrada que se requiere en este caso es determinar la cantidad de dinero que un empleado obtiene. Sobre la base del pago, nosotros podemos determinar el bono de productividad. Las oraciones "sujeto a un máximo" o "sujeto a un mínimo" implica que la cantidad calculada debe ser comparada a un límite máximo o un límite mínimo. Si es más que el límite máximo o menos que el límite mínimo, entonces el límite máximo o el límite mínimo serán tratados como el valor del bono.
+
+
+![Diagrama de flujo para resolver el problema del bono de productividad.](bono3.png)
+
+```{r}
+calcular_bono <- function(pago){
+  if (pago>3000){
+    bono <- 300
+  } else {
+    if (pago>1600){
+      bono <- pago*0.10
+      if (bono>240){
+        bono<-240
+      }
+    }else{
+      bono <- pago*0.15
+      if(bono<100){
+        bono <-100
+      }
+    }
+  }
+   print(bono)
+}
+
+calcular_bono(500)
+```
+
+
+
+# Problemas involucrando ciclos for 
+
+En los diagramas de flujo de la clase anterior, vimos algoritmos de secuencia y selección. Ahora veremos estructuras lógicas de iteración. 
+
+El término **iteración** significa **repetición**. Algunas veces un procedimiento debe ser ejecutado muchas veces. Todos los procedimientos deben ser escritos de forma tal que pueden repetirse tantas veces como sea necesario. Nosotros no debemos desarrollar procedimientos que se ejecuten una vez. Si fuera así, entonces las calculadoras serían suficientes para obtener los resultados.  Una estructura lógica iterativa es conocida como **ciclo** (loop en inglés). Realizar un bucle (looping) significa repetir un conjunto de operaciones para obtener un resultado repetidamente. 
+
+Una iteración puede ser implementada en dos formas: una iteración previa a la prueba (pre-test iteration) y una iteración posterior a la prueba (post-test iteration) . En el caso de una iteración previa a la prueba, una afirmación es probada para decidir si un conjunto de operaciones se desarrollará o no. Si la condición implica que la afirmación es verdadera , entonces las operaciones deseadas son desarrolladas. Si es falsa, entonces la iteración se termina. Esto se muestra en el siguiente diagrama. 
+
+
+![Estructura del diagrama de flujo de un ciclo for de iteración previa a la prueba](for_pre_test.png){width=50%}
+
+
+Para una iteración posterior a la prueba, la afirmación es probada después de realizar un conjunto de operaciones se decide si repetir el conjunto de operaciones o terminar la repetición. Si la condición es cierta, entonces el conjunto de operaciones se repite, en caso contrario, no se repite. La estructura del diagrama de esta lógica se muestra a continuación. 
+
+
+![Estructura del diagrama de flujo de un ciclo for de iteración posterior a la prueba](for_post_iteration.png){width=40%}
+
+Note que las operaciones en el ciclo deben ser realizadas al menos una vez en el caso de la iteración posterior a la prueba. 
+
+La sintaxis de un ciclo for 
+
+
+`for (variación en forma de secuencia) {`
+
+    `código`
+    
+`}`
+
+![Sintaxis ciclo for](forfor.png)
+
+El concepto del ciclo `for` se muestra a continuación.
+
+```{r}
+for (indice in 0:5) {
+  print(indice)
+}
+```
+
+
+
+# Tarea 10 
+
+Construya un diagrama de flujo, un algoritmo y una función en R para encontrar el mayor de tres números ingresados. 
+
+Envíe su archivo a ncperez@cinvestav.mx máximo el lunes 26 de Abril del 2021 a las 18 horas, nombre su archivo como tarea9_apellidonombre_fecha.PDF
+
+Al inicio de su archivo coloque lo siguiente: 
+
+#2NV1 
+
+
+#Tarea Número x
+
+
+#Nombre completo 
+
+
+#Número de Boleta 
+
+
+#Direccion de correo electronico institucional
+
+
+#"Yo trabajé esta tarea sola/solo usando sólo los materiales visto en clase"
+
+
+#"Yo trabajé esta tarea con Nombre completo de la persona con la que trabajó"
+
+#Reporte los sitios de dónde obtuvo los datos 
+
+
+# Asistencia
+
+From Andrea Carmin to Everyone:  04:04 PM
+
+Presente
+
+From Edgar isaac Gutiérrez to Everyone:  04:04 PM
+
+presente
+
+From Daniela Roman to Everyone:  04:04 PM
+
+Presente
+
+From Míriam Sosa to Everyone:  04:04 PM
+
+Presente
+
+From ANNA VIQUEZ to Everyone:  04:04 PM
+
+Presente
+
+From Andrew Betanzos to Everyone:  04:05 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  04:09 PM
+
+presente
+
+From Luis Cabrera to Everyone:  04:09 PM
+
+presente
+
+From Max to Everyone:  04:09 PM
+
+presente
+
+From Ximena Martínez to Everyone:  04:16 PM
+
+Presente
+
+From Valeria Olvera Aguilar to Everyone:  05:20 PM
+
+Presente
+
+From Lorena Silva to Everyone:  05:24 PM
+
+presente
+

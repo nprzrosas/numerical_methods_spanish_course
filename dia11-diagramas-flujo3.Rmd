@@ -1,0 +1,140 @@
+---
+title: "Día 11 - Algoritmos/Diagramas de flujo (parte 3)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  html_document:
+    toc: yes
+    toc_depth: 2
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+# Problemas que involucran selección (continuación)
+
+**Ejercicio 1:** Una ecuación de la forma $ax^2 + bx + c = 0$ es conocida como ecuación cuadrática. Dibuje un diagrama de flujo, desarrolle un algoritmo y una función en R para resolver la ecuación cuadrática. 
+
+
+**Solución:** Los valores de a, b y c en la ecuación representan valores constantes. De forma tal que $4x^2 -17x + c = 0$ representa una ecuación cuadrática donde $a = 4$, $b=-17$ y $c=-15$. Los valores de x que satisface una ecuación cuadrática en particular son conocidos como las raíces de la ecuación. Las raíces pueden ser calculadas al sustituir los valores de $a$ $b$ y $c$ dentro de las siguientes fórmulas:
+
+
+$x_1 = (-b + \sqrt{b^2-4ac})/2a$
+
+$x_2 = -b - \sqrt{b^2-4ac}/2a$
+
+La expresión $b^2-4ac$ se le conoce como el determinante de la ecuación porque determina la naturaleza de las raíces de la ecuación. Si el valor del determinante es menor que cero, entonces las raíces de la ecuación $x_1$ y $x_2$ son números imaginarios (complejos). Para resolver una ecuación cuadrática, nosotros debemos permitir que el usuario ingrese los valores de $a$, $b$ y $c$. Si el discriminante es menor a cero, entonces se debe desplegar un mensaje que diga que las raíces son imaginarias. En caso contrario, el programa debe mostrar las dos raíces de la ecuación. 
+
+El diagrama de flujo para este problema se muestra en la Figura 1. 
+
+![Diagramas de flujo para encontrar las raíces de una ecuación cuadrática.](raiz4.png)
+
+# Participación 1 del día miércoles 14 de Abril del 2021.
+
+Desarrolle el algoritmo para calcular las raices x1 y x2 de una ecuación cuadrática y una función en R para cálcular las raíces de una ecuación cuadrática. Al terminar comparta su pantalla y explique sus resultados. 
+
+Nota: ingrese a [Google colab](https://colab.research.google.com/#create=true&language=r) y escriba su función en R.
+
+Pista: Para imprimir el resultado de x1 y x2 use la función de concatenación. 
+
+
+**Solución del Algoritmo.**
+
+El algoritmo correspondiente al ejercicio 1 se muestra a continuación: 
+
+**Paso 1.** Ingresar a, b y c.
+
+**Paso 2.** Calcule D $\leftarrow$ (B $\times$ B - 4 $\times$ A $\times$ C) (Calcular el valor del discriminante) y almacenar en D.
+
+**Paso 3.**
+             
+             Si (If) D < 0
+                   Entonces imprima las raíces son imaginarias 
+
+             Caso contrario (if-else)    
+                
+                  Calcue raiz_c <- Calcule la raíz cuadrada (D)
+                  Calcule $x_1$ <- (-b + raiz_c)/2*A
+                  Calcule $x_2$ <- (-b - raiz_c)/2*A
+                  Imprima $x_1$  y  $x_2$
+             Fin (End-if)
+
+
+**Paso 4.** Fin 
+
+**Función en R para calcular las raíces de una ecuación cuadrática.**
+
+
+
+```{r}
+raices <- function(a, b, c) {
+  dis <- b^2 - 4*a*c
+if (dis < 0) {
+  print ("Las raíces son imaginarias")
+} else {
+  raiz_c <- sqrt(dis) 
+  x1 <- (-b + raiz_c)/2*a 
+  x2 <- (-b - raiz_c)/2*a
+  print(c(x1, x2))
+} 
+}
+
+raices(5, 3, 3)
+```
+
+# Asistencia.
+
+From Angel Pimentel to Everyone:  04:02 PM
+
+presente
+
+From Edgar isaac Gutiérrez to Everyone:  04:02 PM
+
+presente
+
+From Daniela Roman to Everyone:  04:02 PM
+
+Presente
+
+From Max to Everyone:  04:02 PM
+
+Presente
+
+From Leon Gonzalez to Everyone:  04:02 PM
+
+presente
+
+From Lorena Silva to Everyone:  04:03 PM
+
+presente
+
+From Andrew Betanzos to Everyone:  04:14 PM
+
+presenté
+
+From Valeria Olvera Aguilar to Everyone:  04:17 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  04:17 PM
+
+presente
+
+From Anna Viquez to Everyone:  04:18 PM
+
+presente
+
+From Míriam Sosa to Everyone:  04:18 PM
+
+presente
+
+From Alhelí García to Everyone:  04:18 PM
+
+Presente
+
+From Ian Tsla to Everyone:  04:18 PM
+
+Presente
+
+
+

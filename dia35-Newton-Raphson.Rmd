@@ -1,0 +1,198 @@
+---
+title: "Día 35 - Método de Newton - Raphson / Sistemas de ecuaciones lineales"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+
+# Método de Newton - Raphson 
+
+El segundo algoritmo más usado para encontrar las raíces de una función es el Método de Newton, también conocido como el Método de Newton - Raphson. Este método obtiene una estimación de $x_1$ para la raíz a partir de un valor $x_0$ propuesto, de acuerdo a la siguiente ecuación:
+
+$x_1=x_0-\frac{f(x_0)}{f'(x_0)}$
+
+
+
+iterando hasta que la precisión deseada se alcanza o el máximo número de iteraciones se excede.
+
+**Ejemplo.**
+Use el método de Newton-Raphson para encontrar la raíz de la función $f(x)=x^3-\sin(x)^2$. En la siguiente figura se traza la gráfica de $f(x)$.
+
+
+```{r}
+ecuacion <- function(x){
+  x^3-sin(x)^2
+}
+
+curve(ecuacion, from=0.5, to=1, n=200, xlab="x", ylab="f(x)", col="red",lwd=2, main="f(x)")
+abline(h=0, v=0, col="gray")
+```
+
+
+El método de Newton-Raphson se implimenta con el siguiente código. 
+
+```{r}
+metodo_newton = function(f, df, x0, tol=1e-5, maxit = 20){
+  raiz <- x0
+  for (iteracion in 1:maxit){
+    dx <- f(raiz)/df(raiz)
+    raiz <- raiz - dx
+    if (abs(dx) < tol){
+      return(c(raiz, iteracion, dx))
+    } 
+    print("Se excedió el número máximo de iteraciones")
+  }
+}
+
+f <- function(x){
+  x^3 - sin(x)^2
+}
+
+df <- function(x){
+  3*x^2 - 2*cos(x)*sin(x)
+}
+
+metodo_newton(f, df, 1)
+```
+Note que el método de Newton requirió 5 iteraciones para converger, mientras que el método de la bisección requirió de 16 iteraciones. El método de la bisección es generalmente más lento que otro métodos, pero hay una garantía de convergencia mientras que otros métodos no pueden hacerlo. 
+
+# Funciones uniroot y uniroot.all
+
+La instalación base de R tiene la función **uniroot()** para buscar la raíz de una función $f$ en un intervalo especificado. Esta función obtiene la raíz, el valor de $f$ en la raíz, el número de iteraciones para alcanzar la tolerancia y la precisión estimada de la raíz. La ayuda de R dice que la función **uniroot()** usa el método de Brent para calcular la raíz. El método de Brent combina el intervalo a evaluar las raíces, el método de la bisección y la interpolación cuadrática inversa para converger desde la vecindad de un paso por cero. Es decir, combina la seguridad del método de bisección con la velocidad de un método de orden superior cuando sea apropiado. 
+
+
+
+
+
+
+```{r}
+f <- function(x,a){
+  x^(1/3) * sin(5*x) - a*x^(1/2) 
+}
+curve(f(x, a=0.5),0,5)
+abline(h=0, lty=3)
+
+uniroot(f,c(0.1,1),a=0.5)
+```
+
+En este ejemplo, se inció la búsqueda de la raíz en la región **c(0.1,1)** en lugar de **c(0,1)** porque esta función debe tener signos opuestos en el inicio y en el final del intervalo, sino se cumple esta condición se genera un mensaje de error. 
+
+
+![Error al encontrar la raíz con uniroot.](error_uniroot.png)
+
+```{r}
+f <- function(x,a){
+  x^(1/3) * sin(5*x) - a*x^(1/2) 
+}
+curve(f(x, a=0.5),0,5)
+abline(h=0, lty=3)
+
+
+#uniroot(f,c(0.1,0.5),a=0.5)
+```
+
+
+Si la función tiene diversos ceros en la región de interés, la función **uniroot.all** del paquete **rootSolve** (que usa **uniroot**) debe de encontrar todas las raíces, sin embargo no se garantiza que encuentre las raíces en todos los casos. 
+
+
+```{r}
+f <- function(x,a){
+  x^(1/3) * sin(5*x) - a*x^(1/2) 
+}
+curve(f(x, a=0.5),0,5, col = "blue")
+abline(h=0, lty=3)
+#install.packages("rootSolve")
+#library(rootSolve)
+require(rootSolve)
+raices <- uniroot.all(f,c(0,5), a=0.5)
+raices
+coordenada_y=rep(0,length(raices))
+coordenada_y
+points(raices,coordenada_y, col = "red")
+```
+
+
+Note que **uniroot.all** no proporciona información acerca de la convergencia y la precisión, cosa que sí hace **uniroot**. Note también la diferencia en cómo tratan el parámetro $a$ en las llamadas a la función **curve** y dentro de **uniroot** y **uniroot.all**. 
+
+**uniroot** no funcionará si la función solo toca, pero no cruza el eje de las x's, a menos que un extremo del rango de búsqueda esté exactamente en la raíz. Por ejemplo,
+
+
+```{r}
+ff <- function(x,a){
+ sin(x)+1
+}
+#uniroot(ff, c(-pi,0))
+
+```
+
+![Error al encontrar una raíz.](error_raiz.png)
+
+Sin embargo, 
+
+```{r}
+ff <- function(x,a){
+ sin(x)+1
+}
+uniroot(ff, c(-pi,-pi/2))
+
+```
+
+Por supuesto, si la posición de la raíz se conoce previamente, no hay necesidad de hacer el cálculo. En general, se puede buscar el mínimo de la función en vez de la raíz, tal procedimiento se ve en las áreas de optimización numérica. 
+
+# Asistencia 
+
+From Andrea Carmin to Everyone:  02:34 PM
+
+Presente
+
+From Angel Pimentel to Everyone:  02:34 PM
+
+presente
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  02:34 PM
+
+presente
+
+From Alhelí García to Everyone:  02:34 PM
+
+Presente
+
+From Anna Viquez to Everyone:  02:35 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  02:35 PM
+
+presente
+
+From Daniela Roman to Everyone:  02:39 PM
+
+presente
+
+From Luis Cabrera to Everyone:  02:39 PM
+
+presente
+
+From Max to Everyone:  02:39 PM
+
+presente
+
+From Valeria Olvera Aguilar to Everyone:  03:56 PM
+
+Presente
+
+From Andrew Betanzos to Everyone:  03:56 PM
+
+presente
+
+From Lorena Silva to Everyone:  03:56 PM
+
+presente
+

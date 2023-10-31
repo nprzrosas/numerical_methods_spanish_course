@@ -1,0 +1,274 @@
+---
+title: "Día 7 - Herramientas computacionales - UPIEM-IPN"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+Ingrese a [Google colab](https://colab.research.google.com/#create=true&language=r) y practique los ejercicios de su clase.
+
+# Ejemplos Números especiales (continuación)
+
+```{r}
+1/0
+
+```
+```{r}
+log(0)
+
+```
+
+```{r}
+Inf*Inf
+
+```
+
+
+```{r}
+Inf/Inf
+
+```
+
+```{r}
+0/0
+
+```
+
+# Operadores relacionales (continuación)
+
+R tiene una familia de operadores que permite la comparación de valores, dando respuestas de `TRUE` o `FALSE`: `<` menor que, `>` mayor que, `<=` menor o igual a que, `>=` mayor o igual a, `==` idéntico a, y `!=` no igual a  
+
+
+```{r}
+0.3/0.1 == 3
+
+```
+Para evitar la situación anterior con cantidades complejas o númericas, use la función `all.equal`, la cual verifica que el resultado sea "casi" igual (esto último depende de la tolerancia de su computadora):
+
+```{r}
+all.equal(0.3/0.1,3)
+
+```
+
+
+# Vectores (continuacion)
+
+
+Para seleccionar un elemento particular de un vector, se coloca el la posición del vector entre corchetes `[]`. Por ejemplo,
+
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+x
+x[3]
+
+```
+
+Y para seleccionar varios elementos:
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+x
+x[1:3]
+
+```
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+x
+x[c(2, 3, 5)]
+
+
+```
+
+Para cambiar el valor de un elemento:
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+x
+x[3] = 100 
+x
+```
+
+Podemos hacer crecer un vector agregando un elemento al final:
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+x
+x[7] = 700 
+x
+```
+
+Si un elemento falta dentro del vector, se le asignará el número especial `NA` (not avilable - no disponible)
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+x
+x[11] = 900 
+x
+```
+
+para remover un elemento, ingresé el valor de la posición del elemento con el signo menos y entre corchetes `[]` :
+
+
+```{r}
+y <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+y
+y[-3]
+#y
+```
+
+También hay un conjunto de funciones que regresan la longitud, la media, la desviación estándar, el mínimo, el máximo, etc., de un vector: 
+
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+length(x) # longitud del vector 
+```
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+sd(x) # desviación estándar del vector 
+```
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+var(x) # varianza del vector 
+```
+
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+min(x) # valor mínimo del vector 
+```
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+range(x) # rango del vector 
+```
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+cumsum(x) # suma acumulativa  
+```
+
+
+```{r}
+x <- c(3.2, 1.7, -11.3, -0.67, 4, 0)
+cumprod(x) # suma acumulativa  
+```
+
+Un vector `y` puede actuar sobre otro vector `x`. Sí `y` es más pequeño que `x`, se recicla `y` hasta que un vector con la longitud de `x` se obtiene, con un mensaje de alerta!!
+
+```{r}
+x1 <- c(1, 2, 3, 4, 5)
+y1 <- c(1, 2)
+x1*y1
+ 
+```
+
+## Generación de secuencias
+
+```{r}
+1:10 # secuencia creciente
+ 
+```
+```{r}
+5.7:-3.7 # secuencia decreciente
+ 
+```
+Si se desea un incremento diferente a `1`, use `seq(from, to, by)`. Si los parámetros se dan ese orden, los nombres pueden ser omitidos, pero si se una diferente orden, se requiere de los nombres (esto es válido para todas las funciones de R).
+
+```{r}
+seq(3, 8, 0.5) # secuencia creciente de 3 a 8 con incrementos de 0.5 
+ 
+```
+
+```{r}
+seq(by = 0.45, from = 2.7, to = 6.7) # secuencia creciente de 2.7 a 6.7 con incrementos de  0.45 
+ 
+```
+
+El número de elementos de una secuencia puede ser especificado por `length.out`.
+
+```{r}
+seq(-pi, pi, length.out = 12) # secuencia creciente de 12 números -pi a pi 
+ 
+```
+
+Con la función `rep` repite valores en un secuencia:
+
+```{r}
+y = 2
+rep(y,5)
+
+```
+
+
+# Matrices
+
+
+Matriz en matemáticas es un arreglo de números en 2 dimensiones. 
+
+$$\begin{bmatrix}
+1&0&1&34 \\
+3&100&0&7 \\
+6&8&9&22 \\
+\end{bmatrix}$$
+
+En R las matrices y arreglos son representados como vectores con dimensiones:
+
+
+```{r}
+x <- 1:12
+dim(x) <- c(3,4)
+x
+
+```
+
+La función de asignación `dim` cambia la  *dimension* de`x`causando que R trate al vector de 12 números como una matriz de $3\times 4$. Note que los elementos son almacenados por columna, primero llena la primera columna, luego la segunda y así sucesivamente.
+
+Una forma conveniente de crear matrices es usando la función `matrix`:
+
+```{r}
+matrix(1:12, nrow=3, byrow=T)
+```
+Note como `byrow=T` causa que la matriz sea llenada por filas en vez de columnas. 
+
+Algunas funciones útiles que operan sobre matrices incluyen `rownames`, `colnames` y la función de transposición `t`, que transforma las columnas en filas y vicerversa. 
+
+```{r}
+x <- matrix(1:12, nrow=3,byrow=T)
+x
+rownames(x)  <- LETTERS[1:3]
+x
+t(x)
+
+```
+La variable `LETTERS` es una variable interna que contiene las letras mayúsculas A-Z. 
+
+Se pueden unir vectores para formar matrices con las funciones `cbind` y `r`bind`
+
+```{r}
+cbind(A=1:4, B=5:8, C=9:12)
+```
+
+```{r}
+rbind(A=1:4, B=5:8, C=9:12)
+```
+
+# Bibliografía 
+
+Using R for Numerical Analysis in Science and Engineering. The R series, Victor A. Bloomfield. 
+
+The book of R, Tilman M. Davies, N Sterch Press.
+
+Learning R. A step by step function guide to data analysis, Richard Cotton, O'Reilly.  
+
+
+Introductory Statistics with R, Peter Dalgaard, Statistics and Computing, 2nd. Edition, Springer. 

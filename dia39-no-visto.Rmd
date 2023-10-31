@@ -1,0 +1,369 @@
+---
+title: "dia39-gaussiana"
+author: "NCPR"
+date: "6/5/2021"
+output: html_document
+---
+
+
+
+
+se obtiene la solución $(1,4,0)$. Para $x_3$ se obtiene la solución $(11,-16-10)$.
+
+
+
+
+
+Por el hecho A, al sumar dos ecuaciones se obtiene una tercera ecuación correcta. Esta nueva ecuación puede sustituir cualquiera de las dos ecuaciones del sistema que se usaron para obtenerla. Primero se simplica el sistema (6) multi 
+
+
+
+
+
+
+## Sistemas equivalentes
+
+
+
+
+
+
+Utilizando los hechos 
+
+
+## Resolviendo un sistema lineal 
+
+Esta sección y la siguiente describe un algoritmo, o un procedimiento sistemático, para resolver sistemas lineales. La estrategia básica es **reemplazar un sistema con un sistema equivalente (es decir, un sistema como el mismo conjunto solución) que sea fácil de resolver.**
+
+En términos generales, use el término $x_1$ en la primera ecuación de un sistema para eliminar el
+término $x_1$ en las otras ecuaciones. Luego usa el término $x_2$ en la segunda ecuación para eliminar
+los términos $x_2$ en las otras ecuaciones, y así sucesivamente, hasta que finalmente obtenga un sistema simple y equivalente de ecuaciones.
+
+Se utilizan tres operaciones básicas para simplificar un sistema lineal: reemplazar una ecuación por la suma de sí mismo y un múltiplo de otra ecuación, intercambia dos ecuaciones, y multiplique todos los términos de una ecuación por una constante distinta de cero. Después del primer ejemplo, verá por qué estas tres operaciones no cambian el conjunto de soluciones del sistema.
+
+
+**Ejemplo. **
+
+Resuelva el sistema 
+
+\begin{alignat*}{5}
+   x_1 & {}-{} &  2x_2  &  {}+{} &  x_3  & {}={} & 0 \\
+       & {} {} &  2x_2  &  {}-{} &  8x_3  & {}={} & 8\\   5x_1 & {} {} &        &  {}-{} &  5x_3  & {}={} & 10\\
+\end{alignat*}
+
+
+
+\begin{equation*}
+\begin{pmatrix}
+1 & -2 & 1  & 0 \\
+0 &  2 & -8 & 8 \\
+5 &  0 & -5 & 10
+\end{pmatrix}
+\end{equation*}
+
+Mantenga $x_1$ de la primera ecuación y elimínela de las otras ecuaciones. Para hacer eso, multiplique por $-5$ la primera ecuación y luego súmela a la tercera ecuación:
+
+
+\begin{alignat*}{5}
+ -5(ecuación \ 1) {}&{} &  x_1 & {}-{} &  2x_2  &  {}+{} &  x_3  & {}={} & 0 \\
++ (ecuación \ 3) {}&{} &       5x_1 & {} {} &        &  {}-{} &  5x_3  & {}={} & 10\\
+(nueva \ ecuación \ 3) {}&{} &     & {} {} &  10x_2      &  {}-{} &  10x_3  & {}={} & 10\\
+
+\end{alignat*}
+
+
+El resultado de este cálculo es escrito en lugar de la tercera ecuación 
+
+
+
+\begin{alignat*}{5}
+   x_1 & {}-{} &  2x_2  &  {}+{} &  x_3  & {}={} & 0 \\
+       & {} {} &  2x_2  &  {}-{} &  8x_3  & {}={} & 8\\   
+       & {} {} &  10x_2 &  {}-{} &  10x_3  & {}={} & 10\\
+\end{alignat*}
+
+
+
+
+\begin{equation*}
+\begin{pmatrix}
+1 & -2 & 1  & 0 \\
+0 &  2 & -8 & 8 \\
+0 &  10 & -10 & 10
+\end{pmatrix}
+\end{equation*}
+
+
+Ahora multiplique la ecuación (2) por $\frac{1}{2}$ con el fin de obtener $1$ en el coeficiente $x_2$. Este cálculo simplificará la aritmética en el siguiente paso. 
+
+
+\begin{alignat*}{5}
+   x_1 & {}-{} &  2x_2  &  {}+{} &  x_3  & {}={} & 0 \\
+       & {} {} &  x_2  &  {}-{} &  4x_3  & {}={} & 4\\   
+       & {} {} &  10x_2 &  {}-{} &  10x_3  & {}={} & 10\\
+\end{alignat*}
+
+\begin{equation*}
+\begin{pmatrix}
+1 & -2 & 1  & 0 \\
+0 &  1 & -4 & 4 \\
+0 &  10 & -10 & 10
+\end{pmatrix}
+\end{equation*}
+
+
+Use la $x_2$ de la ecuación 2 para eliminar $10x_2$ en la ecuación 3. El cálculo mental es 
+
+
+\begin{alignat*}{5}
+ -10*(ecuación \ 2) {}&{} &  -10x_2 & {}+{} &  40x_3  & {}={} & -40 \\
+  +(ecuación \ 3) {}&{} &  10x_2 & {}-{} &  10x_3  & {}={} & 10 \\
+  (nva.\ ecuación \ 3) {}&{} &  & {}+{} &  30x_3  & {}={} & -30 \\
+\end{alignat*}
+
+
+Este resultado de este cálclo es escrito en lugar de la tercera ecuación (fila):
+
+
+\begin{alignat*}{5}
+   x_1 & {}-{} &  2x_2  &  {}+{} &  x_3  & {}={} & 0 \\
+       & {} {} &  x_2  &  {}-{} &  4x_3  & {}={} & 4\\   
+       & {} {} &   &  {} {} &  30x_3  & {}={} & -30\\
+\end{alignat*}
+
+
+\begin{equation*}
+\begin{pmatrix}
+1 & -2 & 1  & 0 \\
+0 &  1 & -4 & 4 \\
+0 &  0 & 30 & -30
+\end{pmatrix}
+\end{equation*}
+
+Ahora, multiplique la ecuación (3) por $\frac{1}{30}$ con el fin de obtener $1$ como el coeficiente para $x_3$. Este cálculo va a simplificar la aritmética para el siguiente paso. 
+
+\begin{alignat*}{5}
+   x_1 & {}-{} &  2x_2  &  {}+{} &  x_3  & {}={} & 0 \\
+       & {} {} &  x_2  &  {}-{} &  4x_3  & {}={} & 4\\   
+       & {} {} &   &  {} {} &   x_3  & {}={} & -1\\
+\end{alignat*}
+
+
+\begin{equation*}
+\begin{pmatrix}
+1 & -2 & 1  & 0 \\
+0 &  1 & -4 & 4 \\
+0 &  0 & 1 & -1
+\end{pmatrix}
+\end{equation*}
+
+El nuevo sistema tiene una forma **triangular** 
+
+
+Eventualmente, usted quiere eliminar $-2x_2$ de la ecuación 1, pero es más eficiente primero usar $x_3$ en la tercera ecuación, para eliminar $-4x_3$ y el término $+x_3$ en las ecuaciones $2$ y $1$. Las operaciones mentales son 
+
+
+\begin{alignat*}{5}
+ 4*(ecuación \ 3) {}&{} &   & {}+{} &  4x_3  & {}={} & -4 \\
+  +(ecuación \ 2) {}&{} &  x_2 & {}- {} &  4x_3  & {}={} & 4 \\
+  (nva.\ ecuación \ 2) {}&{} &  x_2 & {}+{} &   & {}={} & 0 \\
+\end{alignat*}
+
+
+
+\begin{alignat*}{5}
+ -1*(ecuación \ 3) {}&{} &   & {}-{} &  x_3  & {}={} & 1 \\
+  +(ecuación \ 1)  {}&{}  & x_1 &  {}-{} 2x_2 & {}+ {} &  x_3  & {}={} & 0 \\
+    +( nva. ecuación \ 1)  {}&{}  & x_1 &  {}-{} 2x_2 & {}+ {} &  & {}={} & 1 \\
+\end{alignat*}
+
+Es conveniente combinar estos resultados de estas dos operaciones 
+
+\begin{alignat*}{5}
+   x_1 & {}-{} &  2x_2 & &  {}={} & 1 \\
+       & {} {} &   x_2 & &  {}={} & 0 \\
+       & {} {} &       & x_3 &  {}={} & -1 \\
+\end{alignat*}
+
+
+
+\begin{equation*}
+\begin{pmatrix}
+1 & -2 & 0  & 1 \\
+0 &  1 & 0 &  0 \\
+0 &  0 & 1 & -1
+\end{pmatrix}
+\end{equation*}       
+       
+
+Ahora, teniendo limpia la columna de $x_3$ en la ecuación 3, regresemos a la ecuación 2 y usémosla para eliminar $-2x2$. Debido al trabajo anterior con $x_3$, ahora no hay aritmética que involucre términos $x_3$. Sumar 2 veces la ecuación 2 a la ecuación 1 obtenemos el sistema:  
+
+ 
+ \begin{alignat*}{5}
+   x_1 & {} {} &       & &  {}={} & 1 \\
+       & {} {} &   x_2 & &  {}={} & 0 \\
+       & {} {} &       & x_3 &  {}={} & -1 \\
+\end{alignat*}
+
+\begin{equation*}
+\begin{pmatrix}
+1 &  0 & 0  & 1 \\
+0 &  1 & 0 &  0 \\
+0 &  0 & 1 & -1
+\end{pmatrix}
+\end{equation*}  
+
+Esto muestra que la única solución del sistema original es $(1,0,-1)$. Como se hicieron muchos cálculos es conveniente, verificar el resultado. 
+
+
+
+
+\begin{alignat*}{5}
+1(1) & {}-{} &  2(0)  &  {}+{} &  1(-1)  & {}={} & 1- 0-1 & {}={} 0 \\
+   & {}-{} &  2(0)  &  {}-{} &  8(-1)  & {}={} & 0+8 & {}={} 8 \\
+5(1)   & {} {} &    &  {}-{} &  5(-1)  & {}={} & 5+5 & {}={} 10 \\
+\end{alignat*}
+
+El resultado de lado derecho concuerda con el sistema original de forma tal que $(1,0,-1)$ es la solución del sistema. 
+
+De manera general el sistema puede escribirse como: 
+
+
+
+\begin{alignat*}{5}
+   a_{1,1}x_1 & {}+{} &  a_{1,2}x_2 & {}+{} & ... & {}+{} & a_{1,n}x_n & {}={} & b_1\\
+   a_{2,1}x_1 & {}+{} &  a_{2,2}x_2 & {}+{} & ... & {}+{} & a_{2,n}x_n & {}={} & b_2\\
+   \vdots     &      &  \vdots    &       &     &  \vdots &         &     & \vdots \\
+    a_{m,1}x_1 & {}+{} &  a_{m,2}x_2 & {}+{} & ... & {}+{} & a_{m,n}x_n & {}={} & b_m\\
+\end{alignat*}
+
+
+Sea, $\mathbf{A}$ la matriz de coeficientes 
+
+\begin{equation*}
+A_{m,n} = 
+\begin{pmatrix}
+a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
+a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
+\vdots  & \vdots  & \ddots & \vdots  \\
+a_{m,1} & a_{m,2} & \cdots & a_{m,n} 
+\end{pmatrix}
+\end{equation*},
+
+$\mathbf{x}$ el vector
+
+\begin{equation*}
+x = 
+\begin{pmatrix}
+x_{1} \\
+x_{2} \\
+\vdots   \\
+x_{3} 
+\end{pmatrix}
+\end{equation*}
+
+y 
+
+
+$\mathbf{b}$ el vector 
+
+\begin{equation*}
+b = 
+\begin{pmatrix}
+b_{1} \\
+b_{2} \\
+\vdots   \\
+b_{3} 
+\end{pmatrix}
+\end{equation*}.
+
+Como $\mathbf{A}$ es una matriz de $m \times n$ y $\mathbf{x}$ es una matriz de $m \times 1$, entonces el sistema se puede escribir como 
+
+$A\mathbf{x}=\mathbf{b}$.
+
+**Ejemplo. **Considere el sistema 
+
+
+\begin{alignat*}{4}
+   2x_1 & {}+{} &  4x_2 & {}+{} & 6x_3 & {}={} & 18 \\
+   4x_1 & {}+{} &  5x_2 & {}+{} & 6x_3 & {}={} & 24 \\
+   3x_1 & {}+{} &  x_2 & {}-{} & 2x_3 & {}={} & 4 \\
+\end{alignat*}
+
+¿Cómo se puede escribir un sistema en su representación matricial? Esto se puede escribir como $A\mathbf{x}=\mathbf{b}$. con
+
+\begin{equation*}
+A = 
+\begin{pmatrix}
+2 & 4  & 6 \\
+4 & 5  & 6 \\
+3 & 1  & -2 \\
+\end{pmatrix}
+\end{equation*}
+
+
+\begin{equation*}
+x = 
+\begin{pmatrix}
+x_{1} \\
+x_{2} \\
+x_{3} 
+\end{pmatrix}
+\end{equation*}
+
+
+
+\begin{equation*}
+b = 
+\begin{pmatrix}
+18 \\
+24 \\
+4 
+\end{pmatrix}
+\end{equation*}.
+
+
+Es evidentemente más sencillo escribir el sistema en la forma $A\mathbf{x}=\mathbf{b}$. Formalmente, $x=\mathbf{A}^{-1}B$ donde $\mathbf{A}^{-1}$ es la inversa de $\mathbf{A}$. Calcular la inversa y después multiplicar es ineficiente e inexacto. R usa rutinas del paquete LAPAC (Linear Algebra PACKage),  la librería estan dar para algebra lineal numérica. Sus rutinas pueden ser usadas declarando la función **solve**.
+
+```{r}
+options(digits=3)
+set.seed(3) # Fijar a seed en R significa inicializar un generador de numero pseudo altearios
+m <- matrix(runif(16), nrow = 4)
+m
+```
+
+```{r}
+b <- runif(4)
+b
+```
+
+```{r}
+solve(m,b)
+```
+```{r}
+m%*%solve(m,b) # Se recupera b
+``` 
+```{r}
+solve(m)%*%b # Multiplica b por la inversa de m
+```
+
+
+# Colorario
+
+
+El **método de bisección**, es un tipo de búsqueda incremental en el que el intervalo se divide siempre a la mitad. Si la función cambia de signo sobre un intervalo, se evalúa el valor de la función en el punto medio. La posición de la raíz se determina situándola en el punto medio del subintervalo, dentro del cual ocurre el cambio de signo. El proceso se repite hasta obtener una mejor aproximación. A continuación se presenta un algoritmo sencillo para los cálculos de la bisección. 
+
+**Paso 1.** Elija los valores iniciales inferior, $x_i$, y superior, $x_u$ que encierre la raíz, de forma tal que la función cambie de signo en el intervalo. Esto se verifica comprobando que $f(x_i)f(x_u)<0$
+
+**Paso 2**. Una aproximación de la raíz $x_r$, se determina mediante:
+
+$x_r=\frac{x_i+x_u}{2}$
+
+**Paso 3.** Realice las siguientes evaluaciones para determinar en qué subintervalo está la raíz:
+(a) Si $f(x_i)f(x_r)<0$, entonces la raíz se encuentra dentro del subintervalo inferior o izquierdo. Por lo tanto, haga $x_u=x_r$ y vuelta al paso 2. 
+
+(b)  Si $f(x_i)f(x_r)>0$, entonces la raíz se encuentra dentro del subintervalo superior o derecho. Por lo tanto, haga $x_i=x_r$ y vuelva al paso 2. 
+
+(c)  Si $f(x_i)f(x_r)=0$, entonces la raíz es igual a $x_r$; termina el cálculo. 
+
+

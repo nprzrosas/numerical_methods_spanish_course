@@ -1,0 +1,190 @@
+---
+title: "Día 29 y 30 - Errores de aproximación"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+# Revisión de la Tarea 13
+
+Proponga un diagrama de flujo y una función en R para obtener a la función exponencial expandida en series de MacLaurin utilizando el ciclo repeat y el valor absoluto del error de aproximación menor que el criterio de error como condición para detener el ciclo repeat. Tenga listo su diagrama de flujo y su función para mostrar y explicarlo frente a la clase para la siguiente sesión. 
+
+![Diagrama de flujo para calcular la suma aproximada (método alternativo)](maclaurin_3.png)
+
+```{r}
+macLaurin_ea <- function (x, cf)
+{
+  epsilon_s <- 0.5*10^(2-cf)
+  suma <- 0
+  iteracion <- 0 
+  epsilon_a <- 100
+  repeat{
+    suma_anterior <- suma
+    termino <- x^iteracion/factorial(iteracion)
+    suma <- suma + termino 
+    iteracion <- iteracion + 1
+    if(iteracion>1){
+      epsilon_a <- abs((suma - suma_anterior)/suma)*100
+    }
+    if(abs(epsilon_a)<epsilon_s){
+      break
+    }
+  }
+  cat("El valor de la suma es:", suma, "Numero de iteraciones:", iteracion, "\n")
+}
+
+macLaurin_ea(0.5, 3)
+```
+
+Código visto en clase
+
+```{r}
+
+macLaurin_ea <- function (x, cf)
+{
+  epsilon_s <- 0.5*10^(2-cf)
+  suma <- 0
+  iteracion <- 0 
+  epsilon_a <- 100
+  repeat{
+    suma_anterior <- suma
+    termino <- x^iteracion/factorial(iteracion)
+    suma <- suma + termino 
+    iteracion <- iteracion + 1
+    if(iteracion>1){
+      epsilon_a <- abs((suma - suma_anterior)/suma)*100
+      cat("epsilon_a:", epsilon_a, "\n")
+    }
+    if(abs(epsilon_a)<epsilon_s){
+       cat("epsilon_a:", epsilon_a, "epsilon_s:", epsilon_s, "iteracion", iteracion, "\n")
+      break
+    }
+  }
+  cat("El valor de la suma es:", suma, "Numero de iteraciones:", iteracion, "\n")
+}
+
+macLaurin_ea(0.5,3)
+```
+
+
+# Asistencia día 30 
+
+From Andrew Betanzos to Everyone:  08:31 PM
+
+presente
+
+From Angel Pimentel to Everyone:  08:33 PM
+
+presente
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  08:33 PM
+
+presente
+
+From Luis Cabrera to Everyone:  08:33 PM
+
+presente
+
+From Anna Viquez to Everyone:  08:33 PM
+
+Presente
+
+From Daniela Roman to Everyone:  08:33 PM
+
+presente
+
+From Ximena Martínez to Everyone:  08:38 PM
+
+Presente
+
+From Andrea Carmin to Everyone:  08:38 PM
+
+Presente 
+
+From Max to Everyone:  08:38 PM
+
+presente
+
+From Alhelí García to Everyone:  08:38 PM
+
+Presente
+
+From Lorena Silva to Everyone:  08:38 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  08:38 PM
+
+presente
+
+From Míriam Sosa to Everyone:  08:46 PM
+
+presente
+
+From Angel Pimentel to Everyone:  09:10 PM
+
+pseint
+
+From Valeria Olvera Aguilar to Everyone:  09:52 PM
+
+Presente
+
+
+# Asistencia día 29
+
+
+From Leon Gonzalez to Everyone:  04:07 PM
+
+Presente
+
+From Angel Pimentel to Everyone:  04:07 PM
+
+presente
+
+From Andrea Carmin to Everyone:  04:11 PM
+
+Presente
+
+From Ximena Martínez to Everyone:  04:24 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  04:25 PM
+
+presente
+
+From Míriam Sosa to Everyone:  04:25 PM
+
+presente
+
+From Ian Tsla to Everyone:  04:25 PM
+
+presente.
+
+From ANNA VIQUEZ to Everyone:  04:25 PM
+
+presente 
+
+From Lorena Silva to Everyone:  04:25 PM
+
+presente
+
+From Daniela Roman to Everyone:  04:32 PM
+
+presente
+
+From Valeria Olvera Aguilar to Everyone:  05:29 PM
+
+Presente
+
+From Andrew Betanzos to Everyone:  05:29 PM
+
+presente
+
+

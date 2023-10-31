@@ -1,0 +1,180 @@
+---
+title: "Día 32 - Punto flotante - Series de Taylor"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  html_document:
+    toc: yes
+    toc_depth: 2
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+# Rango de enteros
+
+## Participación 1 de clase del día 26/05/21
+
+
+**Ejercicio.** Determine el rango de enteros de base 10 que pueda representarse en 16 bits. 
+
+![Rango de enteros de base 10 que pueda representarse en 16 bits](rango.png)
+
+
+**Solución.** De los 16 bits, se tiene el primer bit para el signo. Los 15 bits restantes pueden contener los números binarios de $0$ a $111111111111111$. El límite superior se convierte en un entero decimal así 
+
+![Cálculo del límite superior para calcular el rango de enteros de base 10 que puede representarse en 16 bits](max_binario.png)
+
+
+```{r}
+(1*2^14)+(1*2^13)+(1*2^12)+(1*2^11)+(1*2^10)+(1*2^9)+(1*2^8)+(1*2^7)+(1*2^6)+(1*2^5)+(1*2^4)+(1*2^3)+(1*2^2)+(1*2^1)+(1*2^0)
+```
+
+Así en una computadora de 16 bits un término puede guardar en memoria un entero decimal en el rango de $-32767$ a $32767$. Además, debido a que el cero ya está como $0000000000000000$, sería redundante usar el número $1000000000000000$ para definir "menos cero". Por lo tanto, es usualmente empleado para representar un número negativo adicional $-32768$, y el rango va de $-32768$ a $32767$.
+
+Observe que el método de magnitud con signo descrito antes no se utiliza para representar enteros en computadoras convencionales. Se prefiere usar una técnica llamada **complemento de 2** que incorpora en forma directa el signo dentro de la magnitud del número, en lugar de representar un bit adicional para representar más o menos. Sin embargo, el ejemplo anterior sirve para ilustrar cómo todas las computadoras digitales están limitadas en cuanto a su capacidad para representar enteros. Esto es, los números por encima o por debajo de este rango no pueden representarse. Una limitación más importante se encuentra en el almacenaje y la manipulación de cantidades fraccionarias, como se describe a continuación. 
+
+# Representación del punto flotante 
+
+
+Las cantidades fraccionarias generalmente se representan en la computadora usando la forma de punto flotante. Con este método, el número se representa como una parte fraccionaria, llamada **mantisa** o **significado**, y una parte entera, denominada **exponente** o **característica**, esto es, 
+
+$m \cdot b^e$
+
+donde $m=$ la mantisa, $b=$ la base del sistema numérico que se va a utilizar y $e=$ el exponente. Por ejemplo, el número 156.78 se representa como $0.15678 \times 10^3$ en un sistema de base $10$ de punto flotante. 
+
+En la figura se muestra una forma en que el número de punto flotante se guarda en una palabra (cadena finita de bits que son manejados como un conjunto por la máquina). El primer bit se reserva para el signo; la siguiente serie de bits, para el exponente, con signo y los últimos bits, para la mantisa. 
+
+![La forma en que un número de punto flotante se guarda en un término](mantisa.png)
+
+
+Observe que la mantisa es usualmente normalizada si tiene primero dígitos. Por ejemplo, suponga que la cantidad $1/34=0.029411765..$ se guarda en un sistema base $10$ con punto flotante, que únicamente permite guardar cuatro lugares decimales. Entonces, $1/34$ se guardaría como 
+
+$0.0294\times 10^0$
+
+Al hacerlo así, la inclusión del cero "inútil" a la derecha del punto decial nos obliga a eliminar el dígito $1$ del quito lugar decimal. El número puede normalizarse para eliminar el cero multiplicando la mantisa por $10$ y disminuyendo el exponente en $1$, para que quede, 
+
+$0.2941\times 10^-1$
+
+Así, se conserva una cifra significativa adicional al guardar el número. 
+
+La consecuencia de la normalización es que el valor absoluto de $m$ queda limitado. Esto es,
+
+
+$\frac{1}{b}\leq m <1$
+
+donde $b=$ la base. Por ejemplo, para un sistema de base $10$, $m$ estaría entre $0.1$ y $1$; y para un sistema de base $2$, entre $0.5$ y $1$.
+
+La representación de punto flotante permite que tanto fracciones como número muy grandes se expresen en la computadora. Sin embargo, hay desventajas. Por ejemplo, los números de punto flotante requieren más espacio y más tiempo de procesado que los número enteros y su uso introduce una fuente de error debido a que la mantisa conserva sólo un número finito de cifras significativas. Por lo tanto, se introduce un **error de redondeo**.
+
+# Errores de truncamiento y la serie Taylor 
+
+Los **errores de truncamiento** son aquellos que resultan al usar una aproximación en lugar un procedimiento matemático exacto. Para obtener un conocimiento sobre las características de estos errores, se debe considerar una formulación matemática que se utiliza ampliamente en los métodos numéricos para **expresar funciones de manera aproximada: la serie de Taylor**.
+
+El teorema de Taylor y su fórmula, la serie de Taylor, es de gran valor en el estudio de los métodos numéricos ya que proporciona un medio para predecir el valor de una función en un punto en términos del valor de la función y sus derivadas en otro punto. En particular, el teorema estable que cualquier función suave puede aproximarse por un polinomio 
+
+$f(x) = a_n x^n + a_{n-1}x^{n-1}+...+a_1x+a_0$.
+
+Una buena forma de entender la serie de Taylor consiste en construirla término por térmio. Por ejemplo, el primer término de la serie es:
+
+$f(x_{i+1})\cong f(x_{i})$ ----  (A)
+
+Esta relación, llamada la **aproximación de orden cero**, indica que el valor de $f$ en el nuevo punto es el mismo que su valor anterior. Tal resultado tiene un sentido intuitivo, ya que si $x_i$ y $x_{i+1}$ están muy próximas entre sí, entonces es muy probable que el nuevo valor sea similar al anterior. 
+
+```{r}
+curve(x^2, from = -5, to = 5, col = "violet", lwd = 2)
+abline(h=0, v=0, col="gray")
+```
+
+
+La ecuación (A) es una estimació perfecta si la función que se va a aproximar es una función constante $f(x)=k$
+
+
+![Gráfica de f(x)=k.](recta_roja.png)
+
+
+Sin embargo, si la función cambiar en el intervalo, entonces se requieren los términos adicionales de la serie Taylor, para obtener una mejor aproximación. ´pr ejemplo, la **aproximación de primer orden** se obtiene sumando otro término para obtener:
+
+
+
+$f(x_{i+1})\cong f(x_{i})+f'(x_{i})(x_{i+1}-x_{i})$ -- (B)
+
+El término adicional de primer orden consiste en una pediente $f'(x_{i})$ multiplicada por la distancia entre $x_{i}$ y $x_{i+1}$. Por lo tanto, la expresión representa ahora una línea recta y es posible predecir un incremento o decremento de la función entre $x_{i}$ y $x_{i+1}$.
+
+Aunque la ecuación (B) puede predecir un cambio, sólo es exacta para una línea recta o una tendencia **lineal**. Por lo tanto, se agrega a la serie un término de **segundo orden** para obtener algo de curvatura, que pudiera presentar la función:
+
+
+$f(x_{i+1})\cong f(x_{i})+f'(x_{i})(x_{i+1}-x_{i})+\frac{f''(x)}{2!}(x_{i+1}-x_{i})^2$ -- (C)
+
+
+De forma similar, se agregan términos adicionales para desarrollar la expansión completa de la serie de Taylor:
+
+ $f(x_{i+1})= f(x_{i})+f'(x_{i})(x_{i+1}-x_{i})+\frac{f''(x)}{2!}(x_{i+1}-x_{i})^2+\frac{f^{(3)}(x)}{3!}(x_{i+1}-x_{i})^3+...+\frac{f^{(n)}(x)}{n!}(x_{i+1}-x_{i})^n+R^n$-- (D)
+
+Observe que debido a que la ecuación (D) es una serie infinita, el signo igual reemplaza al signo de aproximación que se utiliza en las ecuaciones A, B y C. Se incluye un término residual para considerar todos los términos desde el $n+1$ hasta infinito:
+
+$R_n=\frac{f^{(n+1)(\\xi)}}{(n+1)!}(x_{i+1}-x{i})^{n+1}$
+
+donde el subíndice $n$ indica que éste es el residuo de la aproximación de $n-ésimo$ orden y $\\xi$ es algún valor de $x$ que se encuentra en algún punto entre $x_i$ y $x_{i+1}$.
+
+Con frecuencia es conveniente simplificar la serie de Taylor definiendo un tamaño de paso o incremento $h=x_{i+1}-x_{i}$ y expresando la ecuación D como:
+
+$f(x_{i+1})= f(x_{i})+f'(x_{i})h+\frac{f''(x)}{2!}h^2+\frac{f^{(3)}(x)}{3!}h^3+...+\frac{f^{(n)}(x)}{n!}h^n+R^n$-- (D)
+
+y término residual ahora es,
+
+$R_n=\frac{f^{(n+1)(\\xi)}}{(n+1)!}h^{n+1}$
+
+
+
+# Asistencia 
+
+
+From Angel Pimentel to Everyone:  04:02 PM
+
+presente
+
+From Andrea Carmin to Everyone:  04:05 PM
+
+Presente
+
+From Gutierrez Bernal Edgar Isaac to Everyone:  04:05 PM
+
+presente
+
+From Leon Gonzalez to Everyone:  04:05 PM
+
+presente
+
+From Luis Cabrera to Everyone:  04:05 PM
+
+presente
+
+From Ximena Martínez to Everyone:  04:05 PM
+
+Presente
+
+From Alhelí García to Everyone:  04:05 PM
+
+Presente
+
+From Max to Everyone:  04:05 PM
+
+Presente
+
+From Daniela Roman to Everyone:  04:10 PM
+
+presente
+
+From Anna Viquez to Everyone:  04:10 PM
+
+presente
+
+From Lorena Silva to Everyone:  04:10 PM
+
+presente
+
+From Valeria Olvera Aguilar to Everyone:  05:27 PM
+Presente
+
+

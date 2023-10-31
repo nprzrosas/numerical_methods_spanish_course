@@ -1,0 +1,57 @@
+---
+title: "Día 28 - Uso del error de aproximacion (Continuación)"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+
+
+# Cálculo de la expansión en series de MacLaurin utilizando el error de aproximación 
+
+Para calcular la expansión en series de MacLaurin utilizando el error de aproximación y una función en R, usaremos la función **repeat** en R, la cual ejecuta el mismo bloque de código iterativamente hasta que una condición se satisface. 
+
+![Diagrama de flujo para el ciclo repeat](repeat_loop.png)
+
+La sintaxis para la función **repeat** en R es la siguiente. 
+
+![Sintaxis para la función repeat](repeat.png)
+
+**Ejemplo.**
+
+```{r}
+suma <-0
+repeat{
+  suma = suma + 1
+  print(suma)
+  if (suma == 6){
+    print("El ciclo repeat termina")
+    break
+  }
+}
+```
+
+
+
+# Participación en clase del día 19 de Mayo del 2021
+
+Proponga un diagrama de flujo para obtener a la función exponencial expandida en series de MacLaurin utilizando el ciclo repeat. 
+
+Nota: Ningún estudiante logró generar el diagrama de flujo que resuelve el problema. No hay participación para nadie, entonces el ejercicio se queda de tarea. 
+
+
+# Tarea 13
+
+Proponga un diagrama de flujo y una función en R para obtener a la función exponencial expandida en series de MacLaurin utilizando el ciclo repeat y el valor absoluto del error de aproximación menor que el criterio de error como condición para detener el ciclo repeat. Tenga listo su diagrama de flujo y su función para mostrar y explicarlo frente a la clase para la siguiente sesión. 
+
+
+# Asistencia
+
+Accidentalmente perdí la lista de asistencia, todos tienen asistencia. 
+

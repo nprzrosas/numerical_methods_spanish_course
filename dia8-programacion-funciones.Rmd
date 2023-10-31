@@ -1,0 +1,456 @@
+---
+title: "Día 8 - Herramientas computacionales/Algoritmos"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+Ingrese a [Google colab](https://colab.research.google.com/#create=true&language=r) y practique los ejercicios de su clase.
+
+# Vectores lógicos
+
+
+R es un lenguaje de programación completamente desarrollado con construcciones de programación estándar como ejecuciones condicionales, ciclos (loops) y subrutinas (llamadas funciones en R). En esta clase veremos cómo se implementan estas construcciones. 
+
+# Ejecución condicional: `if` e `if-else`
+
+
+Los programas de computación pueden seleccionar diferentes cálculos dependiendo de sí una condición lógica al ser evaluada es `TRUE` o `FALSE`. Los operadores lógicos son `&` que signica `y/and`, `|` que significa `o/or` y `!` que significa  `no/not`.
+
+La declaración `if` opera sobre vectores lógicos de longitud 1. Una construcción formal tiene la siguiente estructura.
+
+
+
+`if (condición 1) {`
+
+
+`  resultado 1`
+  
+  
+`} else if (condición 2){`
+
+
+`  resultado 2 `
+  
+  
+`} else {`
+
+
+ ` resultado 3`
+  
+  
+`}`
+
+
+Por ejemplo:
+
+```{r}
+x <- -3
+if (x < -1) {
+  y <- -1
+} else if (x < 0){
+  y <- 0 
+} else {
+  y <- 1
+} 
+y
+```
+
+Ejemplos de `if` e `if-else` un poco más largos...
+
+```{r}
+x <- 15
+if (x < -1) {
+  y <- -1
+} else if (x < 0){
+  y <- 0 
+} else if (x < 10){
+  y <- 8 
+} else if (x < 20){
+  y <- 100 
+} else {
+  y <- 1
+} 
+y
+```
+```{r}
+x <- 150
+if (x < -1) {
+  y <- -1
+} else if (x < 0){
+  y <- 0 
+} else if (x < 10){
+  y <- 8 
+} else if (x < 20){
+  y <- 100 
+} else if (x < 40){
+  y <- 22 
+}else {
+  y <- 1
+} 
+y
+```
+
+
+
+
+Nota: tenga cuidado en no insertar una línea entre `}` y `else`, porque R interpretará todo lo que está arriba como un comando completo y regresará un resultado prematuro. 
+
+Casos simples: la construcción `if-else` se puede escribir en una sola línea, la sintaxis en una sola línea es la siguiente 
+
+
+`if (condición) resultado1 else resultado2 `
+
+```{r}
+x <- -1
+if (x > 0) 1 else 0
+```
+
+Para más de dos opciones, con `else if`, la sintaxis es la siguiente:
+
+`if (condición 1) resultado1 else if (condicion 2) resultado2 else resultado3` 
+
+```{r}
+x <- 0
+if (x < 0) 0 else if (x == 0) 0.5 else 1
+```
+
+# Ciclo `for`
+
+Con frecuencia nos encontramos cálculos que deben repetirse un determinado número de veces o hasta que una condición es alcanzada. R, como otros lenguajes de programación tiene las funciones de ciclo para lidiar con esas situaciones, aunque es con frecuencia posible evitar ciclos y tomar avances de la vectorización. 
+
+`for (variación en forma de secuencia) {`
+    
+`}`
+
+
+
+Para repetir una operación a través de un rango determinado de elementos de un vector, use el ciclo`for`. Por ejemplo:
+
+```{r}
+suma <- 0
+for (i in 1:10) suma = suma + i
+suma
+```
+
+```{r}
+sum(1:10) 
+#"sum" está definida en R y retorna la suma de todos
+#los valores presentes en su argumento
+```
+
+Un ejemplo un poco más complicado es sumar los números pares del 1 al 10, ¿cómo se resolvería este problema?
+
+Respuesta:
+Utilizamos el operador módulo `%%` para este ejemplo. Recordemos que este operador retorna el valor del residuo una vez que se ha efectuado la división, como se ve en los números en rojo de la Figura 1. 
+
+![Los residuos de un número par son cero.](divisionespar.png)
+
+
+En las siguientes líneas se observa la implementación del ciclo `for` para este ejemplo. 
+
+```{r}
+suma <- 0
+for (i in 1:10) if (i %% 2 == 0) suma <- suma + i 
+suma
+```
+
+En las Figuras 2, 3, 4 y 5 se muestra cómo se lee el ciclo `for` para este ejemplo.
+
+![Lectura del ciclo for parte 1.](lecturafor1.png){ width=90% }
+
+
+
+![Lectura del ciclo for parte 2.](lecturafor2.png){ width=70% }
+
+
+
+![Lectura del ciclo for parte 3.](lecturafor3.png){ width=70% }
+
+![Lectura del ciclo for parte 4.](lecturafor4.png){ width=50% }
+
+
+
+
+
+
+La alternativa de calcular la suma de los números pares del 1 al 10, es tomar ventaja de la vectorización:
+
+
+```{r}
+sum(c(2, 4, 6, 8, 10)) #la alternativa de la suma de los num. par es con la función sum
+```
+Si el número de repeticiones en el ciclo es muy largo, el ciclo `for` es notablemente más lento que las operaciones vectorizadas. Consideremos calcular 1 millón de veces la función coseno:
+
+```{r}
+n <- 1000000
+x <- 0
+system.time(for (i in 1:n) x <- cos(i/n))
+```
+
+Compare el tiempo que se tardó el sistema en calcular el coseno usando un ciclo `for`, comparado con la vectorización:
+
+
+```{r}
+i <- 1:n # Aquí creamos el vector 
+system.time(cos(i/n))
+```
+
+Sin embargo, si el valor de un elemento del vector cambia de acuerdo al valor de otros elementos, entonces la vectorización no es posible. Un ejemplo común es integración de ecuaciones diferenciales usando el método de Euler. Considere el decaimiento radiactivo, en el cual la velocidad de decaimiento de N átomos radiactivos es proporcional al número de átomo que queda: 
+
+
+$$
+\frac{dN}{dt}=-kN 
+$$
+
+
+con el número inicial de átomos $N_{0}$ a $t = 0$.
+
+
+```{r}
+# Declaramos las condiciones iniciales y definimos las variables
+tmin <- 0
+tmax <- 100
+dt <- 1 
+n <- (tmax - tmin) / dt + 1 # 101 valores de tiempo de 0 a 100
+tiempo <- seq(tmin, tmax, by = dt)
+k <- 0.03 # tasa de decaimiento de la constante
+N0 <- 100 # Número inicial de átomos
+N <- N0 # Inicialización de N
+
+#Ciclo for
+
+for (i in 2:n){
+  dN <- -k * N[i - 1] * dt
+  N[i] <- N[i -1] + dN # Debido a que N[i] depende de N[i - 1] la vectorización no es posible
+}
+#Graficar
+plot(tiempo, N, type = "l")
+
+
+```
+
+# Algoritmos 
+
+Secuencia de pasos usados para resolver un problema. Esta secuencia representa un método único de resolver el problema al proporcionar una solución particular. Algunas fórmulas son algoritmos como la fórmula cuadrática. Con el fin de que un proceso de solución represente un algoritmo, este debe ser: 
+
+* Finito: el algoritmo eventualmente debe resolver el problema. 
+
+* Debe estar bien definido: la serie de pasos deben ser precisos y presentar pasos que sean entendibles (la computadora debe ser capaz de entender los pasos para crear un algoritmo utilizable).
+
+* Efectivo: un algoritmo debe resolver todos los casos del problema para el cual fue definido. 
+
+
+Hay muchos tipos de algoritmos, y muchas aplicaciones de los mismos:
+
+* Búsqueda (searching): localizar información y verificar que la información que ves es la que realmente estás buscando es una tarea esencial. Sin esta habilidad, no sería posible desarrollar muchas acciones en internet, como encontrar un sitio de internet específico. 
+ 
+ 
+ * Clasificación (sorting): determinar en qué orden presentar la información es importante porque actualmente hay una sobrecarga de información y colocar la información en orden es una forma de reducir esta sobre carga de información. Ordenar es un requisito importante al resolver problemas.
+ 
+ * Transformación (transforming): convertir un tipo de datos a otro tipo es crítico para entender y usar los datos eficientemente. Por ejemplo, convertir libras a kilos, o por ejemplo la transformada rápida de Fourier convierte señales entre el dominio del tiempo y el dominio de la frecuencia, de forma tal que es posible hacer que el router funcione. 
+ 
+ * Planificación (scheduling): La computadora desarrolla  múltiples tareas al mismo tiempo, sin un algoritmo de planificación la computadora usaría todos sus recursos en una sola tarea y evitaría que se pueda trabajar. 
+ 
+ * Análisis gráfico (graph analysis): decidir la línea más corta entre dos puntos, sin un algoritmo que permitiera encontrar esta distancia el GPS no podría trabajar. 
+ 
+* Criptografía (cryptography): mantener los datos seguros, es una batalla constante con los hackers que atacan bases de datos como las bancarias. Los algoritmos hacen posible analizar los datos, colocarlos dentro de un formato y regresarlos a su forma original después.
+
+* Generación de números pseudo aleatorios (pseudorandom number generation): imagine jugando video juegos sin que estos varien. Sin la capacidad de generar números aleatorios, muchas computadoras no serían posibles. 
+
+## Ejemplos de algortimos de clasificación (sorting algorithms)
+
+Los algoritmos de clasificación son un conjunto de instrucciones que toman un arreglo o una lista como entrada y arreglan los datos en un orden en particular. Estos algoritmos son muy comunes cuando hay que clasificar números o clasificación alfabética, y pueden ser ascendentes (A-Z, 0-9) o en orden descendente (Z-A, 9-0).
+
+Estos algoritmos son importantes porque pueden reducir la complejidad de un problema. Estos algoritmos tienen una aplicación directa en algoritmos de bases de datos, en los métodos de divide y venceras, algorítmos de búsqueda, etc. 
+
+Cuando se usan algoritmos se deben responder algunas preguntas, ¿qué tan grande es la colección de datos? ¿cuánta memoria se supone que se usará? ¿la colección de datos crecerá?  Para responder estas preguntas puede determinar que algoritmo se usará para cada situación. 
+
+### Algoritmos de clasificación comunes 
+* Selection sort
+* Bubble sort
+* Insertion sort
+* Merge sort 
+* Quick sort
+* Heap sort 
+* Counting sort
+* Radix sort
+* Bucket sort
+
+
+### Bubble sort algorithm 
+
+
+La Ordenación de burbuja (Bubble Sort en inglés) es un sencillo algoritmo de ordenamiento. Funciona revisando cada elemento de la lista que va a ser ordenada con el siguiente, intercambiándolos de posición si están en el orden equivocado. Es necesario revisar varias veces toda la lista hasta que no se necesiten más intercambios, lo cual significa que la lista está ordenada. Este algoritmo obtiene su nombre de la forma con la que suben por la lista los elementos durante los intercambios, como si fueran pequeñas "burbujas". También es conocido como el método del intercambio directo. Dado que solo usa comparaciones para operar elementos, se lo considera un algoritmo de comparación, siendo uno de los más sencillos de implementar (Definición de wikipedia).
+
+```{r}
+
+#Ejemplo de la implementación del Bubble sort algorithm en R
+x <- sample(1:100,10) # muestra 10 número aleatorios entre 1:100
+ejemplo <- function(x){
+  n <- length(x)
+  for(j in 1:(n-1)){
+    for(i in 1:(n-j)){
+      if(x[i] > x[i+1]){
+        temporal <- x[i]
+        x[i] <- x[i+1]
+        x[i+1] <- temporal
+      }
+    }
+  }
+  return(x)
+}
+resultado <- ejemplo(x)
+#entrada desordenada
+x
+#salida ordenada
+resultado
+```
+
+```{r}
+x <-sample(1:100,10) # muestra 10 número aleatorios entre 1:100
+x # entrada desordenada
+resultado<-sort(x) # sort es una función en R que ordena el vector (bubble sort algorithm)
+resultado # salida ordenada
+```
+
+# Tarea 3
+
+
+1. Escriba un algoritmo de la vida de por lo menos 30 pasos que se requieran para culminar la tarea.   
+
+![Ejemplo de la tarea 3.](sandwich.png){ width=50% }
+
+
+2. Escoja alguno de los algoritmos mencionados en clase, revise para que sirven y trate de encontar sí existe una función en R para dicho algoritmo. Reporte su investigación por escrito.
+
+
+Entregar máximo el lunes 12 de Abril del 2021 a las 8 pm, nombre su archivo como tarea3_apellidonombre_fecha.PDF
+
+
+Al inicio de su archivo coloque lo siguiente: 
+
+#2NV1 
+
+
+#Tarea Número x
+
+
+#Nombre completo 
+
+
+#Número de Boleta 
+
+
+#Direccion de correo electronico institucional
+
+
+#"Yo trabajé esta tarea sola/solo usando sólo los materiales visto en clase"
+
+
+#"Yo trabajé esta tarea con Nombre completo de la persona con la que trabajó"
+
+#Reporte los sitios de dónde obtuvo los datos 
+
+ 
+
+# Bibliografía 
+
+Using R for Numerical Analysis in Science and Engineering. The R series, Victor A. Bloomfield. 
+
+The book of R, Tilman M. Davies, N Sterch Press.
+
+Learning R. A step by step function guide to data analysis, Richard Cotton, O'Reilly.  
+
+Algorithms for Dummies by John Paul Mueller, Luca Massaron, Learning Made Easy. 
+
+Introductory Statistics with R, Peter Dalgaard, Statistics and Computing, 2nd. Edition, Springer. 
+
+# Asistencia 31/03/2021
+
+From Leon Gonzalez to Everyone:  04:05 PM
+
+
+presente
+
+
+From Angel Pimentel to Everyone:  04:05 PM
+
+
+Presente
+
+From Luis Cabrera to Everyone:  04:05 PM
+
+presente
+
+
+From Edgar isaac Gutiérrez to Everyone:  04:05 PM
+
+
+presente
+
+
+From Daniela Roman to Everyone:  04:05 PM
+
+
+presente
+
+
+From Alhelí García to Everyone:  04:05 PM
+
+
+Presente
+
+
+From Andrew Betanzos to Everyone:  04:05 PM
+
+
+presente
+
+
+From Max to Everyone:  04:06 PM
+
+
+PRESENTE
+
+
+From Angel Pimentel to Everyone:  04:06 PM
+
+
+profesora, mi compañero Emmanuel Gonzales tiene problemas con su internet
+
+
+From Ian Tsla to Everyone:  04:12 PM
+
+
+Presente
+
+
+From Ximena Martínez to Everyone:  04:12 PM
+
+
+Presente
+
+
+From Anna Viquez to Everyone:  04:14 PM
+
+
+Presente.
+
+
+From Emmanuel González to Everyone:  04:21 PM
+
+
+González García Emmanuel
+
+
+digo presente
+
+
+
