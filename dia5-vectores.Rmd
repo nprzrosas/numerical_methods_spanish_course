@@ -1,0 +1,326 @@
+---
+title: "Día 5 - Herramientas computacionales"
+author: "Dra. Norma C. Pérez Rosas"
+date: '`r format(Sys.time(), "%d/%m/%Y")`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    toc: yes
+    toc_depth: 2
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = "asis")
+```
+
+
+
+# R para matemáticas básicas (continuación)
+
+Ingrese a [Google colab](https://colab.research.google.com/#create=true&language=r) y escriba los siguientes códigos.
+
+
+## Raíz cuadrada
+
+Usted puede encontrar la raíz cuadrada de cualquier número negativo con la función sqrt 
+
+```{r}
+sqrt(9)
+sqrt(x <- 5.311)
+```
+
+## Fórmulas aritméticas complicadas
+
+Cuando use R, con frecuencia tendrá la necesidad de trasladar fórmulas aritméticas complicadas en un código para evaluación (por ejemplo, cuando quiere verificar un cálculo de un libro). Los siguientes ejemplos proporcionan expresiones matemáticas, seguidas de su código de ejecución en R. 
+
+$10{^2}+\frac{3\times60}{8}-3$
+
+```{r}
+10 ^ 2 + 3 * 60 / 8 - 3
+```
+
+$\frac{5{^3}\times(6-2)}{61-3+4}$
+
+```{r}
+5 ^ 3 * (6 - 2) / (61 - 3 + 4)
+```
+
+$2^{2+1}-4+64{^{-2^{2.25-\frac{1}{4}}}}$
+
+
+```{r}
+2 ^ (2 + 1) - 4 + 64 ^ ((-2) ^ (2.25 - 1 / 4))
+```
+
+$\left(\frac{0.44\times(1-0.44)}{34}\right)^\frac{1}{2}$
+
+```{r}
+(0.44 * (1 - 0.44) / 34) ^ (1 / 2)
+```
+
+Note que algunas expresiones en R requiere de parentésis extra que no están presentes en las expresiones matemáticas. Colocar paréntesis donde no corresponde es causa de errores frecuentes en R, especialmente cuando se trabaja con exponentes. Si el exponente es un cálculo aritmético, siempre debe aparecer en paréntesis. Por ejemplo, en la tercera expresión se necesita se necesitan paréntesis alrededor de $2.25-1/4$. También necesitará paréntesis sí el número es elevado a alguna potencia en el cálculo, como en la expresión $2^{2+1}$ en el tercer ejemplo. Note que R considera un número negativo un cálculo porque interpreta $-2$ como $-1\times2$. Esta es la misma razón por la que usted necesita el paréntesis alrededor del $-2$ en la misma expresión. Es importante considerar esto desde el principio, porque se puede uno perder en el código. 
+
+## Logaritmos
+
+Con frecuencia encontrará investigadores que desarrollan la transformación logarítmica de ciertos datos. Esto se refiere a reescalar los números de acuerdo a un logaritmo. Cuando se proporciona un número $x$ y un valor referido como la $base$, el logaritmo calcula la potencia para la cual usted debe elevar la base para obtener $x$.Por ejemplo, el logaritmo de $x=243$ en base 3 (escrito matemáticamente como $\log _3 \left( 243 \right)$ es 5, porque $3^{5}=243$. En R, la transformación logarítmica se hace con la función log. Usted proporciona log con el número a transformar, asignado al valor $x$, y la base, asignado a la $base$, como sigue
+
+```{r}
+log(x = 243, base = 3)
+```
+
+Aquí hay que considerar que $x$ y la $base$ deben ser positivos.
+
+
+# Ejercicio
+
+Use R para verificar que 
+
+$\frac{6a+42}{3^{4.2-3.52}}=29.50556$
+
+cuando a=2.3
+
+```{r}
+a <- 2.3
+
+(6 * a + 42) / (3 ^ (4.2 - 3.62))
+
+```
+
+
+# Asignación de objetos
+
+Si usted quiere salvar los resultados de un determinado cálculo para operaciones futuras, se necesita asignar el resultado del cálculo a un objeto en el espacio de trabajo actual. Usted puede hacer una asignación en R usando la notación (<-).
+
+```{r}
+x <- 5
+x
+
+x <- x + 1 + 50 + 10 # esto sobreescribe el valor previo de x
+x
+
+```
+
+
+```{r}
+mi_numero <- 45.2
+
+mi_numero
+
+y <- mi_numero * x
+y
+
+ls() # el comando ls examina el contenido en el espacio actual de trabajo en orden alfabético
+
+```
+
+Ejercicio:
+
+a) Crea un objeto que almacene el valor $3^{2}\times3^{1/8}$.
+b) Sobreescriba el objeto en (a) al dividirlo por 2.33. Esriba el resultado en la consola. 
+
+```{r}
+objeto <- 3 ^ 2 * 3 ^ (1/8) # Creación del objeto 
+objeto
+objeto <- objeto / 2.33 #Sobreescritura del objeto 
+objeto
+
+```
+
+
+
+# Vectores
+
+Vector es un arreglo ordenado de números. 
+
+$$
+    v = \begin{bmatrix}
+           v_{1} \\
+           v_{2} \\
+           \vdots \\
+           v_{m}
+         \end{bmatrix}
+$$
+
+Con frencuencia usted desea hace la misma operación a un conjunto de datos. Se puede hacer esta operación en una sola acción. R proporciona una solución eficiente con vectores.  
+
+## Creando un vector 
+
+En el sentido numérico, piense en un vector como una colección de datos o mediciones, por ejemplo el peso de 50 personas, el registro de la irradiación solar de la estación del Servicio Metereológico Nacional, el registro de la irradiación solar de la estación de la NASA etc. La función para crear un vector en R es con la letra c, con las entradas deseadas separadas por comas. 
+
+
+
+```{r}
+irradiacion_SMN <- c(3.1, 3.9, 4.3, 4.9, 5.1, 6.1, 6.2, 6.3, 6.7, 6.8, 7.5, 7.6)
+
+irradiacion_SMN
+
+```
+
+
+```{r}
+irradiacion_NASA <- c(3.7, 3.9, 4.2, 4.9, 5.1, 6.1, 5.8, 6.2,6.9, 7.5, 7.3, 7.0)
+
+irradiacion_NASA
+
+```
+
+
+Las entradas del vector pueden ser cálculos previos, o datos previamente almacenados. 
+
+
+```{r}
+
+dato_reciente <- 8.5
+
+irradiacion_SMN <- c(3.1, 3.9, 4.3, 4.9, 5.1, 6.1, 6.2, 6.3, 6.7, 6.8, 7.5, 7.6, dato_reciente)
+
+irradiacion_SMN
+
+```
+
+```{r}
+
+datos_recientes <- c(11.5, 13, 18)
+
+irradiacion_SMN <- c(3.1, 3.9, 4.3, 4.9, 5.1, 6.1, 6.2, 6.3, 6.7, 6.8, 7.5, 7.6, datos_recientes)
+
+irradiacion_SMN
+
+```
+
+
+Se puede crear un vector, a partir de vectores previos. 
+
+
+```{r}
+
+vector_1 <- c(1, 2, 3)
+
+vector_2 <- c(6, 8, 10)
+
+vector_3 <- c(vector_1, vector_2)
+
+vector_3
+
+```
+
+El orden en el que se coloquen las entradas es importante. 
+
+```{r}
+
+vector_1 <- c(1, 2, 3, 4, 5)
+
+vector_2 <- c(6, 8, 10, 12.5, 18)
+
+vector_3 <- c(vector_2, vector_1)
+
+vector_3 
+
+```
+
+
+## Graficando vectores
+
+Los vectores se pueden graficar con la función plot. 
+
+
+```{r}
+
+irradiacion_SMN <- c(3.1, 3.9, 4.3, 4.9, 5.1, 6.1, 6.2, 6.3, 6.7, 6.8, 7.5, 7.6)
+irradiacion_NASA <- c(3.7, 3.9, 4.2, 4.9, 5.1, 6.1, 5.8, 6.2,6.9, 7.5, 7.3, 7.0)
+
+
+plot(irradiacion_NASA ~ irradiacion_SMN, col = "red", pch = 19,
+      main = "Irradiación Solar (I)",
+      xlab = expression("(I) AMS (Bahía de Loreto), kWh/m"^2),
+      ylab = expression("(I) SMSE, kWh/m"^2))
+
+```
+
+
+# Tarea 1
+
+Tarea 1: Escriba en google colab dos vectores de algún ejemplo de su especialidad Ingeniería en Negocios Energéticos Sustentables y grafíquelos. Envío de la tarea máximo lunes 29 de Marzo de 2021 a las 19 horas al correo ncperez@cinvestav.mx 
+
+# Asistencia
+
+
+
+From Me to Everyone:  04:06 PM
+
+https://colab.research.google.com/#create=true&language=r
+
+From Edgar isaac Gutiérrez to Everyone:  04:10 PM
+
+profesora no me aparece el link
+
+From Andrea Carmin to Everyone:  04:10 PM
+
+Presente 
+
+From Alhelí García to Everyone:  04:10 PM
+
+Presente
+
+From Andrea Carmin to Everyone:  04:10 PM
+
+https://colab.research.google.com/#create=true&language=r
+
+From Edgar isaac Gutiérrez to Everyone:  04:10 PM
+
+presente
+
+From Andrea Carmin to Everyone:  04:10 PM
+
+Ese es el link 
+
+From Ximena Martínez to Everyone:  04:10 PM
+
+Presente
+
+From Leon Gonzalez to Everyone:  04:10 PM
+
+Presente
+
+From Valeria Olvera Aguilar to Everyone:  04:11 PM
+
+presente
+
+From Me to Everyone:  04:13 PM
+
+https://colab.research.google.com/#create=true&language=r
+
+From Andrew Betanzos to Everyone:  04:17 PM
+
+presente
+
+From Ian Tsla to Everyone:  04:17 PM
+
+presente
+
+From Me to Everyone:  04:18 PM
+
+https://colab.research.google.com/#create=true&language=r
+
+From Angel Pimentel to Everyone:  04:18 PM
+
+Presente
+
+From Luis Cabrera to Everyone:  04:18 PM
+
+presente
+
+From Max to Everyone:  04:18 PM
+
+presente
+
+From Anna Viquez to Everyone:  04:21 PM
+presente 
+
+From Leon Gonzalez to Everyone:  04:40 PM
+
+Profesora mi compañera Andrea Bravo se salio de la clase porque se le fue el internet
+
