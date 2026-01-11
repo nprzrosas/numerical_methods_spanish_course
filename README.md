@@ -1,3 +1,3 @@
 # Numerical Methods (Spanish course)
 
-What follows were my lecture notes for Numerical Methods, taught at the UPIEM-IPN, Mexico. The course was primarily for non-mathematics majors and was required by several engineering departments.
+The following are my lecture notes for a Numerical Methods course taught at UPIEM-IPN, Mexico. The course was primarily aimed at non-mathematics majors and was a required course for several engineering programs.
